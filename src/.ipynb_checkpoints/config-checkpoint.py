@@ -158,7 +158,6 @@ class Config:
         )
         config.api.region = getattr(args, "region", "us-central1")
         config.api.model_name = getattr(args, "model", "gemini-1.5-flash")
-        config.api.image_model = getattr(args, "image_model", "imagen-3.0-generate-001") 
         config.api.max_retries = getattr(args, "max_retries", 3)
 
         # Cấu hình hạn mức theo nền tảng

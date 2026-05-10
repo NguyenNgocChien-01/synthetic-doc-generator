@@ -292,119 +292,49 @@ class DataGenerator:
                 elapsed_seconds=time.monotonic() - start_time,
             )
 
-    def _generate_one(
-        self,
-        doc_type: str,
-        sample_id: str,
-        template_config: Dict,
-    ) -> GenerationResult:
+    def _parse_custom_json(self, data: Any) -> Any:
         """
-        Quy trình chính sinh một mẫu dữ liệu đầy đủ.
-
-        Các bước:
-            1. Kiểm tra quota.
-            2. Sinh dữ liệu văn bản giả.
-            3. Lấy ảnh đại diện (API hoặc placeholder).
-            4. Render ảnh tài liệu.
-            5. Lưu trữ kết quả.
-            6. Ghi nhận tiêu thụ quota.
-
-        Tham số:
-            doc_type: Loại tài liệu.
-            sample_id: ID mẫu.
-            template_config: Cấu hình template đã tải.
-
-        Trả về:
-            GenerationResult với đầy đủ thông tin.
+        Duyệt qua JSON của bạn, tìm các giá trị mẫu và thay bằng Faker.
+        Ví dụ: "MICHAEL" -> "NGUYEN", "045823671" -> "098...".
         """
+        if isinstance(data, dict):
+            return {k: self._parse_custom_json(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [self._parse_custom_json(i) for i in data]
+        elif isinstance(data, str):
+            # Logic thông minh: Dựa vào nội dung mẫu để chọn kiểu Faker
+            if data.isupper() and len(data) > 3: return self._faker_factory.faker.first_name().upper()
+            if "-" in data and len(data) > 8: return self._faker_factory.faker.date_of_birth().strftime("%d-%m-%Y")
+            if data.isdigit() and len(data) > 5: return str(self._faker_factory.faker.random_number(digits=len(data)))
+            return data
+        return data
+
+    def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict) -> GenerationResult:
         start_time = time.monotonic()
-        estimated_tokens = self.quota_manager.estimate_tokens(
-            text_content=str(template_config.get("fields", [])),
-            image_request=self.config.image.avatar_use_api,
+        
+        # 1. Lấy JSON gốc từ base.json và sinh dữ liệu giả
+        # Nếu tệp base.json chính là cái Driver License JSON bạn đưa:
+        raw_json = template_config 
+        nested_json_data = self._parse_custom_json(raw_json)
+
+        # 2. Tải ảnh template.jpg
+        template_image = self.image_processor._load_template_image(doc_type, template_config)
+
+        # 3. Gọi API
+        api_image = self.api_client.generate_document(template_image, nested_json_data)
+        
+        if not api_image:
+            raise Exception("API khong phan hoi anh.")
+
+        # 4. Lưu kết quả
+        img_p, json_p = self.storage_manager.save_sample(
+            doc_type=doc_type, sample_id=sample_id, image=api_image, 
+            fields_data=nested_json_data, bounding_boxes=[], metadata={}
         )
 
-        # Bước 1: Kiểm tra quota
-        can_proceed, quota_msg = self.quota_manager.check_availability(estimated_tokens)
-        if not can_proceed:
-            raise QuotaExceededError(quota_msg)
-        if quota_msg:
-            logger.warning(quota_msg)
-
-        # Bước 2: Sinh dữ liệu văn bản
-        fields_config = template_config.get("fields", [])
-        fields_data = self._faker_factory.generate_document_fields(fields_config)
-
-        logger.debug(
-            "Da sinh du lieu cho mau '%s': %d truong.", sample_id, len(fields_data)
-        )
-
-        # Bước 3: Lấy ảnh đại diện
-        avatar_image: Optional[Image.Image] = None
-        avatar_config = template_config.get("avatar", {})
-        tokens_used = 0
-
-        if avatar_config.get("enabled", False):
-            avatar_size = avatar_config.get("size", [150, 190])
-            gender = fields_data.get("gender", "unknown")
-            name_seed = fields_data.get("ho_ten", fields_data.get("full_name", sample_id))
-
-            avatar_image = self.api_client.get_avatar(
-                seed=name_seed,
-                width=avatar_size[0],
-                height=avatar_size[1],
-                use_api=self.config.image.avatar_use_api,
-                gender=gender,
-            )
-
-            if self.config.image.avatar_use_api:
-                tokens_used += 500  # Ước tính token cho yêu cầu ảnh
-
-        # Bước 4: Render ảnh tài liệu
-        rendered_image, bounding_boxes = self.image_processor.render_document(
-            doc_type=doc_type,
-            template_config=template_config,
-            fields_data=fields_data,
-            avatar_image=avatar_image,
-        )
-
-        # Bước 5: Lưu trữ
-        metadata = {
-            "locale": self._faker_factory.locale,
-            "api_platform": self.config.api.platform,
-            "augmentation_enabled": self.config.image.enable_augmentation,
-        }
-
-        image_path, json_path = self.storage_manager.save_sample(
-            doc_type=doc_type,
-            sample_id=sample_id,
-            image=rendered_image,
-            fields_data=fields_data,
-            bounding_boxes=bounding_boxes,
-            metadata=metadata,
-        )
-
-        # Bước 6: Ghi nhận tiêu thụ quota
-        self.quota_manager.record_usage(tokens_used=tokens_used, success=True)
-
-        elapsed = time.monotonic() - start_time
-        quota_status = self.quota_manager.get_status()
-
-        logger.debug(
-            "Hoan thanh mau '%s' trong %.2f giay.",
-            sample_id, elapsed,
-        )
-
-        return GenerationResult(
-            success=True,
-            sample_id=sample_id,
-            doc_type=doc_type,
-            image_path=str(image_path),
-            json_path=str(json_path),
-            tokens_used=tokens_used,
-            elapsed_seconds=elapsed,
-        )
-
-    def _load_template_config(self, doc_type: str) -> Dict:
+        return GenerationResult(True, sample_id, doc_type, str(img_p), str(json_p), "", 0, time.monotonic()-start_time)
+    
+    def _load_template_config(self, doc_type: str) -> dict:
         """
         Tải cấu hình template từ tệp base.json.
         Kết quả được cache để tránh đọc lại nhiều lần.

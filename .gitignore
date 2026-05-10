@@ -1,0 +1,33 @@
+# Môi trường ảo (Virtual Environment)
+venv/
+env/
+.env/
+.venv/
+
+# Tệp môi trường chứa thông tin nhạy cảm (API Keys)
+.env
+
+# Tệp thực thi và bộ nhớ đệm Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Dữ liệu đầu ra của dự án
+dataset/
+logs/
+*.log
+
+# Cấu hình IDE / Trình chỉnh sửa văn bản
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tệp hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Tệp lưu trạng thái nội bộ
+quota_state.json

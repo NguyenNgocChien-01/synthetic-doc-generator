@@ -157,47 +157,41 @@ class GoogleAIStudioProvider(BaseAPIProvider):
             
     def generate_document_image(self, template_image: Image.Image, json_data: dict) -> Optional[Image.Image]:
         """
-        Gửi ảnh gốc và JSON dữ liệu lên API.
-        Tự động nhận diện mô hình để chọn endpoint (predict hoặc generateContent).
+        Gửi ảnh gốc và JSON dữ liệu lên API để yêu cầu sinh ảnh tài liệu mới.
         """
-        logger.debug("Goi API sinh anh voi mo hinh: %s", self.config.image_model)
+        logger.debug("Goi API sinh anh tai lieu dua tren anh goc va JSON.")
         
-        # Chuyển ảnh sang Base64
+        # Chuyển đổi ảnh gốc sang Base64
         buffered = io.BytesIO()
         template_image.save(buffered, format="JPEG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
+        # Chuẩn bị Prompt: Yêu cầu API dựa vào ảnh gốc và thay thế nội dung bằng JSON
         prompt_text = (
-            "Dưới đây là một ảnh mẫu và dữ liệu JSON. "
-            "Hãy tạo ra một bức ảnh tài liệu thực tế, giữ nguyên bố cục ảnh gốc "
-            "nhưng thay thông tin văn bản bằng dữ liệu trong JSON này:\n"
-            f"{json.dumps(json_data, ensure_ascii=False)}"
+            "Dưới đây là một ảnh mẫu của giấy phép lái xe và một tệp dữ liệu JSON. "
+            "Hãy tạo ra một bức ảnh giấy phép lái xe chân thực hoàn toàn mới, "
+            "giữ nguyên bố cục của ảnh mẫu nhưng thay thế toàn bộ thông tin văn bản "
+            "và mã vạch bằng các giá trị được cung cấp trong tệp JSON sau:\n"
+            f"{json.dumps(json_data, ensure_ascii=False, indent=2)}"
         )
 
-        model_name = self.config.image_model.lower()
-        # Kiểm tra nếu là dòng Gemini/Banana sử dụng generateContent
-        is_generative_model = "gemini" in model_name or "banana" in model_name
-
-        if is_generative_model:
-            # Endpoint dành cho Gemini 3 Flash / Nano Banana
-            url = f"{self.base_url}/models/{self.config.image_model}:generateContent?key={self.config.api_key}"
-            payload = {
-                "contents": [{
-                    "parts": [
-                        {"text": prompt_text},
-                        {"inline_data": {"mime_type": "image/jpeg", "data": img_str}}
-                    ]
-                }]
+        # Cấu trúc payload gửi API (Dành cho mô hình hỗ trợ Vision/Image Generation)
+        # Lưu ý: Endpoint thực tế phụ thuộc vào mô hình (ví dụ: Imagen 3 hoặc Gemini 1.5 Pro)
+        url = f"{self.base_url}/models/{self.config.model_name}:predict?key={self.config.api_key}"
+        
+        payload = {
+            "instances": [
+                {
+                    "prompt": prompt_text,
+                    "image": {
+                        "bytesBase64Encoded": img_str
+                    }
+                }
+            ],
+            "parameters": {
+                "sampleCount": 1
             }
-        else:
-            # Endpoint dành cho Imagen (Lưu ý: AI Studio có thể yêu cầu tên khác)
-            # Thử bỏ tiền tố 'models/' nếu bị lỗi 404
-            clean_model_id = self.config.image_model.replace("models/", "")
-            url = f"{self.base_url}/models/{clean_model_id}:predict?key={self.config.api_key}"
-            payload = {
-                "instances": [{"prompt": prompt_text, "image": {"bytesBase64Encoded": img_str}}],
-                "parameters": {"sampleCount": 1}
-            }
+        }
         
         body = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(url, data=body, method="POST")
@@ -206,22 +200,14 @@ class GoogleAIStudioProvider(BaseAPIProvider):
         try:
             with urllib.request.urlopen(req, timeout=90) as resp:
                 result = json.loads(resp.read().decode("utf-8"))
-                
-                if is_generative_model:
-                    # Trích xuất từ cấu trúc Gemini
-                    parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-                    for part in parts:
-                        if "inline_data" in part:
-                            return Image.open(io.BytesIO(base64.b64decode(part["inline_data"]["data"]))).convert("RGB")
-                    logger.error("API tra ve van ban nhung khong co anh. Kiem tra Prompt.")
-                    return None
-                else:
-                    # Trích xuất từ cấu trúc Imagen
-                    b64_data = result["predictions"][0]["bytesBase64Encoded"]
-                    return Image.open(io.BytesIO(base64.b64decode(b64_data))).convert("RGB")
+                # Trích xuất ảnh kết quả từ phản hồi
+                b64_result = result["predictions"][0]["bytesBase64Encoded"]
+                img_data = base64.b64decode(b64_result)
+                return Image.open(io.BytesIO(img_data)).convert("RGB")
         except Exception as loi:
-            logger.error("Loi API: %s", loi)
+            logger.error("Loi khi goi API sinh anh: %s", loi)
             return None
+
 
 class VertexAIProvider(BaseAPIProvider):
     """Kết nối với Google Vertex AI."""
