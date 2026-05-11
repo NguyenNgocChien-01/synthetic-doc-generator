@@ -31,7 +31,11 @@ def main():
     parser.add_argument("--workers", type=int, default=1, help="So luong luong xu ly song song")
     parser.add_argument("--debug", action="store_true", help="Bat che do debug")
     parser.add_argument("--avatar-api", action="store_true", help="Su dung API de sinh anh dai dien")
+    # parser.add_argument("--image-model", default="imagen-3.0-generate-001", help="Mo hinh sinh anh (VD: imagen-3.0-generate-001 hoac gemini-3-flash-image)")
     parser.add_argument("--image-model", default="imagen-3.0-generate-001", help="Mo hinh sinh anh (VD: imagen-3.0-generate-001 hoac gemini-3-flash-image)")
+    parser.add_argument("--project-id", help="GCP Project ID su dung cho Vertex AI")
+    parser.add_argument("--region", default="us-central1", help="GCP Region su dung cho Vertex AI")
+    # args = parser.parse_args()
     args = parser.parse_args()
 
     config = Config.from_cli_args(args)

@@ -293,21 +293,64 @@ class DataGenerator:
             )
 
     def _parse_custom_json(self, data: Any) -> Any:
-        """
-        Duyệt qua JSON của bạn, tìm các giá trị mẫu và thay bằng Faker.
-        Ví dụ: "MICHAEL" -> "NGUYEN", "045823671" -> "098...".
-        """
         if isinstance(data, dict):
-            return {k: self._parse_custom_json(v) for k, v in data.items()}
+            result = {}
+            for k, v in data.items():
+                k_lower = k.lower()
+                
+                # Đệ quy nếu giá trị là object hoặc list lồng nhau
+                if isinstance(v, (dict, list)):
+                    result[k] = self._parse_custom_json(v)
+                
+                # Nhận diện theo từ khóa trong tên Key
+                elif any(word in k_lower for word in ["first_name", "given_name"]):
+                    result[k] = self._faker_factory.faker.first_name().upper()
+                
+                elif any(word in k_lower for word in ["middle_name"]):
+                    result[k] = self._faker_factory.faker.first_name().upper() if v else None
+                
+                elif any(word in k_lower for word in ["last_name", "surname"]):
+                    result[k] = self._faker_factory.faker.last_name().upper()
+                
+                elif any(word in k_lower for word in ["dob", "birth"]):
+                    # Tự động nhận diện nếu dữ liệu mẫu là dạng chuỗi liền (watermark)
+                    if isinstance(v, str) and "-" not in v and v.isdigit():
+                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d%m%Y")
+                    else:
+                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d-%m-%Y")
+                
+                elif any(word in k_lower for word in ["expiry", "expiration"]):
+                    result[k] = self._faker_factory.faker.date_between(start_date="today", end_date="+5y").strftime("%d-%m-%Y")
+                
+                elif "line_1" in k_lower:
+                    result[k] = f"UNIT {self._faker_factory.faker.random_int(min=1, max=99)}"
+                
+                elif any(word in k_lower for word in ["line_2", "street"]):
+                    result[k] = self._faker_factory.faker.street_address().upper()
+                
+                elif any(word in k_lower for word in ["suburb", "city", "town"]):
+                    result[k] = self._faker_factory.faker.city().upper()
+                
+                elif any(word in k_lower for word in ["postcode", "zip"]):
+                    result[k] = str(self._faker_factory.faker.postcode())
+                
+                elif any(word in k_lower for word in ["licence_number", "license_number"]):
+                    result[k] = str(self._faker_factory.faker.random_number(digits=9, fix_len=True))
+                
+                elif "card_number" in k_lower:
+                    result[k] = f"D{self._faker_factory.faker.random_number(digits=7, fix_len=True)}"
+                
+                elif "barcode" in k_lower:
+                    result[k] = f"ABnoteNZ{self._faker_factory.faker.random_number(digits=10, fix_len=True)}"
+                
+                else:
+                    # Giữ nguyên giá trị gốc đối với các key không khớp từ khóa (ví dụ: state, class, conditions)
+                    result[k] = v
+            return result
         elif isinstance(data, list):
             return [self._parse_custom_json(i) for i in data]
-        elif isinstance(data, str):
-            # Logic thông minh: Dựa vào nội dung mẫu để chọn kiểu Faker
-            if data.isupper() and len(data) > 3: return self._faker_factory.faker.first_name().upper()
-            if "-" in data and len(data) > 8: return self._faker_factory.faker.date_of_birth().strftime("%d-%m-%Y")
-            if data.isdigit() and len(data) > 5: return str(self._faker_factory.faker.random_number(digits=len(data)))
-            return data
         return data
+    
 
     def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict) -> GenerationResult:
         start_time = time.monotonic()

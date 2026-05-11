@@ -1,0 +1,20 @@
+{
+  "document_type": "aus_passport",
+  "extracted_data": {
+    "issuing_country": "AUS",
+    "document_number": "J8962843",
+    "family_name": "FIGUEROA",
+    "given_names": "DEBORAH",
+    "nationality": "AUSTRALIAN",
+    "date_of_birth": "13-03-1985",
+    "sex": "M",
+    "date_of_issue": "2025-01-23",
+    "date_of_expiry": "27-07-2028",
+    "place_of_birth": "15-08-1964",
+    "authority": "LONDON",
+    "mrz": {
+      "line1": "P<AUSFIGUEROA<<MICHEAL<NICHOLAS<<<<<<<<<<<<<<",
+      "line2": "J8962843<6AUS9603057M3501232<<<<<<<<<<<<<<00"
+    }
+  }
+}

@@ -292,78 +292,90 @@ class DataGenerator:
                 elapsed_seconds=time.monotonic() - start_time,
             )
 
-    def _parse_blueprint(self, node: Any) -> Any:
-        """
-        Duyệt đệ quy cấu trúc blueprint.
-        Nếu gặp node chứa 'faker_type', gọi FakerFactory để sinh dữ liệu.
-        Nếu gặp giá trị tĩnh hoặc dict thông thường, trả về nguyên bản.
-        """
-        if isinstance(node, dict):
-            # Nhận diện node cấu hình sinh dữ liệu
-            if "faker_type" in node:
-                faker_type = node.get("faker_type")
-                options = node.get("options", {})
-                value = self._faker_factory.generate_value(faker_type, options=options)
+    def _parse_custom_json(self, data: Any) -> Any:
+        if isinstance(data, dict):
+            result = {}
+            for k, v in data.items():
+                k_lower = k.lower()
                 
-                if node.get("uppercase") and isinstance(value, str):
-                    value = value.upper()
-                if node.get("lowercase") and isinstance(value, str):
-                    value = value.lower()
-                return value
-            else:
-                # Tiếp tục duyệt dict lồng nhau
-                return {k: self._parse_blueprint(v) for k, v in node.items()}
-        elif isinstance(node, list):
-            # Duyệt mảng
-            return [self._parse_blueprint(item) for item in node]
-        else:
-            # Trả về giá trị cứng (string, int, null, boolean...)
-            return node
+                # Đệ quy nếu giá trị là object hoặc list lồng nhau
+                if isinstance(v, (dict, list)):
+                    result[k] = self._parse_custom_json(v)
+                
+                # Nhận diện theo từ khóa trong tên Key
+                elif any(word in k_lower for word in ["first_name", "given_name"]):
+                    result[k] = self._faker_factory.faker.first_name().upper()
+                
+                elif any(word in k_lower for word in ["middle_name"]):
+                    result[k] = self._faker_factory.faker.first_name().upper() if v else None
+                
+                elif any(word in k_lower for word in ["last_name", "surname"]):
+                    result[k] = self._faker_factory.faker.last_name().upper()
+                
+                elif any(word in k_lower for word in ["dob", "birth"]):
+                    # Tự động nhận diện nếu dữ liệu mẫu là dạng chuỗi liền (watermark)
+                    if isinstance(v, str) and "-" not in v and v.isdigit():
+                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d%m%Y")
+                    else:
+                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d-%m-%Y")
+                
+                elif any(word in k_lower for word in ["expiry", "expiration"]):
+                    result[k] = self._faker_factory.faker.date_between(start_date="today", end_date="+5y").strftime("%d-%m-%Y")
+                
+                elif "line_1" in k_lower:
+                    result[k] = f"UNIT {self._faker_factory.faker.random_int(min=1, max=99)}"
+                
+                elif any(word in k_lower for word in ["line_2", "street"]):
+                    result[k] = self._faker_factory.faker.street_address().upper()
+                
+                elif any(word in k_lower for word in ["suburb", "city", "town"]):
+                    result[k] = self._faker_factory.faker.city().upper()
+                
+                elif any(word in k_lower for word in ["postcode", "zip"]):
+                    result[k] = str(self._faker_factory.faker.postcode())
+                
+                elif any(word in k_lower for word in ["licence_number", "license_number"]):
+                    result[k] = str(self._faker_factory.faker.random_number(digits=9, fix_len=True))
+                
+                elif "card_number" in k_lower:
+                    result[k] = f"D{self._faker_factory.faker.random_number(digits=7, fix_len=True)}"
+                
+                elif "barcode" in k_lower:
+                    result[k] = f"ABnoteNZ{self._faker_factory.faker.random_number(digits=10, fix_len=True)}"
+                
+                else:
+                    # Giữ nguyên giá trị gốc đối với các key không khớp từ khóa (ví dụ: state, class, conditions)
+                    result[k] = v
+            return result
+        elif isinstance(data, list):
+            return [self._parse_custom_json(i) for i in data]
+        return data
+    
 
-    def _generate_one(
-        self,
-        doc_type: str,
-        sample_id: str,
-        template_config: Dict,
-    ) -> GenerationResult:
+    def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict) -> GenerationResult:
         start_time = time.monotonic()
         
-        # 1. Phân tích cấu trúc blueprint từ base.json
-        blueprint = template_config.get("blueprint", {})
-        nested_json_data = self._parse_blueprint(blueprint)
+        # 1. Lấy JSON gốc từ base.json và sinh dữ liệu giả
+        # Nếu tệp base.json chính là cái Driver License JSON bạn đưa:
+        raw_json = template_config 
+        nested_json_data = self._parse_custom_json(raw_json)
 
-        # 2. Tải ảnh gốc
+        # 2. Tải ảnh template.jpg
         template_image = self.image_processor._load_template_image(doc_type, template_config)
 
-        # 3. Gửi Ảnh gốc + Nested JSON lên API
-        logger.debug("Dang gui yeu cau sinh anh API cho ID: %s", sample_id)
-        api_generated_image = self.api_client.generate_document(template_image, nested_json_data)
+        # 3. Gọi API
+        api_image = self.api_client.generate_document(template_image, nested_json_data)
+        
+        if not api_image:
+            raise Exception("API khong phan hoi anh.")
 
-        if not api_generated_image:
-            raise Exception("API khong the sinh anh tu JSON va template duoc cung cap.")
-
-        # 4. Lưu trữ Ảnh kết quả và JSON gốc
-        image_path, json_path = self.storage_manager.save_sample(
-            doc_type=doc_type,
-            sample_id=sample_id,
-            image=api_generated_image,
-            fields_data=nested_json_data,
-            bounding_boxes=[],
-            metadata={"api_platform": self.config.api.platform}
+        # 4. Lưu kết quả
+        img_p, json_p = self.storage_manager.save_sample(
+            doc_type=doc_type, sample_id=sample_id, image=api_image, 
+            fields_data=nested_json_data, bounding_boxes=[], metadata={}
         )
 
-        self.quota_manager.record_usage(tokens_used=1500, success=True)
-        elapsed = time.monotonic() - start_time
-
-        return GenerationResult(
-            success=True,
-            sample_id=sample_id,
-            doc_type=doc_type,
-            image_path=str(image_path),
-            json_path=str(json_path),
-            tokens_used=1500,
-            elapsed_seconds=elapsed,
-        )
+        return GenerationResult(True, sample_id, doc_type, str(img_p), str(json_p), "", 0, time.monotonic()-start_time)
     
     def _load_template_config(self, doc_type: str) -> dict:
         """
