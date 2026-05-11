@@ -223,23 +223,31 @@ class StorageManager:
         image_path: str,
         image_size_bytes: int,
     ) -> Dict:
-        # Lấy dữ liệu thực
+        # Lấy dữ liệu thực từ fields_data
         actual_data = fields_data.get("extracted_data", fields_data)
 
-        extracted = {
-            k: v for k, v in actual_data.items() 
-            if k not in ("mrz", "document_type", "doc_type")
+        # Danh sách các trường cần trích xuất theo cấu trúc phẳng
+        target_fields = [
+            "issuing_country", "document_number", "family_name", 
+            "given_names", "nationality", "date_of_birth", 
+            "sex", "date_of_issue", "date_of_expiry", 
+            "place_of_birth", "authority"
+        ]
+
+        # Khởi tạo bản ghi với document_type
+        record = {
+            "document_type": fields_data.get("document_type", actual_data.get("document_type", doc_type))
         }
+
+        # Đổ dữ liệu các trường vào cấu trúc phẳng
+        for field in target_fields:
+            record[field] = actual_data.get(field)
         
-        if "mrz" in actual_data:
-            extracted["mrz"] = actual_data["mrz"]
+        # Xử lý MRZ
+        record["mrx_line1"] = actual_data.get("mrx_line1", actual_data.get("mrz_line1"))
+        record["mrz_line2"] = actual_data.get("mrz_line2")
 
-        doc_type_val = fields_data.get("document_type", actual_data.get("document_type", doc_type))
-
-        return {
-            "document_type": doc_type_val,
-            "extracted_data": extracted,
-        }
+        return record
     
     def _scan_existing_count(self, doc_type: str) -> int:
         """

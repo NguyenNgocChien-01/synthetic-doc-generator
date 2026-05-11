@@ -20,7 +20,6 @@ for i in $(seq 1 $TOTAL); do
         --type "$DOC_TYPE" \
         --count 1 \
         --workers 1 \
-        --api vertex_ai \
         --project-id first-orc-chien \
         --image-model gemini-2.5-flash-image \
         2>&1 | tee /tmp/run_output.txt | tail -5
