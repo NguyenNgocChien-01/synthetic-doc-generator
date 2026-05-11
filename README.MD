@@ -4,12 +4,13 @@
 `.env`:
 
 ```env
-GOOGLE_CLOUD_PROJECT=...
-GOOGLE_CLOUD_LOCATION=us-central1
+GOOGLE_API_KEY=...[Gemini API + Biling]
+GOOGLE_CLOUD_PROJECT=...[ID_Project]
+
 ```
 
----
 
+---
 
 ### Script batch 
 
@@ -23,7 +24,7 @@ GOOGLE_CLOUD_LOCATION=us-central1
 **Tham số:**
 - `số_mẫu` — bao nhiêu ảnh cần sinh (mặc định: 10)
 - `delay_giây` — thời gian chờ giữa mỗi lần gọi API để tránh rate limit (mặc định: 8, khuyến nghị: 15)
-- `loại_tài_liệu` — `passport` hoặc `driver_license` (mặc định: passport)
+- `loại_tài_liệu` — `passport` hoặc `driver_license`... (mặc định: passport)
 
 ### CLI 
 
@@ -46,9 +47,11 @@ synthetic-doc-generator/
 ├── run.sh
 ├── templates/
 │   ├── driver_license/
-│   │   └── template.jpg       ← ảnh template bằng lái
+│   │   |── template.jpg ← ảnh template bằng lái
+|   |   └── base.json ← json genarate
 │   └── passport/
-│       └── template.jpg       ← ảnh template hộ chiếu
+│       └── template.jpg ← ảnh template hộ chiếu
+|          ...      
 └── dataset/                   ← output sinh ra
     |── documents/
     |   ├── passport
