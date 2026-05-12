@@ -65,13 +65,14 @@ class DataGenerator:
         count: int,
         progress_callback: Optional[Callable[[GenerationResult], None]] = None,
         num_workers: int = 1,
+        state=None,
     ) -> List[GenerationResult]:
         logger.info(
             "Bat dau sinh lo %d mau loai '%s' voi %d luong.",
             count, doc_type, num_workers,
         )
 
-        template_config = self._load_template_config(doc_type)
+        template_config = self._load_template_config(doc_type, state)
 
         sample_ids = [
             self.storage_manager.get_next_id(doc_type) for _ in range(count)
@@ -82,14 +83,14 @@ class DataGenerator:
         if num_workers <= 1:
             for sample_id in sample_ids:
                 result = self._generate_one_safe(
-                    doc_type, sample_id, template_config
+                    doc_type, sample_id, template_config,state
                 )
                 results.append(result)
                 if progress_callback:
                     progress_callback(result)
         else:
             results = self._generate_parallel(
-                doc_type, sample_ids, template_config, progress_callback, num_workers
+                doc_type, sample_ids, template_config, progress_callback, num_workers, state
             )
 
         success_count = sum(1 for r in results if r.success)
@@ -119,13 +120,14 @@ class DataGenerator:
         template_config: Dict,
         progress_callback: Optional[Callable],
         num_workers: int,
+        state=None,
     ) -> List[GenerationResult]:
         results: List[GenerationResult] = []
 
         with ThreadPoolExecutor(max_workers=num_workers) as executor:
             future_to_id = {
                 executor.submit(
-                    self._generate_one_safe, doc_type, sid, template_config
+                    self._generate_one_safe, doc_type, sid, template_config,  state
                 ): sid
                 for sid in sample_ids
             }
@@ -155,6 +157,7 @@ class DataGenerator:
         doc_type: str,
         sample_id: str,
         template_config: Dict,
+        state=None,
     ) -> GenerationResult:
         start_time = time.monotonic()
         try:
@@ -168,7 +171,7 @@ class DataGenerator:
                     elapsed_seconds=time.monotonic() - start_time,
                 )
 
-            return self._generate_one(doc_type, sample_id, template_config)
+            return self._generate_one(doc_type, sample_id, template_config, state)
 
         except StorageError as loi:
             logger.error("Loi luu tru mau '%s': %s", sample_id, loi)
@@ -231,13 +234,13 @@ class DataGenerator:
             return [self._parse_custom_json(i) for i in data]
         return data
     
-    def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict) -> GenerationResult:
+    def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict, state=None) -> GenerationResult:
         start_time = time.monotonic()
         
         raw_json = template_config 
         nested_json_data = self._parse_custom_json(raw_json)
 
-        template_image = self.image_processor._load_template_image(doc_type, template_config)
+        template_image = self.image_processor._load_template_image(doc_type, template_config, state)
 
         api_image = self.api_client.generate_document(template_image, nested_json_data)
         
@@ -246,18 +249,20 @@ class DataGenerator:
 
         img_p, json_p = self.storage_manager.save_sample(
             doc_type=doc_type, sample_id=sample_id, image=api_image, 
-            fields_data=nested_json_data, bounding_boxes=[], metadata={}
+            fields_data=nested_json_data, bounding_boxes=[], metadata={},state=state,
         )
 
         return GenerationResult(True, sample_id, doc_type, str(img_p), str(json_p), "", time.monotonic()-start_time)
+        
+    def _load_template_config(self, doc_type: str, state: str = None) -> dict:
+        cache_key = f"{doc_type}_{state}" if state else doc_type
+        if cache_key in self._template_configs:
+            return self._template_configs[cache_key]
     
-    def _load_template_config(self, doc_type: str) -> dict:
-        if doc_type in self._template_configs:
-            return self._template_configs[doc_type]
-
-        base_json_path = (
-            Path(self.config.storage.templates_dir) / doc_type / "base.json"
-        )
+        if state:
+            base_json_path = Path(self.config.storage.templates_dir) / doc_type / state / "base.json"
+        else:
+            base_json_path = Path(self.config.storage.templates_dir) / doc_type / "base.json"
 
         if not base_json_path.exists():
             raise TemplateLoadError(

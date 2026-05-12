@@ -195,44 +195,39 @@ class ImageProcessor:
             len(bounding_boxes),
         )
         return image, bounding_boxes
-
-    def _load_template_image(self, doc_type: str, template_config: Dict) -> Image.Image:
-        """
-        Tải ảnh template từ thư mục, hoặc tạo mới nếu không tồn tại.
-
-        Tham số:
-            doc_type: Loại tài liệu.
-            template_config: Cấu hình template.
-
-        Trả về:
-            Đối tượng PIL Image làm nền.
-        """
-        # Kiểm tra bộ nhớ đệm
-        if doc_type in self._template_cache:
-            return self._template_cache[doc_type].copy()
-
-        template_path = self.templates_dir / doc_type / "template.jpg"
-
-        if template_path.exists():
+    
+    def _load_template_image(self, doc_type: str, template_config: Dict, state: str = None) -> Image.Image:
+        cache_key = f"{doc_type}_{state}" if state else doc_type
+        if cache_key in self._template_cache:
+            return self._template_cache[cache_key].copy()
+    
+        if state:
+            template_dir = self.templates_dir / doc_type / state
+        else:
+            template_dir = self.templates_dir / doc_type
+    
+        template_path = None
+        for ext in ["jpg", "jpeg", "png", "bmp", "webp", "tiff"]:
+            for candidate in template_dir.glob(f"template.{ext}"):
+                template_path = candidate
+                break
+            if template_path:
+                break
+    
+        if template_path and template_path.exists():
             try:
                 img = Image.open(template_path).convert("RGB")
-                self._template_cache[doc_type] = img
+                self._template_cache[cache_key] = img
                 logger.debug("Da tai anh template tu: %s.", template_path)
                 return img.copy()
             except Exception as loi:
-                logger.warning(
-                    "Khong the tai template '%s': %s. Tao nen trong.", template_path, loi
-                )
-
-        # Tạo ảnh nền mới nếu không có template
+                logger.warning("Khong the tai template '%s': %s.", template_path, loi)
+    
         img_size = template_config.get("image_size", [1200, 850])
-        logger.info(
-            "Template '%s' khong ton tai, tao nen tai lieu mo phong (%dx%d).",
-            doc_type, img_size[0], img_size[1],
-        )
         img = self._generate_document_background(doc_type, img_size, template_config)
-        self._template_cache[doc_type] = img
+        self._template_cache[cache_key] = img
         return img.copy()
+            
 
     def _generate_document_background(
         self,

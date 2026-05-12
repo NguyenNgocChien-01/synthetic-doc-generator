@@ -1,4 +1,4 @@
-# src/api_client.py
+
 """
 Module kết nối với Vertex AI.
 """

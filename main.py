@@ -32,8 +32,10 @@ def main():
     parser.add_argument("--image-model", default="imagen-3.0-generate-001", help="Mo hinh sinh anh")
     parser.add_argument("--project-id", help="GCP Project ID su dung cho Vertex AI")
     parser.add_argument("--region", default="us-central1", help="GCP Region su dung cho Vertex AI")
+    parser.add_argument("--state", default=None, help="Bang (vd: vic, nsw, act, nt...)")
     
     args = parser.parse_args()
+    args.state = args.state.lower() if args.state else None
 
     config = Config.from_cli_args(args)
     setup_logging(config.debug_mode)
@@ -68,7 +70,8 @@ def main():
         doc_type=args.type,
         count=args.count,
         progress_callback=progress_callback,
-        num_workers=config.num_workers
+        num_workers=config.num_workers,
+        state=args.state,
     )
 
     monitor.finish()

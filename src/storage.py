@@ -80,24 +80,18 @@ class StorageManager:
             self.image_format,
         )
 
-    def ensure_directories(self, doc_type: str) -> Tuple[Path, Path]:
-        """
-        Tạo cấu trúc thư mục đầu ra cho hình ảnh và nhãn.
-
-        Tham số:
-            doc_type: Loại tài liệu.
-
-        Trả về:
-            Tuple chứa (đường_dẫn_thư_mục_ảnh, đường_dẫn_thư_mục_nhãn).
-        """
-        image_dir = self.dataset_dir / "documents" / doc_type
-        label_dir = self.dataset_dir / "labels" / doc_type
+    def ensure_directories(self, doc_type: str, state: str = None) -> Tuple[Path, Path]:
+        if state:
+            image_dir = self.dataset_dir / "documents" / doc_type / state
+            label_dir = self.dataset_dir / "labels" / doc_type / state
+        else:
+            image_dir = self.dataset_dir / "documents" / doc_type
+            label_dir = self.dataset_dir / "labels" / doc_type
         
         image_dir.mkdir(parents=True, exist_ok=True)
         label_dir.mkdir(parents=True, exist_ok=True)
-        
         return image_dir, label_dir
-
+        
     def get_next_id(self, doc_type: str) -> str:
         """
         Lấy ID tiếp theo cho một mẫu dữ liệu.
@@ -112,30 +106,17 @@ class StorageManager:
         self._counters[doc_type] += 1
         counter = self._counters[doc_type]
         return f"{self.id_prefix}{counter:0{self.id_zero_padding}d}"
-
-    def save_sample(
-        self,
-        doc_type: str,
-        sample_id: str,
-        image: Image.Image,
-        fields_data: Dict[str, Any],
-        bounding_boxes: Optional[List[Dict]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> Tuple[Path, Path]:
-        """
-        Lưu mẫu dữ liệu vào đúng thư mục phân loại.
-        """
-        image_dir, label_dir = self.ensure_directories(doc_type)
-
+    
+    def save_sample(self, doc_type, sample_id, image, fields_data, 
+                    bounding_boxes=None, metadata=None, state=None):
+        image_dir, label_dir = self.ensure_directories(doc_type, state)
+        
         ext = "jpg" if self.image_format == "JPEG" else "png"
-        date_str = datetime.now().strftime("%Y%m%d")
         
-        # Số thứ tự theo ngày
-        counter_key = f"{doc_type}_{date_str}"
-        self._daily_counters[counter_key] = self._daily_counters.get(counter_key, 0) + 1
+        # Tên file dùng state nếu có
+        prefix = f"{doc_type}_{state}" if state else doc_type
         
-        # Tìm số thứ tự tiếp theo dựa trên thư mục nhãn (để giữ file đồng bộ)
-        existing = list(label_dir.glob(f"{doc_type}_*.json"))
+        existing = list(label_dir.glob(f"{prefix}_*.json"))
         if existing:
             last_stt = max(
                 int(f.stem.split("_")[-1])
@@ -144,12 +125,9 @@ class StorageManager:
             )
         else:
             last_stt = 0
-            
+        
         stt = last_stt + 1
-        
-        filename = f"{doc_type}_{stt:05d}"
-        
-        # Gán đường dẫn lưu riêng biệt
+        filename = f"{prefix}_{stt:05d}"
         image_path = image_dir / f"{filename}.{ext}"
         json_path = label_dir / f"{filename}.json"
 
@@ -223,32 +201,26 @@ class StorageManager:
         image_path: str,
         image_size_bytes: int,
     ) -> Dict:
-        # Lấy dữ liệu thực từ fields_data
+        # Lấy dữ liệu thực — bỏ qua lớp extracted_data nếu có
         actual_data = fields_data.get("extracted_data", fields_data)
-
-        # Danh sách các trường cần trích xuất theo cấu trúc phẳng
-        target_fields = [
-            "issuing_country", "document_number", "family_name", 
-            "given_names", "nationality", "date_of_birth", 
-            "sex", "date_of_issue", "date_of_expiry", 
-            "place_of_birth", "authority"
-        ]
-
-        # Khởi tạo bản ghi với document_type
+    
+        # Bắt đầu với document_type
         record = {
             "document_type": fields_data.get("document_type", actual_data.get("document_type", doc_type))
         }
-
-        # Đổ dữ liệu các trường vào cấu trúc phẳng
-        for field in target_fields:
-            record[field] = actual_data.get(field)
-        
-        # Xử lý MRZ
-        record["mrx_line1"] = actual_data.get("mrx_line1", actual_data.get("mrz_line1"))
-        record["mrz_line2"] = actual_data.get("mrz_line2")
-
-        return record
     
+        # Đổ tất cả field vào record — tự động, không hardcode
+        for k, v in actual_data.items():
+            if k == "document_type":
+                continue  # đã có ở trên
+            if k == "mrz" and isinstance(v, dict):
+                record["mrz_line1"] = v.get("line1")
+                record["mrz_line2"] = v.get("line2")
+            else:
+                record[k] = v
+    
+        return record
+        
     def _scan_existing_count(self, doc_type: str) -> int:
         """
         Đếm mẫu hiện có để tiếp tục sinh ID số.

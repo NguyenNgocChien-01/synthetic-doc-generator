@@ -2,6 +2,7 @@
 TOTAL=${1:-10}
 DELAY=${2:-8}
 DOC_TYPE=${3:-passport}
+STATE=${4:-""}
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -14,8 +15,13 @@ else
     exit 1
 fi
 
+STATE_ARG=""
+if [ -n "$STATE" ]; then
+    STATE_ARG="--state $STATE"
+fi
+
 echo "======================================"
-echo " Chay tuan tu: $TOTAL mau | delay: ${DELAY}s | loai: $DOC_TYPE"
+echo " Chay tuan tu: $TOTAL mau | delay: ${DELAY}s | loai: $DOC_TYPE ${STATE}"
 echo "======================================"
 
 SUCCESS=0
@@ -27,13 +33,13 @@ for i in $(seq 1 $TOTAL); do
 
     python "$SCRIPT_DIR/main.py" \
         --type "$DOC_TYPE" \
+        $STATE_ARG \
         --count 1 \
         --workers 1 \
         --project-id "$PROJECT_ID" \
         --image-model gemini-2.5-flash-image \
         2>&1 | tee /tmp/run_output.txt | tail -5
 
-    # Nếu có "That bai   1" trong output = fail
     if grep -qE "That bai\s+[1-9]" /tmp/run_output.txt; then
         FAIL=$((FAIL + 1))
         echo "[$i/$TOTAL] THAT BAI - Thanh cong: $SUCCESS | That bai: $FAIL"
@@ -50,5 +56,5 @@ done
 
 echo ""
 echo "======================================"
-echo " XONG: Thanh cong $SUCCESS/$TOTAL"
+echo " Success: $SUCCESS/$TOTAL"
 echo "======================================"

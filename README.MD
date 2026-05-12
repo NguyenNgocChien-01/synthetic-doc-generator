@@ -15,16 +15,18 @@ GOOGLE_CLOUD_PROJECT=...[ID_Project]
 ### Script batch 
 
 ```bash
-# ./run.sh [số_mẫu] [delay_giây] [loại_tài_liệu]
+# ./run.sh [số_mẫu] [delay_giây] [loại_tài_liệu] [bang]
 
 ./run.sh 10 15 passport
 ./run.sh 20 15 driver_license
+./run.sh 20 15 driver_license vic
 ```
 
 **Tham số:**
 - `số_mẫu` — bao nhiêu ảnh cần sinh (mặc định: 10)
 - `delay_giây` — thời gian chờ giữa mỗi lần gọi API để tránh rate limit (mặc định: 8, khuyến nghị: 15)
 - `loại_tài_liệu` — `passport` hoặc `driver_license`... (mặc định: passport)
+- `bang` — (đang vic, có thể thêm cac thư mục template cho cac bang tương ứng).
 
 ### CLI 
 
@@ -47,8 +49,9 @@ synthetic-doc-generator/
 ├── run.sh
 ├── templates/
 │   ├── driver_license/
-│   │   |── template.jpg ← ảnh template bằng lái
-|   |   └── base.json ← json genarate
+|   │   │─vic/
+|   |       |── template.jpg ← ảnh template bằng lái
+|   |       └── base.json ← json genarate
 │   └── passport/
 │       └── template.jpg ← ảnh template hộ chiếu
 |          ...      
