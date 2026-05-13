@@ -8,7 +8,15 @@ GOOGLE_API_KEY=...[Gemini API + Biling]
 GOOGLE_CLOUD_PROJECT=...[ID_Project]
 
 ```
+on Local
+```
+https://cloud.google.com/sdk/docs/install#windows
+gcloud auth application-default login
+<!-- gcloud compute ssh instance-20260506-083338 --zone=us-central1-b --project=first-orc-chien
+cd /home/jupyter/synthetic-doc-generator
+sudo chmod -R 777 dataset/ -->
 
+```
 
 ---
 

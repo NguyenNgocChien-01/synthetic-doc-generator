@@ -14,8 +14,9 @@ import urllib.parse
 from abc import ABC, abstractmethod
 from typing import Optional
 from PIL import ImageOps, Image
+# from rich.prompt import result
 
-from .config import APIConfig, PLATFORM_VERTEX_AI
+from .config import APIConfig, PLATFORM_VERTEX_AI, PROMPT_TEMPLATES
 from .rate_limiter import RateLimiter, RateLimitExceededError
 
 logger = logging.getLogger(__name__)
@@ -66,7 +67,20 @@ class VertexAIProvider(BaseAPIProvider):
             self.region,
         )
 
+
     def _get_access_token(self) -> str:
+        # 1. Thử xác thực qua môi trường Local (Application Default Credentials)
+        try:
+            import google.auth
+            from google.auth.transport.requests import Request as GoogleRequest
+            creds, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
+            creds.refresh(GoogleRequest())
+            if creds.token:
+                return creds.token
+        except Exception as local_auth_err:
+            logger.debug("Khong the xac thuc qua google-auth (Local): %s", local_auth_err)
+
+        # 2. Thử xác thực qua Metadata Server (Google Cloud VM)
         url = (
             "http://metadata.google.internal/computeMetadata/v1"
             "/instance/service-accounts/default/token"
@@ -74,11 +88,13 @@ class VertexAIProvider(BaseAPIProvider):
         req = urllib.request.Request(url)
         req.add_header("Metadata-Flavor", "Google")
         try:
-            with urllib.request.urlopen(req, timeout=5) as resp:
+            with urllib.request.urlopen(req, timeout=3) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 return data["access_token"]
-        except Exception as loi:
-            raise APIError(f"Khong the lay access token: {loi}") from loi
+        except Exception as metadata_err:
+            raise APIError(
+                f"Khong the lay access token tu ca hai moi truong. Lỗi Metadata: {metadata_err}"
+            ) from metadata_err
 
     def generate_avatar_image(self, prompt: str) -> Optional[Image.Image]:
         logger.debug("VertexAI: generate_avatar_image chua duoc trien khai.")
@@ -201,7 +217,7 @@ class VertexAIProvider(BaseAPIProvider):
         if max(w, h) > MAX_SIDE:
             scale = MAX_SIDE / max(w, h)
             page_image = page_image.resize(
-                (int(w * scale), int(h * scale)), Image.LANCZOS
+                (int(w * scale), int(h * scale)), Image.Resampling.LANCZOS
             )
             logger.debug("Resize template: %dx%d", page_image.width, page_image.height)
 
@@ -209,28 +225,37 @@ class VertexAIProvider(BaseAPIProvider):
         page_image.save(buffered, format="JPEG", quality=90)
         img_b64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-        doc_type = json_data.get("doc_type", "driver license")
+        # Lấy loại tài liệu và cấu hình prompt
+        doc_type_raw = json_data.get("doc_type", "document")
+        doc_type_key = doc_type_raw.lower().replace(" ", "_")
+        
+        prompt_config = PROMPT_TEMPLATES.get(doc_type_key, PROMPT_TEMPLATES["default"])
+        date_format = prompt_config["date_format"]
+        photo_instructions = prompt_config["photo_instructions"]
+
+        # Xử lý các trường dữ liệu
         fields = {k: v for k, v in json_data.items() if k != "doc_type"}
+        gender_raw = str(fields.get('sex', fields.get('gender', 'M'))).upper()
+        target_gender = 'female' if gender_raw in ('F', 'FEMALE') else 'male'
+        target_dob = fields.get('date_of_birth', fields.get('dob', ''))
+
         prompt_text = (
-            f"This is a {doc_type} document template image. "
+            f"This is a {doc_type_raw.replace('_', ' ')} document template image. "
             "Your task: generate a NEW photorealistic version of this document. "
             "STRICT RULES:\n"
             "1. LAYOUT: Keep the EXACT same layout, colors, fonts, logos, borders, watermarks, "
             "background patterns and structure as the template. Do not move or remove any element.\n"
             "2. TEXT: Replace ALL text fields with the following data EXACTLY as provided. "
-            "ALL dates MUST use format 'DD MMM YYYY' (example: 23 JAN 2025). "
+            f"{date_format} "
             "Never alter, invent or distort any value:\n"
             f"{json.dumps(fields, ensure_ascii=False, indent=2)}\n"
             "3. PHOTOS: This document contains portrait photo slots. "
             "Generate ONE new fictional human face that does NOT resemble anyone in the template. "
-            f"The face MUST match: gender={'female' if str(fields.get('sex', fields.get('gender', 'M'))).upper() in ('F', 'FEMALE') else 'male'}, "
-            f"approximate age based on date_of_birth={fields.get('date_of_birth', fields.get('dob', ''))}. "
-            "Place this new face ONLY in the LARGEST portrait photo slot. "
-            "For any other smaller portrait slots, leave them as they appear in the template.\n"
+            f"The face MUST match: gender={target_gender}, approximate age based on date_of_birth={target_dob}. "
+            f"{photo_instructions}\n"
             "4. OUTPUT: One single photorealistic document image, "
-            "same dimensions and orientation as the template. "
+            "same dimensions and orientation as the template."
         )
-
         payload = {
             "contents": [
                 {
@@ -290,11 +315,18 @@ class VertexAIProvider(BaseAPIProvider):
                     raw_data = base64.b64decode(part["inline_data"]["data"])
 
                 if raw_data:
+                    # 1. Load ảnh từ dữ liệu nhị phân
                     img = Image.open(io.BytesIO(raw_data))
-                
+                    
+                    # 2. Xử lý Exif và hệ màu
                     img = ImageOps.exif_transpose(img)
                     img = img.convert("RGB")
-                
+                    
+                    # --- SỬA TẠI ĐÂY: Xử lý xoay chiều và ép kích thước ---
+                    # Lưu kích thước của ảnh mẫu hiện tại (page_image) để so sánh
+                    orig_input_w, orig_input_h = page_image.size
+                    
+                    # A. Xoay chiều nếu cần (giữ expand=True để không mất pixel)
                     out_is_portrait = img.height > img.width
                     if is_portrait and not out_is_portrait:
                         img = img.rotate(90, expand=True)
@@ -302,7 +334,18 @@ class VertexAIProvider(BaseAPIProvider):
                     elif not is_portrait and out_is_portrait:
                         img = img.rotate(-90, expand=True)
                         logger.debug("Xoay output -90 ve landscape.")
-                
+
+                    # B. QUAN TRỌNG NHẤT: Ép kích thước về khớp 100% ảnh gốc
+                    # Việc này xử lý trường hợp Gemini trả về ảnh vuông hoặc sai aspect ratio
+                    if img.size != (orig_input_w, orig_input_h):
+                        logger.debug(
+                            "Force resize output (%dx%d) ve khop template (%dx%d).",
+                            img.width, img.height, orig_input_w, orig_input_h
+                        )
+                        img = img.resize((orig_input_w, orig_input_h), Image.Resampling.LANCZOS)
+                    # --- KẾT THÚC ĐOẠN SỬA ---
+
+                    # 3. Chạy hàm fix avatar (nếu có OpenCV)
                     img = self._fix_avatar_consistency(img)
                 
                     logger.info("Sinh anh tai lieu thanh cong qua Vertex AI Gemini.")

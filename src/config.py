@@ -98,3 +98,18 @@ class Config:
         config.dry_run = getattr(args, "dry_run", False)
 
         return config
+    
+PROMPT_TEMPLATES = {
+    "passport": {
+        "date_format": "ALL dates MUST use format 'DD MMM YYYY' (example: 23 JAN 2025).",
+        "photo_instructions": "Place this new face ONLY in the LARGEST portrait photo slot. For any other smaller portrait slots, leave them as they appear in the template."
+    },
+    "driver_license": {
+        "date_format": "ALL dates MUST use format 'DD-MM-YYYY' (example: 23-01-2025).",
+        "photo_instructions": "Place this new face in the main portrait photo slot. MUST preserve any watermark numbers or text overlapping the photo area."
+    },
+    "default": {
+        "date_format": "Format dates exactly as they appear in the provided JSON data.",
+        "photo_instructions": "Place the new face in the designated portrait photo slot."
+    }
+}
