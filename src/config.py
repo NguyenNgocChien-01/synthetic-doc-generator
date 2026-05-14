@@ -24,7 +24,7 @@ class APIConfig:
     project_id: Optional[str] = None
     region: str = "us-central1"
     model_name: str = "gemini-1.5-flash"
-    image_model: str = "imagen-3.0-generate-001"
+    image_model: str = "gemini-2.5-flash-image"
     timeout_seconds: int = 30
     max_retries: int = 3
     retry_delay_seconds: float = 2.0
@@ -81,7 +81,7 @@ class Config:
         )
         config.api.region = getattr(args, "region", "us-central1")
         config.api.model_name = getattr(args, "model", "gemini-1.5-flash")
-        config.api.image_model = getattr(args, "image_model", "imagen-3.0-generate-001") 
+        config.api.image_model = getattr(args, "image_model", "gemini-2.5-flash-image")
         config.api.max_retries = getattr(args, "max_retries", 3)
 
         config.storage.templates_dir = getattr(args, "templates_dir", "templates")
@@ -113,10 +113,9 @@ PROMPT_TEMPLATES = {
         "photo_instructions": (
             "Generate ONE new fictional human face, ensuring it does not resemble anyone in the original template. "
             "The face MUST be created from scratch, matching the provided JSON details including age, gender, and stature. "
-            "CRITICAL VISUAL INSPECTION - Examine the provided template carefully to determine the number of portrait slots:\n"
-            "1. IF you see MULTIPLE (state: act, vic... only one 1 avatar) portrait slots (e.g., a main photo AND a secondary 'ghost' or smaller photo): You MUST place the EXACT SAME newly generated face into ALL slots. Secondary images must perfectly match the identity and pose of the main person but strictly retain their original semi-transparent, monochrome, or faded style.\n"
-            "2. IF you see ONLY ONE portrait slot: Replace that single photo only. DO NOT hallucinate, add, or create any secondary ghost images.\n"
-            "CRITICAL PHOTO OVERLAYS: You MUST preserve all state-specific security features, holograms, transparent watermark numbers, guilloche lines, AND ANY handwritten signature or text overlapping the portrait areas. If a signature overlaps a photo (like on QLD templates), the signature MUST appear *on top* of the newly generated face."
+            "CRITICAL VISUAL INSPECTION - Examine the provided template carefully to determine portrait slots. "
+            "CRITICAL ACT WARNING: The white text and logo area containing the words 'ACT Government' and the coat of arms is NOT a photo slot. This is sacred text/logo data and MUST NOT be modified, replaced, or covered by a face image. Only modify the single, clearly defined portrait photo frame. Delete any other perceived 'extra' photo elements, but do not touch the 'ACT Government' text/logo data. "
+            "CRITICAL PHOTO OVERLAYS: You MUST preserve all state-specific security features, holograms, transparent watermark numbers, guilloche lines, AND ANY handwritten signature or text overlapping the portrait areas. If a signature overlaps a photo, the signature MUST appear *on top* of the newly generated face."
         ),
         
         "info": {

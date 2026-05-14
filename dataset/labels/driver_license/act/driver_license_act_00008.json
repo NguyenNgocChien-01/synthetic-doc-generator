@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "17-10-1982",
+      "first_name": "JOSEPH",
+      "middle_name": null,
+      "last_name": "REYES",
+      "full_name": "Joan CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "544368127",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "04-11-2033",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 80",
+      "address_line_2": "FLAT 72 8 DAVID ROUND",
+      "suburb": "NEW DALELAND",
+      "state": "ACT",
+      "postcode": "2760"
+    },
+    "card_number": "D2500751",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "22-09-1984",
+    "card_number": "D1174842",
+    "expiry_date": "11-09-2029",
+    "age_indicator": "09-84",
+    "barcode_number": "ABnoteNZ1342251654",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

@@ -69,20 +69,28 @@ class VertexAIProvider(BaseAPIProvider):
 
 
     def _get_access_token(self) -> str:
-   
         try:
             import google.auth
-            print("Trying to authenticate with google-auth library...")
             from google.auth.transport.requests import Request as GoogleRequest
-            creds, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
-            creds.refresh(GoogleRequest())
-            print("Authentication successful, access token obtained.")
-            if creds.token:
-                return creds.token
-        except Exception as local_auth_err:
-            logger.debug("Khong the xac thuc qua google-auth (Local): %s", local_auth_err)
+            import requests  # dat timeout cho session
 
-        # 2. Thử xác thực qua Metadata Server (Google Cloud VM)
+            session = requests.Session()
+            session.timeout = (5, 15)  # (connect, read) timeout = s
+            google_request = GoogleRequest(session=session)
+
+            creds, _ = google.auth.default(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
+            )
+            creds.refresh(google_request)
+
+            if creds.token:
+                logger.debug("Xac thuc thanh cong.")
+                return creds.token
+
+        except Exception as e:
+            logger.debug("google-auth that bai: %s", e)
+
+        # Fallback: Metadata Server
         url = (
             "http://metadata.google.internal/computeMetadata/v1"
             "/instance/service-accounts/default/token"
@@ -90,13 +98,14 @@ class VertexAIProvider(BaseAPIProvider):
         req = urllib.request.Request(url)
         req.add_header("Metadata-Flavor", "Google")
         try:
-            with urllib.request.urlopen(req, timeout=3) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 return data["access_token"]
         except Exception as metadata_err:
             raise APIError(
-                f"Khong the lay access token tu ca hai moi truong. Lỗi Metadata: {metadata_err}"
+                f"Khong the xac thuc: {metadata_err}"
             ) from metadata_err
+        
 
     def generate_avatar_image(self, prompt: str) -> Optional[Image.Image]:
         logger.debug("VertexAI: generate_avatar_image chua duoc trien khai.")
@@ -214,7 +223,7 @@ class VertexAIProvider(BaseAPIProvider):
         image_model: str,
         is_portrait: bool,
     ) -> Optional[Image.Image]:
-        MAX_SIDE = 1536
+        MAX_SIDE = 1024
         w, h = page_image.size
         if max(w, h) > MAX_SIDE:
             scale = MAX_SIDE / max(w, h)
@@ -302,7 +311,7 @@ class VertexAIProvider(BaseAPIProvider):
             },
         }
 
-        # print("Prompt to Vertex AI Gemini:\n", prompt_text[:5000], "...\n")
+        print("Prompt to Vertex AI Gemini:\n", prompt_text[:5000], "...\n")
 
         image_model_clean = image_model.replace("models/", "")
         url = f"{self.base_url}/{image_model_clean}:generateContent"
@@ -319,18 +328,24 @@ class VertexAIProvider(BaseAPIProvider):
         req.add_header("Authorization", f"Bearer {token}")
         req.add_header("Content-Type", "application/json")
 
+        logger.debug("Dang gui request den Vertex AI...")
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                logger.debug("Nhan duoc response HTTP %s, dang doc...", resp.status)
                 result = json.loads(resp.read().decode("utf-8"))
+                logger.debug("Doc response hoan tat.")
         except urllib.error.HTTPError as loi:
             error_body = loi.read().decode("utf-8", errors="replace")
-            logger.error("HTTP Error %s from Vertex AI: %s", loi.code, error_body[:500])
+            logger.error("Loi HTTP %s tu Vertex AI: %s", loi.code, error_body[:500])
             return None
         except urllib.error.URLError as loi:
-            logger.error("Connection Error to Vertex AI: %s", loi.reason)
+            logger.error("Loi ket noi toi Vertex AI: %s", loi.reason)
+            return None
+        except TimeoutError:
+            logger.error("Timeout sau 15 giay cho Vertex AI phan hoi.")
             return None
         except Exception as loi:
-            logger.error("Undefined Error: %s", loi)
+            logger.error("Loi khong xac dinh: %s", loi)
             return None
 
         try:
