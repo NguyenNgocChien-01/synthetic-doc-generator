@@ -69,12 +69,14 @@ class VertexAIProvider(BaseAPIProvider):
 
 
     def _get_access_token(self) -> str:
-        # 1. Thử xác thực qua môi trường Local (Application Default Credentials)
+   
         try:
             import google.auth
+            print("Trying to authenticate with google-auth library...")
             from google.auth.transport.requests import Request as GoogleRequest
             creds, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
             creds.refresh(GoogleRequest())
+            print("Authentication successful, access token obtained.")
             if creds.token:
                 return creds.token
         except Exception as local_auth_err:
@@ -300,7 +302,7 @@ class VertexAIProvider(BaseAPIProvider):
             },
         }
 
-        print("Prompt to Vertex AI Gemini:\n", prompt_text[:5000], "...\n")
+        # print("Prompt to Vertex AI Gemini:\n", prompt_text[:5000], "...\n")
 
         image_model_clean = image_model.replace("models/", "")
         url = f"{self.base_url}/{image_model_clean}:generateContent"
