@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "dob": "29-07-1983",
+      "first_name": "VERNON",
+      "middle_name": null,
+      "last_name": "MCBRIDE",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "731408417",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "14-08-2033",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 25",
+      "address_line_2": "183 BRITTANY CRESCENT",
+      "suburb": "TAYLORBOROUGH",
+      "state": "NSW",
+      "postcode": "2099"
+    },
+    "card_number": "D2449791",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "22-04-2001",
+    "card_number": "D1514012",
+    "expiry_date": "12-11-2029",
+    "age_indicator": "04-01",
+    "barcode_number": "ABnoteNZ8734112305",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "17-04-2007",
+      "first_name": "ANDREW",
+      "middle_name": null,
+      "last_name": "COLLINS",
+      "full_name": "Joan CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "702392335",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "12-04-2033",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 14",
+      "address_line_2": "474 MICHAEL BOULEVARD",
+      "suburb": "KELLYMOUTH",
+      "state": "ACT",
+      "postcode": "2661"
+    },
+    "card_number": "D4906983",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "18-04-1981",
+    "card_number": "D6347125",
+    "expiry_date": "30-11-2027",
+    "age_indicator": "04-81",
+    "barcode_number": "ABnoteNZ4967126816",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

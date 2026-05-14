@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "dob": "16-03-1959",
+      "first_name": "REBECCA",
+      "middle_name": null,
+      "last_name": "PERRY",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "615982017",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "05-05-2033",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 75",
+      "address_line_2": "359 HARRISON RESERVE",
+      "suburb": "SHELTONLAND",
+      "state": "NSW",
+      "postcode": "2930"
+    },
+    "card_number": "D8048783",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "13-03-1976",
+    "card_number": "D2391636",
+    "expiry_date": "04-02-2032",
+    "age_indicator": "03-76",
+    "barcode_number": "ABnoteNZ5918055288",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "QLD",
+  "front": {
+    "holder": {
+      "dob": "07-02-1975",
+      "first_name": "MARCIA",
+      "middle_name": null,
+      "last_name": "HERNANDEZ",
+      "full_name": "JOHN DOE",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "379387070",
+      "licence_classes": [
+        "C",
+        "RE"
+      ],
+      "licence_type_raw": "O, L",
+      "expiry_date": "14-12-2027",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 90",
+      "address_line_2": "71/376 CHRISTINE BOULEVARD",
+      "suburb": "LAKE BENJAMINVIEW",
+      "state": "QLD",
+      "postcode": "2786"
+    },
+    "card_number": "D3993274",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "06-03-2005",
+    "card_number": "D6729044",
+    "expiry_date": "20-10-2027",
+    "age_indicator": "03-05",
+    "barcode_number": "ABnoteNZ9848225192",
+    "conditions_legend": null,
+    "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+  }
+}

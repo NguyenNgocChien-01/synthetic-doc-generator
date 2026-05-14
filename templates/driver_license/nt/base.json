@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NT",
+  "front": {
+    "holder": {
+      "first_name": "JANE",
+      "middle_name": null,
+      "last_name": "CITIZEN",
+      "full_name": "JANE CITIZEN",
+      "sex": null,
+      "dob": "1999-12-25"
+    },
+    "licence": {
+      "licence_number": "1564102",
+      "licence_classes": [
+        "C",
+        "LR",
+        "MR",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2026-06-01",
+      "conditions": [
+        "S",
+        "XA",
+        "R"
+      ]
+    },
+    "address": {
+      "address_line_1": "2 SAMPLE ST",
+      "address_line_2": null,
+      "suburb": "ROADSAFETY",
+      "state": "NT",
+      "postcode": "0800"
+    },
+    "card_number": null,
+    "dob_watermark": "25/12/1999",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "27892102",
+    "expiry_date": "2026-06-01",
+    "dob": "1999-12-25",
+    "age_indicator": "12-99",
+    "barcode_number": null,
+    "conditions_legend": null,
+    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+  }
+}

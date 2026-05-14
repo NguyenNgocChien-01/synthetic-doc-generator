@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "14-07-1983",
+      "first_name": "HEATHER",
+      "middle_name": null,
+      "last_name": "MORRIS",
+      "full_name": "CRAIG MENON",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "630790103",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "02-11-2029",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 72",
+      "address_line_2": "60 RHODES GATES",
+      "suburb": "LORIHAVEN",
+      "state": "SA",
+      "postcode": "2662"
+    },
+    "card_number": "D4509126",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "08-07-1959",
+    "card_number": "D3774728",
+    "expiry_date": "25-10-2032",
+    "age_indicator": "07-59",
+    "barcode_number": "ABnoteNZ2533210181",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

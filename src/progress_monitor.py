@@ -1,6 +1,6 @@
 """
-Module giám sát và hiển thị tiến trình theo thời gian thực.
-Sử dụng thư viện rich để hiển thị bảng điều khiển chuyên nghiệp.
+Module for monitoring and displaying real-time progress.
+Uses the rich library for professional control panel display.
 """
 
 import logging
@@ -30,57 +30,57 @@ logger = logging.getLogger(__name__)
 
 class ProgressMonitor:
     """
-    Theo dõi và hiển thị tiến trình sinh dữ liệu theo thời gian thực.
+    For monitoring and displaying real-time progress.
 
-    Hiển thị:
-        - Thanh tiến trình với ETA.
-        - Bảng thống kê: số lượng thành công/thất bại, tốc độ, thời gian.
-        - Trạng thái hạn mức API.
-        - Nhật ký hoạt động gần nhất.
+    Displays:
+        - A progress bar with ETA.
+        - A summary table: number of successes/failures, speed, time.
+        - API rate limit status.
+        - Recent activity log.
     """
 
     MAX_LOG_LINES = 8
 
     def __init__(self, total_count: int, doc_type: str, console: Optional[Console] = None):
         """
-        Khởi tạo ProgressMonitor.
+        Initialize ProgressMonitor.
 
-        Tham số:
-            total_count: Tổng số mẫu cần sinh.
-            doc_type: Loại tài liệu đang sinh.
-            console: Đối tượng Console của rich (tùy chọn).
+        Parameters:
+            total_count: Total number of samples to generate.
+            doc_type: Type of document being generated.
+            console: Rich console object (optional).
         """
         self.total_count = total_count
         self.doc_type = doc_type
         self.console = console or Console()
 
-        # Bộ đếm tiến trình
+        # Progress counter
         self._success_count = 0
         self._failure_count = 0
         self._current_id = ""
         self._start_time = time.monotonic()
 
-        # Trạng thái API và quota
-        self._api_status = "Chua kiem tra"
+        # API status and quota
+        self._api_status = "Not yet checked"
         self._quota_percent = 0.0
         self._tokens_used = 0
 
-        # Nhật ký hoạt động gần nhất
+        # Recent activity log
         self._recent_logs: list = []
 
-        # Đối tượng rich
+        # Rich object
         self._progress = None
         self._task_id: Optional[TaskID] = None
         self._live: Optional[Live] = None
 
         logger.debug(
-            "Khoi tao ProgressMonitor: %d mau, loai tai lieu: %s.",
+            "Initialized ProgressMonitor: %d samples, type: %s.",
             total_count,
             doc_type,
         )
 
     def start(self) -> None:
-        """Bắt đầu hiển thị bảng điều khiển tiến trình."""
+        """Start displaying the control panel."""
         self._start_time = time.monotonic()
 
         self._progress = Progress(
@@ -97,7 +97,7 @@ class ProgressMonitor:
         )
 
         self._task_id = self._progress.add_task(
-            f"Sinh {self.doc_type}", total=self.total_count
+            f"Generating {self.doc_type}", total=self.total_count
         )
 
         self._live = Live(
@@ -107,7 +107,7 @@ class ProgressMonitor:
             transient=False,
         )
         self._live.start()
-        self._log_event(f"Bat dau sinh {self.total_count} mau [{self.doc_type}]")
+        self._log_event(f"Started generating {self.total_count} samples [{self.doc_type}]")
 
     def update(
         self,
@@ -118,14 +118,14 @@ class ProgressMonitor:
         quota_percent: float = 0.0,
     ) -> None:
         """
-        Cập nhật tiến trình sau khi sinh xong một mẫu.
+        Update progress after generating a sample.
 
-        Tham số:
-            success: Mẫu có được sinh thành công không.
-            sample_id: ID của mẫu vừa sinh.
-            error_message: Thông báo lỗi nếu thất bại.
-            tokens_used: Số token đã tiêu thụ.
-            quota_percent: Phần trăm quota đã dùng.
+        Parameters:
+            success: Whether the sample was generated successfully.
+            sample_id: ID of the sample just generated.
+            error_message: Error message if failed.
+            tokens_used: Number of tokens consumed.
+            quota_percent: Percentage of quota used.
         """
         if success:
             self._success_count += 1
@@ -133,26 +133,26 @@ class ProgressMonitor:
             self._log_event(f"[OK] {sample_id}")
         else:
             self._failure_count += 1
-            short_err = error_message[:60] if error_message else "Loi khong xac dinh"
+            short_err = error_message[:60] if error_message else "Unknown error"
             self._log_event(f"[THAT BAI] {short_err}")
 
         self._tokens_used += tokens_used
         self._quota_percent = quota_percent
 
-        # Cập nhật thanh tiến trình
+        # Update progress bar
         if self._progress and self._task_id is not None:
             self._progress.advance(self._task_id, 1)
 
-        # Cập nhật giao diện
+        # Update interface
         if self._live:
             self._live.update(self._build_layout())
 
     def set_api_status(self, status: str) -> None:
         """
-        Cập nhật trạng thái kết nối API.
+        Update API connection status.
 
-        Tham số:
-            status: Chuỗi mô tả trạng thái ('kha_dung', 'loi', ...).
+        Parameters:
+            status: String describing the status ('good', 'bad', ...).
         """
         self._api_status = status
         if self._live:
@@ -160,10 +160,10 @@ class ProgressMonitor:
 
     def finish(self, summary_message: str = "") -> None:
         """
-        Kết thúc phiên giám sát và hiển thị tóm tắt cuối cùng.
+        Finish monitoring and display a final summary.
 
-        Tham số:
-            summary_message: Thông báo tóm tắt bổ sung.
+        Parameters:
+            summary_message: Additional summary information.
         """
         if self._live:
             self._live.stop()
@@ -171,8 +171,8 @@ class ProgressMonitor:
         elapsed = time.monotonic() - self._start_time
         elapsed_str = str(timedelta(seconds=int(elapsed)))
 
-        # In bảng tóm tắt cuối cùng
-        summary = Table(title="Ket qua sinh du lieu", show_header=False, box=None)
+        # In final summary table
+        summary = Table(title="Final summary", show_header=False, box=None)
         summary.add_column("Nhan", style="bold cyan", width=30)
         summary.add_column("Gia tri", style="white")
 
@@ -181,25 +181,25 @@ class ProgressMonitor:
             (self._success_count / total_done * 100) if total_done > 0 else 0.0
         )
 
-        summary.add_row("Loai tai lieu", self.doc_type.upper())
-        summary.add_row("Tong mau yeu cau", str(self.total_count))
-        summary.add_row("Thanh cong", f"[green]{self._success_count}[/green]")
-        summary.add_row("That bai", f"[red]{self._failure_count}[/red]")
-        summary.add_row("Ti le thanh cong", f"[bold]{ty_le:.1f}%[/bold]")
-        summary.add_row("Thoi gian thuc hien", elapsed_str)
+        summary.add_row("Document type", self.doc_type.upper())
+        summary.add_row("Total requested samples", str(self.total_count))
+        summary.add_row("Success", f"[green]{self._success_count}[/green]")
+        summary.add_row("Failure", f"[red]{self._failure_count}[/red]")
+        summary.add_row("Success rate", f"[bold]{ty_le:.1f}%[/bold]")
+        summary.add_row("Execution time", elapsed_str)
         if elapsed > 0 and self._success_count > 0:
             toc_do = self._success_count / elapsed
-            summary.add_row("Toc do trung binh", f"{toc_do:.2f} mau/giay")
-        summary.add_row("Token da su dung", f"{self._tokens_used:,}")
+            summary.add_row("Average speed", f"{toc_do:.2f} samples/second")
+        # summary.add_row("Tokens used", f"{self._tokens_used:,}")
 
         if summary_message:
-            summary.add_row("Ghi chu", summary_message)
+            summary.add_row("Notes", summary_message)
 
         self.console.print()
         self.console.print(Panel(summary, border_style="green", padding=(1, 2)))
 
     def _build_layout(self) -> Layout:
-        """Xây dựng layout giao diện rich."""
+        """Build rich layout."""
         layout = Layout()
         layout.split_column(
             Layout(self._build_header_panel(), name="header", size=3),
@@ -213,7 +213,7 @@ class ProgressMonitor:
         return layout
 
     def _build_header_panel(self) -> Panel:
-        """Xây dựng thanh tiêu đề."""
+        """Build header bar."""
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         title_text = Text()
         title_text.append("Cong cu Sinh Du lieu OCR Tong hop  |  ", style="bold white")
@@ -222,13 +222,13 @@ class ProgressMonitor:
         return Panel(title_text, style="blue", padding=(0, 1))
 
     def _build_progress_panel(self) -> Panel:
-        """Xây dựng thanh tiến trình."""
+        """Build progress bar."""
         if self._progress:
             return Panel(self._progress, title="Tien trinh", border_style="cyan", padding=(0, 1))
         return Panel("Dang khoi dong...", border_style="dim")
 
     def _build_stats_panel(self) -> Panel:
-        """Xây dựng bảng thống kê."""
+        """Build statistics table."""
         stats = Table(show_header=False, box=None, padding=(0, 1))
         stats.add_column("Nhan", style="dim", width=22)
         stats.add_column("Gia tri", style="bold white")
@@ -254,7 +254,7 @@ class ProgressMonitor:
         stats.add_row("ETA", f"[cyan]{eta_str}[/cyan]")
         stats.add_row("Token da dung", f"{self._tokens_used:,}")
 
-        # Thanh quota
+        # Quota bar
         quota_color = "green"
         if self._quota_percent >= 95:
             quota_color = "red"
@@ -269,7 +269,7 @@ class ProgressMonitor:
         return Panel(stats, title="Thong ke", border_style="green", padding=(0, 1))
 
     def _build_log_panel(self) -> Panel:
-        """Xây dựng ô nhật ký hoạt động gần nhất."""
+        """Build recent activity log."""
         log_text = Text()
         for line in self._recent_logs[-self.MAX_LOG_LINES:]:
             timestamp, message = line
@@ -284,18 +284,18 @@ class ProgressMonitor:
         return Panel(log_text, title="Nhat ky hoat dong", border_style="yellow", padding=(0, 1))
 
     def _log_event(self, message: str) -> None:
-        """Thêm một sự kiện vào nhật ký nội bộ."""
+        """Add an event to the internal log."""
         timestamp = datetime.now().strftime("%H:%M:%S")
         self._recent_logs.append((timestamp, message))
-        # Giữ tối đa 50 dòng trong bộ nhớ
+        # Keep at most 50 lines in memory
         if len(self._recent_logs) > 50:
             self._recent_logs = self._recent_logs[-50:]
 
 
 class SimpleProgressMonitor:
     """
-    Phiên bản đơn giản dùng tqdm khi rich không khả dụng.
-    Dự phòng khi môi trường không hỗ trợ terminal đầy đủ.
+    A simpler version using tqdm when rich is not available.
+    For environments without full terminal support.
     """
 
     def __init__(self, total_count: int, doc_type: str, **kwargs):
@@ -310,8 +310,8 @@ class SimpleProgressMonitor:
             from tqdm import tqdm
             self._pbar = tqdm(
                 total=total_count,
-                desc=f"Sinh {doc_type}",
-                unit="mau",
+                desc=f"Generating {doc_type}",
+                unit="samples",
                 ncols=100,
                 bar_format=(
                     "{l_bar}{bar}| {n_fmt}/{total_fmt} "
@@ -319,7 +319,7 @@ class SimpleProgressMonitor:
                 ),
             )
         except ImportError:
-            print(f"[THONG TIN] Bat dau sinh {total_count} mau loai '{doc_type}'...")
+            print(f"[INFO] Starting generation of {total_count} samples of type '{doc_type}'...")
 
     def start(self) -> None:
         self._start_time = time.monotonic()
@@ -332,15 +332,15 @@ class SimpleProgressMonitor:
         if self._pbar:
             self._pbar.update(1)
             self._pbar.set_postfix(
-                thanh_cong=self._success_count,
-                that_bai=self._failure_count,
+                success=self._success_count,
+                failure=self._failure_count,
             )
         else:
             total = self._success_count + self._failure_count
             if total % 10 == 0:
                 print(
-                    f"[TIEN TRINH] {total}/{self.total_count} "
-                    f"(Thanh cong: {self._success_count}, That bai: {self._failure_count})"
+                    f"[PROGRESS] {total}/{self.total_count} "
+                    f"(Success: {self._success_count}, Failure: {self._failure_count})"
                 )
 
     def set_api_status(self, status: str) -> None:
@@ -350,19 +350,19 @@ class SimpleProgressMonitor:
         if self._pbar:
             self._pbar.close()
         elapsed = time.monotonic() - self._start_time
-        ty_le = (
+        success_rate = (
             (self._success_count / (self._success_count + self._failure_count) * 100)
             if (self._success_count + self._failure_count) > 0
             else 0
         )
         print(
-            f"\n[HOAN THANH] Thanh cong: {self._success_count}, "
-            f"That bai: {self._failure_count}, "
-            f"Ti le: {ty_le:.1f}%, "
-            f"Thoi gian: {timedelta(seconds=int(elapsed))}"
+            f"\n[COMPLETED] Success: {self._success_count}, "
+            f"Failure: {self._failure_count}, "
+            f"Success rate: {success_rate:.1f}%, "
+            f"Elapsed time: {timedelta(seconds=int(elapsed))}"
         )
         if summary_message:
-            print(f"[GHI CHU] {summary_message}")
+            print(f"[NOTE] {summary_message}")
 
 
 def create_progress_monitor(
@@ -371,21 +371,21 @@ def create_progress_monitor(
     prefer_rich: bool = True,
 ) -> "ProgressMonitor | SimpleProgressMonitor":
     """
-    Factory: Tạo monitor phù hợp với môi trường hiện tại.
+    Factory: Create a monitor suitable for the current environment.
 
-    Tham số:
-        total_count: Tổng số mẫu cần sinh.
-        doc_type: Loại tài liệu.
-        prefer_rich: Ưu tiên dùng rich nếu khả dụng.
+    Parameters:
+        total_count: Total number of samples to generate.
+        doc_type: Type of document.
+        prefer_rich: Prefer using rich if available.
 
-    Trả về:
-        Đối tượng ProgressMonitor hoặc SimpleProgressMonitor.
+    Returns:
+        A ProgressMonitor or SimpleProgressMonitor.
     """
     if prefer_rich:
         try:
             import rich  # noqa: F401
             return ProgressMonitor(total_count, doc_type)
         except ImportError:
-            logger.warning("Thu vien 'rich' khong kha dung, dung SimpleProgressMonitor.")
+            logger.warning("The 'rich' library is not available, using SimpleProgressMonitor.")
     return SimpleProgressMonitor(total_count, doc_type)
 

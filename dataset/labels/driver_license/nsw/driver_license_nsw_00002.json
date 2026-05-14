@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "dob": "01-02-1965",
+      "first_name": "LORI",
+      "middle_name": null,
+      "last_name": "BENNETT",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "246305478",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "21-05-2030",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 53",
+      "address_line_2": "UNIT 43 44 WOODWARD LANE",
+      "suburb": "GINAMOUTH",
+      "state": "NSW",
+      "postcode": "4262"
+    },
+    "card_number": "D8630889",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "24-03-2003",
+    "card_number": "D6407879",
+    "expiry_date": "02-06-2031",
+    "age_indicator": "03-03",
+    "barcode_number": "ABnoteNZ2991085361",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

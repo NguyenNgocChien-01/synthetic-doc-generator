@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NT",
+  "front": {
+    "holder": {
+      "dob": "07-10-1957",
+      "first_name": "MARK",
+      "middle_name": null,
+      "last_name": "JOHNSON",
+      "full_name": "JANE CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "214866262",
+      "licence_classes": [
+        "C",
+        "LR",
+        "MR",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "17-12-2027",
+      "conditions": [
+        "S",
+        "XA",
+        "R"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 75",
+      "address_line_2": "LEVEL 3 63 SANCHEZ PARKWAY",
+      "suburb": "WEST ROBERT",
+      "state": "NT",
+      "postcode": "2919"
+    },
+    "card_number": "D1684432",
+    "dob_watermark": "25/12/1999",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "19-03-1979",
+    "card_number": "D1677577",
+    "expiry_date": "01-09-2031",
+    "age_indicator": "03-79",
+    "barcode_number": "ABnoteNZ5802398509",
+    "conditions_legend": null,
+    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+  }
+}

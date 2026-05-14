@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "dob": "21-06-1996",
+      "first_name": "SHAUN",
+      "middle_name": null,
+      "last_name": "LUCAS",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "306532262",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "25-06-2032",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 19",
+      "address_line_2": "SUITE 304 58 HOLMES TRUNKWAY",
+      "suburb": "ROMEROTOWN",
+      "state": "NSW",
+      "postcode": "2408"
+    },
+    "card_number": "D6035140",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "21-05-1988",
+    "card_number": "D7928218",
+    "expiry_date": "05-04-2031",
+    "age_indicator": "05-88",
+    "barcode_number": "ABnoteNZ8493813131",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "25-04-1971",
+      "first_name": "CARLA",
+      "middle_name": null,
+      "last_name": "JAMES",
+      "full_name": "CRAIG MENON",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "375978907",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "16-03-2031",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 42",
+      "address_line_2": "0 TAMMY POCKET",
+      "suburb": "HANSENMOUTH",
+      "state": "SA",
+      "postcode": "2922"
+    },
+    "card_number": "D7317051",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "28-08-1973",
+    "card_number": "D2680482",
+    "expiry_date": "03-04-2028",
+    "age_indicator": "08-73",
+    "barcode_number": "ABnoteNZ2818059136",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

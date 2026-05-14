@@ -1,0 +1,46 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "QLD",
+  "front": {
+    "holder": {
+      "dob": "31-01-1989",
+      "first_name": "SAMUEL",
+      "middle_name": null,
+      "last_name": "MORTON",
+      "full_name": "JOHN DOE",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "250505443",
+      "licence_classes": [
+        "C",
+        "RE"
+      ],
+      "licence_type_raw": "O, L",
+      "expiry_date": "25-09-2030",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 60",
+      "address_line_2": "2/53 LEWIS CROSSWAY",
+      "suburb": "NEW JOSEPH",
+      "state": "QLD",
+      "postcode": "2295"
+    },
+    "card_number": "D6556257",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "16-12-1988",
+    "card_number": "D1090249",
+    "expiry_date": "04-05-2033",
+    "age_indicator": "12-88",
+    "barcode_number": "ABnoteNZ7779317807",
+    "conditions_legend": null,
+    "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+  }
+}

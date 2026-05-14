@@ -1,0 +1,26 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "2847 61930 5",
+  "members": [
+    {
+      "position": 1,
+      "first_name": "MICHAEL",
+      "middle_initial": "J",
+      "last_name": "HARRISON"
+    },
+    {
+      "position": 2,
+      "first_name": "SARAH",
+      "middle_initial": "L",
+      "last_name": "HARRISON"
+    },
+    {
+      "position": 3,
+      "first_name": "ETHAN",
+      "middle_initial": "R",
+      "last_name": "HARRISON"
+    }
+  ],
+  "expiry_date": "03/2028"
+}

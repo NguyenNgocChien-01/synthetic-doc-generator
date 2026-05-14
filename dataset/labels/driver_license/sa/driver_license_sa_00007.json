@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "27-01-1958",
+      "first_name": "SUMMER",
+      "middle_name": null,
+      "last_name": "SINGH",
+      "full_name": "CRAIG MENON",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "454667320",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "28-02-2031",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 64",
+      "address_line_2": "APT. 902 009 MASON ALLEY",
+      "suburb": "SOUTH GLORIA",
+      "state": "SA",
+      "postcode": "6362"
+    },
+    "card_number": "D5457731",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "16-10-2000",
+    "card_number": "D9623081",
+    "expiry_date": "11-07-2029",
+    "age_indicator": "10-00",
+    "barcode_number": "ABnoteNZ4350156656",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

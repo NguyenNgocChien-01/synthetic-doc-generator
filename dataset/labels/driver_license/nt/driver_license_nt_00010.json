@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NT",
+  "front": {
+    "holder": {
+      "dob": "04-09-1996",
+      "first_name": "CHRISTOPHER",
+      "middle_name": null,
+      "last_name": "HOLMES",
+      "full_name": "JANE CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "240878965",
+      "licence_classes": [
+        "C",
+        "LR",
+        "MR",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "14-03-2030",
+      "conditions": [
+        "S",
+        "XA",
+        "R"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 92",
+      "address_line_2": "6 WASHINGTON DELL",
+      "suburb": "LAKE KATELYNMOUTH",
+      "state": "NT",
+      "postcode": "2912"
+    },
+    "card_number": "D2282686",
+    "dob_watermark": "25/12/1999",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "29-09-1965",
+    "card_number": "D1752766",
+    "expiry_date": "26-07-2028",
+    "age_indicator": "09-65",
+    "barcode_number": "ABnoteNZ7584734002",
+    "conditions_legend": null,
+    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+  }
+}

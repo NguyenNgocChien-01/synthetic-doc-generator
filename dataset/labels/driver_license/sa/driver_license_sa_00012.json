@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "14-05-1968",
+      "first_name": "DUSTIN",
+      "middle_name": null,
+      "last_name": "DONALDSON",
+      "full_name": "CRAIG MENON",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "899456864",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "01-08-2031",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 41",
+      "address_line_2": "04 WILLIAM END",
+      "suburb": "NEW DOMINIQUEBURGH",
+      "state": "SA",
+      "postcode": "2676"
+    },
+    "card_number": "D8972475",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "20-04-1972",
+    "card_number": "D2125176",
+    "expiry_date": "27-03-2033",
+    "age_indicator": "04-72",
+    "barcode_number": "ABnoteNZ5864532370",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

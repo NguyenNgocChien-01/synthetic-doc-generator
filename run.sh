@@ -11,7 +11,7 @@ if [ -f "$SCRIPT_DIR/.env" ]; then
     source "$SCRIPT_DIR/.env"
     set +a
 else
-    echo "Loi: Khong tim thay tep .env tai $SCRIPT_DIR/.env"
+    echo "Error: File .env not found at $SCRIPT_DIR/.env"
     exit 1
 fi
 
@@ -21,7 +21,7 @@ if [ -n "$STATE" ]; then
 fi
 
 echo "======================================"
-echo " Chay tuan tu: $TOTAL mau | delay: ${DELAY}s | loai: $DOC_TYPE ${STATE}"
+echo " Running sequentially: $TOTAL documents | delay: ${DELAY}s | type: $DOC_TYPE ${STATE}"
 echo "======================================"
 
 SUCCESS=0
@@ -29,7 +29,7 @@ FAIL=0
 
 for i in $(seq 1 $TOTAL); do
     echo ""
-    echo "[$i/$TOTAL] Bat dau sinh mau..."
+    echo "[$i/$TOTAL] Begin generating..."
 
     python "$SCRIPT_DIR/main.py" \
         --type "$DOC_TYPE" \
@@ -40,17 +40,14 @@ for i in $(seq 1 $TOTAL); do
         --image-model gemini-2.5-flash-image \
         2>&1 | tee /tmp/run_output.txt | tail -5
 
-    if grep -qE "That bai\s+[1-9]" /tmp/run_output.txt; then
-        FAIL=$((FAIL + 1))
-        echo "[$i/$TOTAL] THAT BAI - Thanh cong: $SUCCESS | That bai: $FAIL"
-    else
-        SUCCESS=$((SUCCESS + 1))
-        echo "[$i/$TOTAL] OK - Thanh cong: $SUCCESS | That bai: $FAIL"
-    fi
+    STATUS=${PIPESTATUS[0]}
 
-    if [ $i -lt $TOTAL ]; then
-        echo "Cho ${DELAY}s truoc lan tiep theo..."
-        sleep "$DELAY"
+    if [ $STATUS -eq 0 ]; then
+        SUCCESS=$((SUCCESS + 1))
+        echo "[$i/$TOTAL] OK"
+    else
+        FAIL=$((FAIL + 1))
+        echo "[$i/$TOTAL] FAIL"
     fi
 done
 
@@ -58,3 +55,4 @@ echo ""
 echo "======================================"
 echo " Success: $SUCCESS/$TOTAL"
 echo "======================================"
+

@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "first_name": "JOHN",
+      "middle_name": null,
+      "last_name": "CITIZEN",
+      "full_name": "JOHN CITIZEN",
+      "sex": null,
+      "dob": "2000-01-01"
+    },
+    "licence": {
+      "licence_number": "0123456789",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2030-01-01",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "CENTENNIAL PLAZA",
+      "address_line_2": "260 ELIZABETH ST",
+      "suburb": "SURRY HILLS",
+      "state": "NSW",
+      "postcode": "2010"
+    },
+    "card_number": "9 999 999 999",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": null,
+    "expiry_date": null,
+    "dob": null,
+    "age_indicator": null,
+    "barcode_number": "00000000",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

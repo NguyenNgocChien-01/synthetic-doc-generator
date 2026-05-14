@@ -195,41 +195,94 @@ class DataGenerator:
     def _parse_custom_json(self, data: Any) -> Any:
         if isinstance(data, dict):
             result = {}
+
+            _dob_dd = _dob_mm = _dob_yyyy = None
             for k, v in data.items():
                 k_lower = k.lower()
-                
-                if isinstance(v, (dict, list)):
-                    result[k] = self._parse_custom_json(v)
-                elif any(word in k_lower for word in ["first_name", "given_name"]):
-                    result[k] = self._faker_factory.faker.first_name().upper()
-                elif any(word in k_lower for word in ["middle_name"]):
-                    result[k] = self._faker_factory.faker.first_name().upper() if v else None
-                elif any(word in k_lower for word in ["last_name", "surname"]):
-                    result[k] = self._faker_factory.faker.last_name().upper()
-                elif any(word in k_lower for word in ["dob", "birth"]):
+                if any(w in k_lower for w in ["dob", "date_of_birth", "birth"]) and "watermark" not in k_lower:
                     if isinstance(v, str) and "-" not in v and v.isdigit():
-                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d%m%Y")
+                        dob_obj = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=70)
+                        _dob_dd, _dob_mm, _dob_yyyy = dob_obj.strftime("%d"), dob_obj.strftime("%m"), dob_obj.strftime("%Y")
+                        result[k] = f"{_dob_dd}{_dob_mm}{_dob_yyyy}"
                     else:
-                        result[k] = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=80).strftime("%d-%m-%Y")
-                elif any(word in k_lower for word in ["expiry", "expiration"]):
-                    result[k] = self._faker_factory.faker.date_between(start_date="today", end_date="+5y").strftime("%d-%m-%Y")
+                        dob_obj = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=70)
+                        _dob_dd, _dob_mm, _dob_yyyy = dob_obj.strftime("%d"), dob_obj.strftime("%m"), dob_obj.strftime("%Y")
+                        result[k] = f"{_dob_dd}-{_dob_mm}-{_dob_yyyy}"
+
+            for k, v in data.items():
+                k_lower = k.lower()
+
+                if k in result:
+                    continue  # DOB da xu ly
+
+                if k_lower == "conditions_legend":
+                    result[k] = v
+
+                elif isinstance(v, (dict, list)):
+                    result[k] = self._parse_custom_json(v)
+
+                elif any(w in k_lower for w in ["first_name", "given_name"]):
+                    result[k] = self._faker_factory.faker.first_name().upper()
+
+                elif "middle_name" in k_lower:
+                    result[k] = self._faker_factory.faker.first_name().upper() if v else None
+
+                elif any(w in k_lower for w in ["last_name", "surname"]):
+                    result[k] = self._faker_factory.faker.last_name().upper()
+
+                elif "watermark" in k_lower:
+                    if _dob_dd:
+                        result[k] = f"{_dob_dd}{_dob_mm}{_dob_yyyy}"
+                    else:
+                        result[k] = v
+
+                elif "age_indicator" in k_lower:
+                    if _dob_mm and _dob_yyyy:
+                        result[k] = f"{_dob_mm}-{_dob_yyyy[-2:]}"
+                    else:
+                        result[k] = v
+
+                elif any(w in k_lower for w in ["expiry", "expiration"]):
+                    result[k] = self._faker_factory.faker.date_between(
+                        start_date="+1y", end_date="+8y"
+                    ).strftime("%d-%m-%Y")
+
                 elif "line_1" in k_lower:
                     result[k] = f"UNIT {self._faker_factory.faker.random_int(min=1, max=99)}"
-                elif any(word in k_lower for word in ["line_2", "street"]):
+
+                elif any(w in k_lower for w in ["line_2", "street"]):
                     result[k] = self._faker_factory.faker.street_address().upper()
-                elif any(word in k_lower for word in ["suburb", "city", "town"]):
+
+                elif any(w in k_lower for w in ["suburb", "city", "town"]):
                     result[k] = self._faker_factory.faker.city().upper()
-                elif any(word in k_lower for word in ["postcode", "zip"]):
+
+                elif any(w in k_lower for w in ["postcode", "zip"]):
                     result[k] = str(self._faker_factory.faker.postcode())
-                elif any(word in k_lower for word in ["licence_number", "license_number"]):
+
+                elif any(w in k_lower for w in ["licence_number", "license_number"]):
                     result[k] = str(self._faker_factory.faker.random_number(digits=9, fix_len=True))
+
                 elif "card_number" in k_lower:
                     result[k] = f"D{self._faker_factory.faker.random_number(digits=7, fix_len=True)}"
+
                 elif "barcode" in k_lower:
                     result[k] = f"ABnoteNZ{self._faker_factory.faker.random_number(digits=10, fix_len=True)}"
+
+                elif k_lower == "conditions":
+                    import random
+                    valid = ["S", "B", "E", "A", "V", "X", "Y", "Z"]
+                    if random.random() < 0.30:
+                        result[k] = ""
+                    else:
+                        codes = random.sample(valid, random.randint(1, 3))
+                        # KHONG co space giua cac ma
+                        result[k] = "".join(sorted(codes, key=valid.index))
+
                 else:
                     result[k] = v
+
             return result
+
         elif isinstance(data, list):
             return [self._parse_custom_json(i) for i in data]
         return data

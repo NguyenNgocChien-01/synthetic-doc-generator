@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NT",
+  "front": {
+    "holder": {
+      "dob": "04-07-1993",
+      "first_name": "ROBERT",
+      "middle_name": null,
+      "last_name": "DICKSON",
+      "full_name": "JANE CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "376826494",
+      "licence_classes": [
+        "C",
+        "LR",
+        "MR",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "08-01-2029",
+      "conditions": [
+        "S",
+        "XA",
+        "R"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 51",
+      "address_line_2": "3 HENDRICKS RIDGE",
+      "suburb": "NEW JUSTIN",
+      "state": "NT",
+      "postcode": "2972"
+    },
+    "card_number": "D1026324",
+    "dob_watermark": "25/12/1999",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "08-12-1965",
+    "card_number": "D8029960",
+    "expiry_date": "04-03-2028",
+    "age_indicator": "12-65",
+    "barcode_number": "ABnoteNZ8453409694",
+    "conditions_legend": null,
+    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+  }
+}

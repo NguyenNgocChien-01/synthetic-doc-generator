@@ -56,7 +56,7 @@ def _load_best_font(
 
     Trả về:
         Đối tượng ImageFont.
-    """
+    """ 
     for path in font_paths:
         if Path(path).exists():
             try:

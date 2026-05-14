@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "dob": "27-02-1981",
+      "first_name": "BIANCA",
+      "middle_name": null,
+      "last_name": "ODOM",
+      "full_name": "JANE CITIZEN",
+      "sex": "F"
+    },
+    "licence": {
+      "licence_number": "424048760",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "17-04-2030",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 43",
+      "address_line_2": "61 DECKER STEPS",
+      "suburb": "PORT MICHAEL",
+      "state": "VIC",
+      "postcode": "2998"
+    },
+    "card_number": "D5492989",
+    "dob_watermark": "29071983",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "23-07-1958",
+    "card_number": "D8547133",
+    "expiry_date": "09-12-2029",
+    "age_indicator": "07-58",
+    "barcode_number": "ABnoteNZ9113083521",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

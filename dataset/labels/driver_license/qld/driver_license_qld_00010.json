@@ -1,0 +1,46 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "QLD",
+  "front": {
+    "holder": {
+      "dob": "05-06-2003",
+      "first_name": "MICHAEL",
+      "middle_name": null,
+      "last_name": "MARSH",
+      "full_name": "JOHN DOE",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "853429918",
+      "licence_classes": [
+        "C",
+        "RE"
+      ],
+      "licence_type_raw": "O, L",
+      "expiry_date": "27-03-2034",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 7",
+      "address_line_2": "11/419 COOK GROUND",
+      "suburb": "TONYTON",
+      "state": "QLD",
+      "postcode": "0295"
+    },
+    "card_number": "D9380468",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "27-03-1963",
+    "card_number": "D7992705",
+    "expiry_date": "07-06-2029",
+    "age_indicator": "03-63",
+    "barcode_number": "ABnoteNZ4072548595",
+    "conditions_legend": null,
+    "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+  }
+}

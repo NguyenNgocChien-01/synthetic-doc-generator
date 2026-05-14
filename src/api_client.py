@@ -16,7 +16,7 @@ from typing import Optional
 from PIL import ImageOps, Image
 # from rich.prompt import result
 
-from .config import APIConfig, PLATFORM_VERTEX_AI, PROMPT_TEMPLATES
+from .config import APIConfig, PROMPT_TEMPLATES
 from .rate_limiter import RateLimiter, RateLimitExceededError
 
 logger = logging.getLogger(__name__)
@@ -225,19 +225,41 @@ class VertexAIProvider(BaseAPIProvider):
         page_image.save(buffered, format="JPEG", quality=90)
         img_b64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-        # Lấy loại tài liệu và cấu hình prompt
-        doc_type_raw = json_data.get("doc_type", "document")
+        doc_type_raw = json_data.get("document_type", json_data.get("doc_type", "document"))
         doc_type_key = doc_type_raw.lower().replace(" ", "_")
         
+        if "driver_licence" in doc_type_key or "driver_license" in doc_type_key:
+            doc_type_key = "driver_license"
+            
         prompt_config = PROMPT_TEMPLATES.get(doc_type_key, PROMPT_TEMPLATES["default"])
-        date_format = prompt_config["date_format"]
-        photo_instructions = prompt_config["photo_instructions"]
+        date_format = prompt_config.get("date_format", PROMPT_TEMPLATES["default"]["date_format"])
+        photo_instructions = prompt_config.get("photo_instructions", PROMPT_TEMPLATES["default"]["photo_instructions"])
 
-        # Xử lý các trường dữ liệu
-        fields = {k: v for k, v in json_data.items() if k != "doc_type"}
-        gender_raw = str(fields.get('sex', fields.get('gender', 'M'))).upper()
-        target_gender = 'female' if gender_raw in ('F', 'FEMALE') else 'male'
-        target_dob = fields.get('date_of_birth', fields.get('dob', ''))
+        front_data = json_data.get("front", {})
+
+        holder_data = front_data.get("holder", {})
+        gender_raw = holder_data.get("sex")
+        target_dob = holder_data.get("dob")
+
+        if gender_raw is None:
+            gender_raw = front_data.get("sex", json_data.get("sex"))
+        if target_dob is None:
+            target_dob = front_data.get("dob", json_data.get("dob"))
+        if gender_raw is None or target_dob is None:
+            for value in json_data.values():
+                if isinstance(value, dict):
+                    gender_raw = gender_raw or value.get("sex")
+                    target_dob = target_dob or value.get("dob")
+
+
+        gender_str = str(gender_raw).upper() if gender_raw else "M"
+        target_gender = 'female' if gender_str in ('F', 'FEMALE') else 'male'
+        target_dob = str(target_dob) if target_dob else "unknown"
+
+        # info rules
+        info_rules = ""
+        for key, value in prompt_config.get("info", {}).items():
+            info_rules += f"- {key.upper()}: {value}\n"
 
         prompt_text = (
             f"This is a {doc_type_raw.replace('_', ' ')} document template image. "
@@ -246,14 +268,16 @@ class VertexAIProvider(BaseAPIProvider):
             "1. LAYOUT: Keep the EXACT same layout, colors, fonts, logos, borders, watermarks, "
             "background patterns and structure as the template. Do not move or remove any element.\n"
             "2. TEXT: Replace ALL text fields with the following data EXACTLY as provided. "
-            f"{date_format} "
+            f"{date_format}\n"
             "Never alter, invent or distort any value:\n"
-            f"{json.dumps(fields, ensure_ascii=False, indent=2)}\n"
+            f"{json.dumps(json_data, ensure_ascii=False, indent=2)}\n"
             "3. PHOTOS: This document contains portrait photo slots. "
             "Generate ONE new fictional human face that does NOT resemble anyone in the template. "
             f"The face MUST match: gender={target_gender}, approximate age based on date_of_birth={target_dob}. "
             f"{photo_instructions}\n"
-            "4. OUTPUT: One single photorealistic document image, "
+            "4. SPECIFIC RULES:\n"
+            f"{info_rules}"
+            "5. OUTPUT: One single photorealistic document image, "
             "same dimensions and orientation as the template."
         )
         payload = {
@@ -276,6 +300,8 @@ class VertexAIProvider(BaseAPIProvider):
             },
         }
 
+        print("Prompt to Vertex AI Gemini:\n", prompt_text[:5000], "...\n")
+
         image_model_clean = image_model.replace("models/", "")
         url = f"{self.base_url}/{image_model_clean}:generateContent"
         logger.debug("Vertex AI endpoint: %s", url)
@@ -283,7 +309,7 @@ class VertexAIProvider(BaseAPIProvider):
         try:
             token = self._get_access_token()
         except APIError as loi:
-            logger.error("Khong the xac thuc voi Vertex AI: %s", loi)
+            logger.error("Error with Vertex AI: %s", loi)
             return None
 
         body = json.dumps(payload).encode("utf-8")
@@ -296,13 +322,13 @@ class VertexAIProvider(BaseAPIProvider):
                 result = json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as loi:
             error_body = loi.read().decode("utf-8", errors="replace")
-            logger.error("Loi HTTP %s tu Vertex AI: %s", loi.code, error_body[:500])
+            logger.error("HTTP Error %s from Vertex AI: %s", loi.code, error_body[:500])
             return None
         except urllib.error.URLError as loi:
-            logger.error("Loi ket noi toi Vertex AI: %s", loi.reason)
+            logger.error("Connection Error to Vertex AI: %s", loi.reason)
             return None
         except Exception as loi:
-            logger.error("Loi khong xac dinh: %s", loi)
+            logger.error("Undefined Error: %s", loi)
             return None
 
         try:
@@ -315,18 +341,15 @@ class VertexAIProvider(BaseAPIProvider):
                     raw_data = base64.b64decode(part["inline_data"]["data"])
 
                 if raw_data:
-                    # 1. Load ảnh từ dữ liệu nhị phân
+
                     img = Image.open(io.BytesIO(raw_data))
                     
-                    # 2. Xử lý Exif và hệ màu
+            
                     img = ImageOps.exif_transpose(img)
                     img = img.convert("RGB")
-                    
-                    # --- SỬA TẠI ĐÂY: Xử lý xoay chiều và ép kích thước ---
-                    # Lưu kích thước của ảnh mẫu hiện tại (page_image) để so sánh
+           
                     orig_input_w, orig_input_h = page_image.size
-                    
-                    # A. Xoay chiều nếu cần (giữ expand=True để không mất pixel)
+              
                     out_is_portrait = img.height > img.width
                     if is_portrait and not out_is_portrait:
                         img = img.rotate(90, expand=True)
@@ -334,18 +357,14 @@ class VertexAIProvider(BaseAPIProvider):
                     elif not is_portrait and out_is_portrait:
                         img = img.rotate(-90, expand=True)
                         logger.debug("Xoay output -90 ve landscape.")
-
-                    # B. QUAN TRỌNG NHẤT: Ép kích thước về khớp 100% ảnh gốc
-                    # Việc này xử lý trường hợp Gemini trả về ảnh vuông hoặc sai aspect ratio
                     if img.size != (orig_input_w, orig_input_h):
                         logger.debug(
                             "Force resize output (%dx%d) ve khop template (%dx%d).",
                             img.width, img.height, orig_input_w, orig_input_h
                         )
                         img = img.resize((orig_input_w, orig_input_h), Image.Resampling.LANCZOS)
-                    # --- KẾT THÚC ĐOẠN SỬA ---
+    
 
-                    # 3. Chạy hàm fix avatar (nếu có OpenCV)
                     img = self._fix_avatar_consistency(img)
                 
                     logger.info("Sinh anh tai lieu thanh cong qua Vertex AI Gemini.")

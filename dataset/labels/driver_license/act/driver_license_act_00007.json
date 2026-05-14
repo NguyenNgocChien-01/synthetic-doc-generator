@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "19-12-1959",
+      "first_name": "DANA",
+      "middle_name": null,
+      "last_name": "RODRIGUEZ",
+      "full_name": "Joan CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "756497688",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "11-09-2031",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 60",
+      "address_line_2": "43 YVONNE GATES",
+      "suburb": "EAST MARVINSTAD",
+      "state": "ACT",
+      "postcode": "0976"
+    },
+    "card_number": "D2450095",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "26-08-1980",
+    "card_number": "D2924346",
+    "expiry_date": "28-06-2031",
+    "age_indicator": "08-80",
+    "barcode_number": "ABnoteNZ7639769537",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

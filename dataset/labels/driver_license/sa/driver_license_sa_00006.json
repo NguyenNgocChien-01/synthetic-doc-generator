@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "09-01-1973",
+      "first_name": "JULIE",
+      "middle_name": null,
+      "last_name": "WALKER",
+      "full_name": "CRAIG MENON",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "425034436",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "28-01-2033",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 29",
+      "address_line_2": "APT. 417 3 AUSTIN GLADE",
+      "suburb": "DANIELMOUTH",
+      "state": "SA",
+      "postcode": "2041"
+    },
+    "card_number": "D1777075",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "16-11-1997",
+    "card_number": "D6653549",
+    "expiry_date": "29-10-2027",
+    "age_indicator": "11-97",
+    "barcode_number": "ABnoteNZ2610697099",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

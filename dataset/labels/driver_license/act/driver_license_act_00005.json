@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "04-08-1969",
+      "first_name": "DYLAN",
+      "middle_name": null,
+      "last_name": "HUNTER",
+      "full_name": "Joan CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "325997966",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "23-08-2031",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 67",
+      "address_line_2": "UNIT 26 405 ROBIN DELL",
+      "suburb": "PORT JOSEPHCHESTER",
+      "state": "ACT",
+      "postcode": "2759"
+    },
+    "card_number": "D3229003",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "10-05-1998",
+    "card_number": "D3328541",
+    "expiry_date": "17-04-2034",
+    "age_indicator": "05-98",
+    "barcode_number": "ABnoteNZ4607774297",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

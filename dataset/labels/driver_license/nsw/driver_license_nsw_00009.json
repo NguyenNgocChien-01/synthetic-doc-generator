@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NSW",
+  "front": {
+    "holder": {
+      "dob": "26-12-1994",
+      "first_name": "SAMANTHA",
+      "middle_name": null,
+      "last_name": "BROWN",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "162295809",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "29-07-2032",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 1",
+      "address_line_2": "APT. 269 4 MATTHEW RETREAT",
+      "suburb": "LAKE BARBARA",
+      "state": "NSW",
+      "postcode": "2671"
+    },
+    "card_number": "D4952925",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "16-10-1969",
+    "card_number": "D2034217",
+    "expiry_date": "24-12-2030",
+    "age_indicator": "10-69",
+    "barcode_number": "ABnoteNZ3323758615",
+    "conditions_legend": {
+      "S": "Must wear glasses or contact lenses while driving"
+    },
+    "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+  }
+}

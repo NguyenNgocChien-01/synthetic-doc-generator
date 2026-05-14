@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "NT",
+  "front": {
+    "holder": {
+      "dob": "12-06-1965",
+      "first_name": "WILLIAM",
+      "middle_name": null,
+      "last_name": "ADAMS",
+      "full_name": "JANE CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "750060891",
+      "licence_classes": [
+        "C",
+        "LR",
+        "MR",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "04-04-2031",
+      "conditions": [
+        "S",
+        "XA",
+        "R"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 44",
+      "address_line_2": "UNIT 15 8 NICHOLS UPPER",
+      "suburb": "STEPHANIETOWN",
+      "state": "NT",
+      "postcode": "2215"
+    },
+    "card_number": "D5069185",
+    "dob_watermark": "25/12/1999",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "12-07-1959",
+    "card_number": "D5755083",
+    "expiry_date": "25-10-2027",
+    "age_indicator": "07-59",
+    "barcode_number": "ABnoteNZ5862242920",
+    "conditions_legend": null,
+    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+  }
+}

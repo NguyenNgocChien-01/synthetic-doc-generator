@@ -1,0 +1,46 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "QLD",
+  "front": {
+    "holder": {
+      "dob": "19-11-1974",
+      "first_name": "DAVID",
+      "middle_name": null,
+      "last_name": "MOSS",
+      "full_name": "JOHN DOE",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "148033695",
+      "licence_classes": [
+        "C",
+        "RE"
+      ],
+      "licence_type_raw": "O, L",
+      "expiry_date": "12-07-2027",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 56",
+      "address_line_2": "LEVEL 8 5 LEWIS DALE",
+      "suburb": "CRAWFORDHAVEN",
+      "state": "QLD",
+      "postcode": "2909"
+    },
+    "card_number": "D5324727",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "09-08-1963",
+    "card_number": "D6447655",
+    "expiry_date": "03-06-2030",
+    "age_indicator": "08-63",
+    "barcode_number": "ABnoteNZ5257907063",
+    "conditions_legend": null,
+    "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+  }
+}
