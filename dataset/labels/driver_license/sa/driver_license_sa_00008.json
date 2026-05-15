@@ -1,47 +1,47 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "SA",
-  "front": {
-    "holder": {
-      "dob": "1985-12-24",
-      "first_name": "MARY",
-      "middle_name": null,
-      "last_name": "HULL",
-      "full_name": "MARY HULL",
-      "sex": "M"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "SA",
+    "front": {
+        "holder": {
+            "dob": "1985-12-24",
+            "first_name": "MARY",
+            "middle_name": null,
+            "last_name": "HULL",
+            "full_name": "MARY HULL",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "225297252",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CLASS C",
+            "expiry_date": "2028-12-21",
+            "conditions": [
+                "01"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 10",
+            "address_line_2": "8/9 PEARSON FIRETRAIL",
+            "suburb": "WAGNERVILLE",
+            "state": "SA",
+            "postcode": "2986"
+        },
+        "card_number": "D9208161",
+        "dob_watermark": "24121985",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "225297252",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CLASS C",
-      "expiry_date": "2028-12-21",
-      "conditions": [
-        "01"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 10",
-      "address_line_2": "8/9 PEARSON FIRETRAIL",
-      "suburb": "WAGNERVILLE",
-      "state": "SA",
-      "postcode": "2986"
-    },
-    "card_number": "D9208161",
-    "dob_watermark": "24121985",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "24-12-1985",
-    "card_number": "D9304563",
-    "expiry_date": "21-12-2028",
-    "age_indicator": "12-85",
-    "barcode_number": "ABnoteNZ8583555880",
-    "conditions_legend": {
-      "01": "Corrective Lenses"
-    },
-    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
-  }
+    "back": {
+        "dob": "24-12-1985",
+        "card_number": "D9304563",
+        "expiry_date": "21-12-2028",
+        "age_indicator": "12-85",
+        "barcode_number": "ABnoteNZ8583555880",
+        "conditions_legend": {
+            "01": "Corrective Lenses"
+        },
+        "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+    }
 }

@@ -141,7 +141,11 @@ class VertexAIProvider(BaseAPIProvider):
             template_image, json_data, image_model, orig_is_portrait
         )
 
-    def _fix_avatar_consistency(self, output_img: Image.Image) -> Image.Image:
+    def _fix_avatar_consistency(self, output_img: Image.Image, doc_type_key: str) -> Image.Image:
+        if "act" in doc_type_key:
+            logger.debug("Bang lai ACT khong dung ghost face, bo qua fix_avatar.")
+            return output_img
+
         try:
             import cv2
             import numpy as np
@@ -165,12 +169,8 @@ class VertexAIProvider(BaseAPIProvider):
             faces_sorted = sorted(faces, key=lambda f: f[1])
             x_s, y_s, w_s, h_s = faces_sorted[0]  
             x_l, y_l, w_l, h_l = faces_sorted[1]  
-    
-            logger.debug(
-                "Slot nho (top): x=%d y=%d w=%d h=%d | Slot lon (bot): x=%d y=%d w=%d h=%d",
-                x_s, y_s, w_s, h_s, x_l, y_l, w_l, h_l,
-            )
-    
+
+            
             pad_x = int(w_l * 0.30)
             pad_y = int(h_l * 0.35)
             crop_x1 = max(0, x_l - pad_x)
@@ -204,9 +204,7 @@ class VertexAIProvider(BaseAPIProvider):
             blended = Image.composite(avatar_resized, bg_region, mask_pil)
             result.paste(blended, (paste_x1, paste_y1))
     
-            logger.info(
-                "Fix avatar: copy slot duoi -> slot tren tai (%d,%d)", paste_x1, paste_y1
-            )
+            logger.info("Fix avatar: copy slot duoi -> slot tren tai (%d,%d)", paste_x1, paste_y1)
             return result
     
         except ImportError:
@@ -240,14 +238,18 @@ class VertexAIProvider(BaseAPIProvider):
         doc_type_key = doc_type_raw.lower().replace(" ", "_")
         
         if "driver_license" in doc_type_key:
-            issuing_state = str(json_data.get("issuing_state", "")).upper().strip()
-            if not issuing_state:
-                # thử tìm trong nested
-                for v in json_data.values():
-                    if isinstance(v, dict):
-                        issuing_state = str(v.get("issuing_state", "")).upper().strip()
-                        if issuing_state:
-                            break
+            # Thuật toán đệ quy tìm issuing_state an toàn
+            def find_issuing_state(d):
+                if isinstance(d, dict):
+                    if "issuing_state" in d and d["issuing_state"]:
+                        return str(d["issuing_state"]).upper().strip()
+                    for v in d.values():
+                        res = find_issuing_state(v)
+                        if res:
+                            return res
+                return ""
+
+            issuing_state = find_issuing_state(json_data)
             state_key = f"driver_license_{issuing_state.lower()}" if issuing_state else ""
             doc_type_key = state_key if state_key in PROMPT_TEMPLATES else "driver_license"
             
@@ -276,10 +278,21 @@ class VertexAIProvider(BaseAPIProvider):
         target_gender = 'female' if gender_str in ('F', 'FEMALE') else 'male'
         target_dob = str(target_dob) if target_dob else "unknown"
 
-        # info rules
+        # Xử lý info rules
         info_rules = ""
         for key, value in prompt_config.get("info", {}).items():
             info_rules += f"- {key.upper()}: {value}\n"
+
+        # Phân tách logic photo để không ghi đè lệnh chuyên biệt
+        if "DO NOT" in photo_instructions.upper() or "NO PHOTO" in photo_instructions.upper():
+            photo_section = f"3. PHOTOS: {photo_instructions}\n"
+        else:
+            photo_section = (
+                "3. PHOTOS: This document contains portrait photo slots. "
+                "Generate ONE new fictional human face that does NOT resemble anyone in the template. "
+                f"The face MUST match: gender={target_gender}, approximate age based on date_of_birth={target_dob}. "
+                f"{photo_instructions}\n"
+            )
 
         prompt_text = (
             f"This is a {doc_type_raw.replace('_', ' ')} document template image. "
@@ -291,15 +304,13 @@ class VertexAIProvider(BaseAPIProvider):
             f"{date_format}\n"
             "Never alter, invent or distort any value:\n"
             f"{json.dumps(json_data, ensure_ascii=False, indent=2)}\n"
-            "3. PHOTOS: This document contains portrait photo slots. "
-            "Generate ONE new fictional human face that does NOT resemble anyone in the template. "
-            f"The face MUST match: gender={target_gender}, approximate age based on date_of_birth={target_dob}. "
-            f"{photo_instructions}\n"
+            f"{photo_section}"
             "4. SPECIFIC RULES:\n"
             f"{info_rules}"
             "5. OUTPUT: One single photorealistic document image, "
             "same dimensions and orientation as the template."
         )
+        
         payload = {
             "contents": [
                 {
@@ -367,10 +378,7 @@ class VertexAIProvider(BaseAPIProvider):
                     raw_data = base64.b64decode(part["inline_data"]["data"])
 
                 if raw_data:
-
                     img = Image.open(io.BytesIO(raw_data))
-                    
-            
                     img = ImageOps.exif_transpose(img)
                     img = img.convert("RGB")
            
@@ -390,8 +398,7 @@ class VertexAIProvider(BaseAPIProvider):
                         )
                         img = img.resize((orig_input_w, orig_input_h), Image.Resampling.LANCZOS)
     
-
-                    img = self._fix_avatar_consistency(img)
+                    img = self._fix_avatar_consistency(img, doc_type_key)
                 
                     logger.info("Sinh anh tai lieu thanh cong qua Vertex AI Gemini.")
                     return img

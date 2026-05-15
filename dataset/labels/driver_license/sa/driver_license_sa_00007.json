@@ -1,47 +1,47 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "SA",
-  "front": {
-    "holder": {
-      "dob": "1985-11-24",
-      "first_name": "JOSEPH",
-      "middle_name": null,
-      "last_name": "OWEN",
-      "full_name": "JOSEPH OWEN",
-      "sex": "M"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "SA",
+    "front": {
+        "holder": {
+            "dob": "1985-11-24",
+            "first_name": "JOSEPH",
+            "middle_name": null,
+            "last_name": "OWEN",
+            "full_name": "JOSEPH OWEN",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "396130855",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CLASS C",
+            "expiry_date": "2027-12-23",
+            "conditions": [
+                "01"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 85",
+            "address_line_2": "13 PIERCE AVENUE",
+            "suburb": "EAST MICHAEL",
+            "state": "SA",
+            "postcode": "2980"
+        },
+        "card_number": "D2856277",
+        "dob_watermark": "24111985",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "396130855",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CLASS C",
-      "expiry_date": "2027-12-23",
-      "conditions": [
-        "01"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 85",
-      "address_line_2": "13 PIERCE AVENUE",
-      "suburb": "EAST MICHAEL",
-      "state": "SA",
-      "postcode": "2980"
-    },
-    "card_number": "D2856277",
-    "dob_watermark": "24111985",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "24-11-1985",
-    "card_number": "D3140107",
-    "expiry_date": "23-12-2027",
-    "age_indicator": "11-85",
-    "barcode_number": "ABnoteNZ2960510333",
-    "conditions_legend": {
-      "01": "Corrective Lenses"
-    },
-    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
-  }
+    "back": {
+        "dob": "24-11-1985",
+        "card_number": "D3140107",
+        "expiry_date": "23-12-2027",
+        "age_indicator": "11-85",
+        "barcode_number": "ABnoteNZ2960510333",
+        "conditions_legend": {
+            "01": "Corrective Lenses"
+        },
+        "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+    }
 }

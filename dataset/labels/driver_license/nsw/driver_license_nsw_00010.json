@@ -1,0 +1,47 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NSW",
+    "front": {
+        "holder": {
+            "dob": "1980-09-02",
+            "first_name": "LEONARD",
+            "middle_name": null,
+            "last_name": "STEIN",
+            "full_name": "LEONARD STEIN",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "190142792",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2029-08-11",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 67",
+            "address_line_2": "66 VASQUEZ PATH",
+            "suburb": "MAURICEFURT",
+            "state": "NSW",
+            "postcode": "2689"
+        },
+        "card_number": "D1492054",
+        "dob_watermark": "02091980",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "02-09-1980",
+        "card_number": "D6710844",
+        "expiry_date": "11-08-2029",
+        "age_indicator": "09-80",
+        "barcode_number": "ABnoteNZ2098647605",
+        "conditions_legend": {
+            "S": "Must wear glasses or contact lenses while driving"
+        },
+        "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+    }
+}

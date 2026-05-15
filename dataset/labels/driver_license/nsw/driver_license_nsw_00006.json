@@ -1,0 +1,47 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NSW",
+    "front": {
+        "holder": {
+            "dob": "1982-09-02",
+            "first_name": "TIMOTHY",
+            "middle_name": null,
+            "last_name": "NELSON",
+            "full_name": "TIMOTHY NELSON",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "354231202",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-11-23",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 83",
+            "address_line_2": "18 NATHAN REST",
+            "suburb": "SINGLETONFURT",
+            "state": "NSW",
+            "postcode": "2628"
+        },
+        "card_number": "D5520121",
+        "dob_watermark": "02091982",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "02-09-1982",
+        "card_number": "D9628162",
+        "expiry_date": "23-11-2028",
+        "age_indicator": "09-82",
+        "barcode_number": "ABnoteNZ8935700048",
+        "conditions_legend": {
+            "S": "Must wear glasses or contact lenses while driving"
+        },
+        "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+    }
+}

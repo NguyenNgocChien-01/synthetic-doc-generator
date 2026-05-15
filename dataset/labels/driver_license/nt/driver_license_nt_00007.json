@@ -1,50 +1,50 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "NT",
-  "front": {
-    "holder": {
-      "dob": "1975-04-10",
-      "first_name": "PERRY",
-      "middle_name": null,
-      "last_name": "CAMACHO",
-      "full_name": "PERRY CAMACHO",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NT",
+    "front": {
+        "holder": {
+            "dob": "1975-04-10",
+            "first_name": "PERRY",
+            "middle_name": null,
+            "last_name": "CAMACHO",
+            "full_name": "PERRY CAMACHO",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "181024299",
+            "licence_classes": [
+                "C",
+                "LR",
+                "MR",
+                "R"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-08-08",
+            "conditions": [
+                "S",
+                "XA",
+                "R"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 20",
+            "address_line_2": "2/563 VILLA BREAK",
+            "suburb": "NORTH ISAACSHIRE",
+            "state": "NT",
+            "postcode": "2701"
+        },
+        "card_number": "D4827887",
+        "dob_watermark": "10041975",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "181024299",
-      "licence_classes": [
-        "C",
-        "LR",
-        "MR",
-        "R"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2028-08-08",
-      "conditions": [
-        "S",
-        "XA",
-        "R"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 20",
-      "address_line_2": "2/563 VILLA BREAK",
-      "suburb": "NORTH ISAACSHIRE",
-      "state": "NT",
-      "postcode": "2701"
-    },
-    "card_number": "D4827887",
-    "dob_watermark": "10041975",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1975-04-10",
-    "card_number": "D4737241",
-    "expiry_date": "2028-08-08",
-    "age_indicator": "04-75",
-    "barcode_number": "ABnoteNZ1886032387",
-    "conditions_legend": null,
-    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
-  }
+    "back": {
+        "dob": "1975-04-10",
+        "card_number": "D4737241",
+        "expiry_date": "2028-08-08",
+        "age_indicator": "04-75",
+        "barcode_number": "ABnoteNZ1886032387",
+        "conditions_legend": null,
+        "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+    }
 }

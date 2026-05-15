@@ -1,0 +1,46 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "QLD",
+    "front": {
+        "holder": {
+            "dob": "1974-07-13",
+            "first_name": "HALEY",
+            "middle_name": null,
+            "last_name": "POTTS",
+            "full_name": "HALEY POTTS",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "481241482",
+            "licence_classes": [
+                "C",
+                "RE"
+            ],
+            "licence_type_raw": "O, L",
+            "expiry_date": "2028-01-01",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 76",
+            "address_line_2": "86/7 DANIEL INTERCHANGE",
+            "suburb": "BRIGGSSTAD",
+            "state": "QLD",
+            "postcode": "2985"
+        },
+        "card_number": "D7883609",
+        "dob_watermark": "13071974",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "13-07-1974",
+        "card_number": "D8482131",
+        "expiry_date": "01-01-2028",
+        "age_indicator": "07-74",
+        "barcode_number": "ABnoteNZ2252667340",
+        "conditions_legend": null,
+        "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+    }
+}

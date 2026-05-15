@@ -1,0 +1,50 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NT",
+    "front": {
+        "holder": {
+            "dob": "1970-10-13",
+            "first_name": "ANDREA",
+            "middle_name": null,
+            "last_name": "HALL",
+            "full_name": "ANDREA HALL",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "153751122",
+            "licence_classes": [
+                "C",
+                "LR",
+                "MR",
+                "R"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-07-17",
+            "conditions": [
+                "S",
+                "XA",
+                "R"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 47",
+            "address_line_2": "LEVEL 7 8 STAFFORD PARKWAY",
+            "suburb": "ATKINSSTAD",
+            "state": "NT",
+            "postcode": "2995"
+        },
+        "card_number": "D4595077",
+        "dob_watermark": "13101970",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "1970-10-13",
+        "card_number": "D5074752",
+        "expiry_date": "2028-07-17",
+        "age_indicator": "10-70",
+        "barcode_number": "ABnoteNZ9968237191",
+        "conditions_legend": null,
+        "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+    }
+}

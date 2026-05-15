@@ -1,0 +1,47 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NSW",
+    "front": {
+        "holder": {
+            "dob": "1960-01-17",
+            "first_name": "JEREMY",
+            "middle_name": null,
+            "last_name": "HAYS",
+            "full_name": "JEREMY HAYS",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "120031590",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-01-14",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 33",
+            "address_line_2": "LEVEL 5 4 LONG AVENUE",
+            "suburb": "ST. RALPHVIEW",
+            "state": "NSW",
+            "postcode": "2688"
+        },
+        "card_number": "D4755239",
+        "dob_watermark": "17011960",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "17-01-1960",
+        "card_number": "D8314340",
+        "expiry_date": "14-01-2028",
+        "age_indicator": "01-60",
+        "barcode_number": "ABnoteNZ9992779390",
+        "conditions_legend": {
+            "S": "Must wear glasses or contact lenses while driving"
+        },
+        "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+    }
+}

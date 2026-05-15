@@ -1,0 +1,46 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "QLD",
+    "front": {
+        "holder": {
+            "dob": "1997-03-14",
+            "first_name": "NANCY",
+            "middle_name": null,
+            "last_name": "KELLEY",
+            "full_name": "NANCY KELLEY",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "202711362",
+            "licence_classes": [
+                "C",
+                "RE"
+            ],
+            "licence_type_raw": "O, L",
+            "expiry_date": "2030-02-25",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 24",
+            "address_line_2": "FLAT 33 01 THOMAS NOOK",
+            "suburb": "TROYTOWN",
+            "state": "QLD",
+            "postcode": "2436"
+        },
+        "card_number": "D7318076",
+        "dob_watermark": "14031997",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "14-03-1997",
+        "card_number": "D7770268",
+        "expiry_date": "25-02-2030",
+        "age_indicator": "03-97",
+        "barcode_number": "ABnoteNZ6439870857",
+        "conditions_legend": null,
+        "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+    }
+}

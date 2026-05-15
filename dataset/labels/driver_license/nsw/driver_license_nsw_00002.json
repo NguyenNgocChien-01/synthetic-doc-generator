@@ -1,0 +1,47 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NSW",
+    "front": {
+        "holder": {
+            "dob": "2000-12-28",
+            "first_name": "CHRISTOPHER",
+            "middle_name": null,
+            "last_name": "AVILA",
+            "full_name": "CHRISTOPHER AVILA",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "450041797",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2029-12-03",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 63",
+            "address_line_2": "772/41 SCHMITT OUTLOOK",
+            "suburb": "MURILLOTOWN",
+            "state": "NSW",
+            "postcode": "2941"
+        },
+        "card_number": "D4578625",
+        "dob_watermark": "28122000",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "28-12-2000",
+        "card_number": "D1991780",
+        "expiry_date": "03-12-2029",
+        "age_indicator": "12-00",
+        "barcode_number": "ABnoteNZ1140440805",
+        "conditions_legend": {
+            "S": "Must wear glasses or contact lenses while driving"
+        },
+        "transport_notice": "Change of address must be advised within 14 days online at service.nsw.gov.au or by calling 13 22 13 Issued by Transport for NSW, Locked Bag 928 North Sydney NSW 2059"
+    }
+}

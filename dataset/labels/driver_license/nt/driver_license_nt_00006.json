@@ -1,50 +1,50 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "NT",
-  "front": {
-    "holder": {
-      "dob": "2005-01-28",
-      "first_name": "MICHAEL",
-      "middle_name": null,
-      "last_name": "RICH",
-      "full_name": "MICHAEL RICH",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NT",
+    "front": {
+        "holder": {
+            "dob": "2005-01-28",
+            "first_name": "MICHAEL",
+            "middle_name": null,
+            "last_name": "RICH",
+            "full_name": "MICHAEL RICH",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "465566767",
+            "licence_classes": [
+                "C",
+                "LR",
+                "MR",
+                "R"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-07-04",
+            "conditions": [
+                "S",
+                "XA",
+                "R"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 7",
+            "address_line_2": "448 ANITA SERVICE WAY",
+            "suburb": "BRENTFURT",
+            "state": "NT",
+            "postcode": "2972"
+        },
+        "card_number": "D9469040",
+        "dob_watermark": "28012005",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "465566767",
-      "licence_classes": [
-        "C",
-        "LR",
-        "MR",
-        "R"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2028-07-04",
-      "conditions": [
-        "S",
-        "XA",
-        "R"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 7",
-      "address_line_2": "448 ANITA SERVICE WAY",
-      "suburb": "BRENTFURT",
-      "state": "NT",
-      "postcode": "2972"
-    },
-    "card_number": "D9469040",
-    "dob_watermark": "28012005",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "2005-01-28",
-    "card_number": "D9605007",
-    "expiry_date": "2028-07-04",
-    "age_indicator": "01-05",
-    "barcode_number": "ABnoteNZ8204361514",
-    "conditions_legend": null,
-    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
-  }
+    "back": {
+        "dob": "2005-01-28",
+        "card_number": "D9605007",
+        "expiry_date": "2028-07-04",
+        "age_indicator": "01-05",
+        "barcode_number": "ABnoteNZ8204361514",
+        "conditions_legend": null,
+        "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+    }
 }

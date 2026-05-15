@@ -1,47 +1,47 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "SA",
-  "front": {
-    "holder": {
-      "dob": "1976-11-17",
-      "first_name": "TRAVIS",
-      "middle_name": null,
-      "last_name": "KNIGHT",
-      "full_name": "TRAVIS KNIGHT",
-      "sex": "M"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "SA",
+    "front": {
+        "holder": {
+            "dob": "1976-11-17",
+            "first_name": "TRAVIS",
+            "middle_name": null,
+            "last_name": "KNIGHT",
+            "full_name": "TRAVIS KNIGHT",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "974588424",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CLASS C",
+            "expiry_date": "2030-09-11",
+            "conditions": [
+                "01"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 55",
+            "address_line_2": "APT. 291 48 JENNINGS TOP",
+            "suburb": "PORT DEANNATON",
+            "state": "SA",
+            "postcode": "4546"
+        },
+        "card_number": "D1643238",
+        "dob_watermark": "17111976",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "974588424",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CLASS C",
-      "expiry_date": "2030-09-11",
-      "conditions": [
-        "01"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 55",
-      "address_line_2": "APT. 291 48 JENNINGS TOP",
-      "suburb": "PORT DEANNATON",
-      "state": "SA",
-      "postcode": "4546"
-    },
-    "card_number": "D1643238",
-    "dob_watermark": "17111976",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "17-11-1976",
-    "card_number": "D1644143",
-    "expiry_date": "11-09-2030",
-    "age_indicator": "11-76",
-    "barcode_number": "ABnoteNZ3408814604",
-    "conditions_legend": {
-      "01": "Corrective Lenses"
-    },
-    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
-  }
+    "back": {
+        "dob": "17-11-1976",
+        "card_number": "D1644143",
+        "expiry_date": "11-09-2030",
+        "age_indicator": "11-76",
+        "barcode_number": "ABnoteNZ3408814604",
+        "conditions_legend": {
+            "01": "Corrective Lenses"
+        },
+        "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+    }
 }

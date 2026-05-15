@@ -1,60 +1,60 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "TAS",
-  "front": {
-    "holder": {
-      "dob": "21-06-1977",
-      "first_name": "ROBERT",
-      "middle_name": null,
-      "last_name": "FITZGERALD",
-      "full_name": "ROBERT FITZGERALD",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "TAS",
+    "front": {
+        "holder": {
+            "dob": "21-06-1977",
+            "first_name": "ROBERT",
+            "middle_name": null,
+            "last_name": "FITZGERALD",
+            "full_name": "ROBERT FITZGERALD",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "122572171",
+            "licence_classes": [
+                "C",
+                "D",
+                "T",
+                "U"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "21-03-2033",
+            "conditions": [
+                "L1",
+                "L2",
+                "R1",
+                "R2"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 38",
+            "address_line_2": "268/561 SPARKS LANEWAY",
+            "suburb": "MEGHANFORT",
+            "state": "TAS",
+            "postcode": "4794"
+        },
+        "card_number": "D6220407",
+        "dob_watermark": "00000000",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "122572171",
-      "licence_classes": [
-        "C",
-        "D",
-        "T",
-        "U"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "21-03-2033",
-      "conditions": [
-        "L1",
-        "L2",
-        "R1",
-        "R2"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 38",
-      "address_line_2": "268/561 SPARKS LANEWAY",
-      "suburb": "MEGHANFORT",
-      "state": "TAS",
-      "postcode": "4794"
-    },
-    "card_number": "D6220407",
-    "dob_watermark": "00000000",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "20-06-1991",
-    "card_number": "D2607401",
-    "expiry_date": "11-01-2031",
-    "age_indicator": "06-91",
-    "barcode_number": "ABnoteNZ5348925844",
-    "conditions_legend": {
-      "L1 C": "DRIVER REQUIREMENT TEST LINE 1",
-      "R1 E": "RIDER REQUIREMENT TEST LINE 1",
-      "C1": "VISUAL AIDS REQUIRED",
-      "C2": "CONDITION TEST DESCRIPTION 2",
-      "C3": "CONDITION TEST DESCRIPTION 3",
-      "C4": "CONDITION TEST DESCRIPTION 4",
-      "C5": "CONDITION TEST DESCRIPTION 5",
-      "C6": "CONDITION TEST DESCRIPTION 6"
-    },
-    "transport_notice": "For any queries regarding your licence visit Service Tasmania or call 1300 851 225 DEPARTMENT OF STATE GROWTH"
-  }
+    "back": {
+        "dob": "20-06-1991",
+        "card_number": "D2607401",
+        "expiry_date": "11-01-2031",
+        "age_indicator": "06-91",
+        "barcode_number": "ABnoteNZ5348925844",
+        "conditions_legend": {
+            "L1 C": "DRIVER REQUIREMENT TEST LINE 1",
+            "R1 E": "RIDER REQUIREMENT TEST LINE 1",
+            "C1": "VISUAL AIDS REQUIRED",
+            "C2": "CONDITION TEST DESCRIPTION 2",
+            "C3": "CONDITION TEST DESCRIPTION 3",
+            "C4": "CONDITION TEST DESCRIPTION 4",
+            "C5": "CONDITION TEST DESCRIPTION 5",
+            "C6": "CONDITION TEST DESCRIPTION 6"
+        },
+        "transport_notice": "For any queries regarding your licence visit Service Tasmania or call 1300 851 225 DEPARTMENT OF STATE GROWTH"
+    }
 }

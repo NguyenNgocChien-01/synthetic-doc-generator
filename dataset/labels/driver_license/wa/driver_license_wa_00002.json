@@ -1,45 +1,45 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "WA",
-  "front": {
-    "holder": {
-      "dob": "1979-03-15",
-      "first_name": "TERESA",
-      "middle_name": null,
-      "last_name": "GARCIA",
-      "full_name": "TERESA GARCIA",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "WA",
+    "front": {
+        "holder": {
+            "dob": "1979-03-15",
+            "first_name": "TERESA",
+            "middle_name": null,
+            "last_name": "GARCIA",
+            "full_name": "TERESA GARCIA",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "963642628",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2033-11-30",
+            "conditions": "SX"
+        },
+        "address": {
+            "address_line_1": "UNIT 28",
+            "address_line_2": "27 WANG GLADE",
+            "suburb": "TAYLORTON",
+            "state": "WA",
+            "postcode": "2916"
+        },
+        "card_number": "D7173444",
+        "dob_watermark": null,
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "963642628",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2033-11-30",
-      "conditions": "SX"
-    },
-    "address": {
-      "address_line_1": "UNIT 28",
-      "address_line_2": "27 WANG GLADE",
-      "suburb": "TAYLORTON",
-      "state": "WA",
-      "postcode": "2916"
-    },
-    "card_number": "D7173444",
-    "dob_watermark": null,
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1959-03-12",
-    "card_number": "D5840648",
-    "expiry_date": "2033-10-19",
-    "age_indicator": "03-59",
-    "barcode_number": "ABnoteNZ4907190119",
-    "conditions_legend": {
-      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
-    },
-    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
-  }
+    "back": {
+        "dob": "1959-03-12",
+        "card_number": "D5840648",
+        "expiry_date": "2033-10-19",
+        "age_indicator": "03-59",
+        "barcode_number": "ABnoteNZ4907190119",
+        "conditions_legend": {
+            "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+        },
+        "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+    }
 }

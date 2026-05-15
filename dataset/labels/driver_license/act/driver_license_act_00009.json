@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "1986-05-05",
+      "first_name": "CRISTINA",
+      "middle_name": null,
+      "last_name": "COLEMAN",
+      "full_name": "CRISTINA COLEMAN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "249532003",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2031-05-04",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 92",
+      "address_line_2": "APT. 050 03 HUGHES FLAT",
+      "suburb": "WEST BRETT",
+      "state": "ACT",
+      "postcode": "2994"
+    },
+    "card_number": "D3613865",
+    "dob_watermark": "05051986",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "05-05-1986",
+    "card_number": "D5166782",
+    "expiry_date": "04-05-2031",
+    "age_indicator": "05-86",
+    "barcode_number": "ABnoteNZ2577877440",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

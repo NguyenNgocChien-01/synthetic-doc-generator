@@ -1,45 +1,45 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "WA",
-  "front": {
-    "holder": {
-      "dob": "1996-08-05",
-      "first_name": "JENNIFER",
-      "middle_name": null,
-      "last_name": "JONES",
-      "full_name": "JENNIFER JONES",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "WA",
+    "front": {
+        "holder": {
+            "dob": "1996-08-05",
+            "first_name": "JENNIFER",
+            "middle_name": null,
+            "last_name": "JONES",
+            "full_name": "JENNIFER JONES",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "314665079",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2028-01-21",
+            "conditions": "VX"
+        },
+        "address": {
+            "address_line_1": "UNIT 1",
+            "address_line_2": "FLAT 24 450 GREGORY ROADWAY",
+            "suburb": "ST. NATASHACHESTER",
+            "state": "WA",
+            "postcode": "2680"
+        },
+        "card_number": "D1928495",
+        "dob_watermark": null,
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "314665079",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2028-01-21",
-      "conditions": "VX"
-    },
-    "address": {
-      "address_line_1": "UNIT 1",
-      "address_line_2": "FLAT 24 450 GREGORY ROADWAY",
-      "suburb": "ST. NATASHACHESTER",
-      "state": "WA",
-      "postcode": "2680"
-    },
-    "card_number": "D1928495",
-    "dob_watermark": null,
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1991-08-19",
-    "card_number": "D8306857",
-    "expiry_date": "2034-04-15",
-    "age_indicator": "08-91",
-    "barcode_number": "ABnoteNZ5762178996",
-    "conditions_legend": {
-      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
-    },
-    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
-  }
+    "back": {
+        "dob": "1991-08-19",
+        "card_number": "D8306857",
+        "expiry_date": "2034-04-15",
+        "age_indicator": "08-91",
+        "barcode_number": "ABnoteNZ5762178996",
+        "conditions_legend": {
+            "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+        },
+        "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+    }
 }

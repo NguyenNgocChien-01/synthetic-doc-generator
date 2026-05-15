@@ -1,50 +1,50 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "NT",
-  "front": {
-    "holder": {
-      "dob": "1999-07-30",
-      "first_name": "JESSICA",
-      "middle_name": null,
-      "last_name": "MILLER",
-      "full_name": "JESSICA MILLER",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NT",
+    "front": {
+        "holder": {
+            "dob": "1999-07-30",
+            "first_name": "JESSICA",
+            "middle_name": null,
+            "last_name": "MILLER",
+            "full_name": "JESSICA MILLER",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "726886046",
+            "licence_classes": [
+                "C",
+                "LR",
+                "MR",
+                "R"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2032-12-05",
+            "conditions": [
+                "S",
+                "XA",
+                "R"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 25",
+            "address_line_2": "APT. 194 282 BLAKE RING",
+            "suburb": "AUDREYMOUTH",
+            "state": "NT",
+            "postcode": "0961"
+        },
+        "card_number": "D6799452",
+        "dob_watermark": "25/12/1999",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "726886046",
-      "licence_classes": [
-        "C",
-        "LR",
-        "MR",
-        "R"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2032-12-05",
-      "conditions": [
-        "S",
-        "XA",
-        "R"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 25",
-      "address_line_2": "APT. 194 282 BLAKE RING",
-      "suburb": "AUDREYMOUTH",
-      "state": "NT",
-      "postcode": "0961"
-    },
-    "card_number": "D6799452",
-    "dob_watermark": "25/12/1999",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1993-06-08",
-    "card_number": "D3752079",
-    "expiry_date": "2034-03-26",
-    "age_indicator": "06-93",
-    "barcode_number": "ABnoteNZ3832321620",
-    "conditions_legend": null,
-    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
-  }
+    "back": {
+        "dob": "1993-06-08",
+        "card_number": "D3752079",
+        "expiry_date": "2034-03-26",
+        "age_indicator": "06-93",
+        "barcode_number": "ABnoteNZ3832321620",
+        "conditions_legend": null,
+        "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+    }
 }

@@ -1,0 +1,46 @@
+{
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "QLD",
+    "front": {
+        "holder": {
+            "dob": "1996-10-19",
+            "first_name": "MICHAEL",
+            "middle_name": null,
+            "last_name": "JORDAN",
+            "full_name": "MICHAEL JORDAN",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "882040430",
+            "licence_classes": [
+                "C",
+                "RE"
+            ],
+            "licence_type_raw": "O, L",
+            "expiry_date": "2030-12-28",
+            "conditions": [
+                "S"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 67",
+            "address_line_2": "824/59 ADRIAN VIADUCT",
+            "suburb": "LAKE JOSESIDE",
+            "state": "QLD",
+            "postcode": "2260"
+        },
+        "card_number": "D4693271",
+        "dob_watermark": "19101996",
+        "photo_present": true,
+        "signature_present": true
+    },
+    "back": {
+        "dob": "19-10-1996",
+        "card_number": "D8803148",
+        "expiry_date": "28-12-2030",
+        "age_indicator": "10-96",
+        "barcode_number": "ABnoteNZ9115118336",
+        "conditions_legend": null,
+        "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+    }
+}

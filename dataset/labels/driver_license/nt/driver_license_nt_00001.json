@@ -1,50 +1,50 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "NT",
-  "front": {
-    "holder": {
-      "dob": "1988-04-23",
-      "first_name": "TIMOTHY",
-      "middle_name": null,
-      "last_name": "DOYLE",
-      "full_name": "TIMOTHY DOYLE",
-      "sex": null
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "NT",
+    "front": {
+        "holder": {
+            "dob": "1988-04-23",
+            "first_name": "TIMOTHY",
+            "middle_name": null,
+            "last_name": "DOYLE",
+            "full_name": "TIMOTHY DOYLE",
+            "sex": null
+        },
+        "licence": {
+            "licence_number": "474399525",
+            "licence_classes": [
+                "C",
+                "LR",
+                "MR",
+                "R"
+            ],
+            "licence_type_raw": null,
+            "expiry_date": "2031-03-11",
+            "conditions": [
+                "S",
+                "XA",
+                "R"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 75",
+            "address_line_2": "APT. 295 15 DAVID PATH",
+            "suburb": "ST. AUSTINMOUTH",
+            "state": "NT",
+            "postcode": "1276"
+        },
+        "card_number": "D9149586",
+        "dob_watermark": "25/12/1999",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "474399525",
-      "licence_classes": [
-        "C",
-        "LR",
-        "MR",
-        "R"
-      ],
-      "licence_type_raw": null,
-      "expiry_date": "2031-03-11",
-      "conditions": [
-        "S",
-        "XA",
-        "R"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 75",
-      "address_line_2": "APT. 295 15 DAVID PATH",
-      "suburb": "ST. AUSTINMOUTH",
-      "state": "NT",
-      "postcode": "1276"
-    },
-    "card_number": "D9149586",
-    "dob_watermark": "25/12/1999",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1987-09-14",
-    "card_number": "D3301836",
-    "expiry_date": "2031-07-13",
-    "age_indicator": "09-87",
-    "barcode_number": "ABnoteNZ1738542591",
-    "conditions_legend": null,
-    "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
-  }
+    "back": {
+        "dob": "1987-09-14",
+        "card_number": "D3301836",
+        "expiry_date": "2031-07-13",
+        "age_indicator": "09-87",
+        "barcode_number": "ABnoteNZ1738542591",
+        "conditions_legend": null,
+        "transport_notice": "NORTHERN TERRITORY MOTOR VEHICLE REGISTRY NT.GOV.AU 1300 654 628"
+    }
 }

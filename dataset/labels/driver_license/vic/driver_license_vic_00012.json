@@ -1,61 +1,61 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "VIC",
-  "front": {
-    "holder": {
-      "dob": "1995-05-08",
-      "first_name": "DOUGLAS",
-      "middle_name": null,
-      "last_name": "WHITE",
-      "full_name": "DOUGLAS WHITE",
-      "sex": "F"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "VIC",
+    "front": {
+        "holder": {
+            "dob": "1995-05-08",
+            "first_name": "DOUGLAS",
+            "middle_name": null,
+            "last_name": "WHITE",
+            "full_name": "DOUGLAS WHITE",
+            "sex": "F"
+        },
+        "licence": {
+            "licence_number": "543964025",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CAR",
+            "expiry_date": "2030-02-20",
+            "conditions": [
+                "S",
+                "B",
+                "E",
+                "A",
+                "V",
+                "X",
+                "Y",
+                "Z"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 63",
+            "address_line_2": "FLAT 61 17 ESPARZA ROADSIDE",
+            "suburb": "DOUGLASMOUTH",
+            "state": "VIC",
+            "postcode": "4876"
+        },
+        "card_number": "D1171414",
+        "dob_watermark": "08051995",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "543964025",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CAR",
-      "expiry_date": "2030-02-20",
-      "conditions": [
-        "S",
-        "B",
-        "E",
-        "A",
-        "V",
-        "X",
-        "Y",
-        "Z"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 63",
-      "address_line_2": "FLAT 61 17 ESPARZA ROADSIDE",
-      "suburb": "DOUGLASMOUTH",
-      "state": "VIC",
-      "postcode": "4876"
-    },
-    "card_number": "D1171414",
-    "dob_watermark": "08051995",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1995-05-08",
-    "card_number": "D8397023",
-    "expiry_date": "2030-02-20",
-    "age_indicator": "05-95",
-    "barcode_number": "ABnoteNZ7334816269",
-    "conditions_legend": {
-      "S": "Corrective lenses to be worn while driving",
-      "B": "Synchromesh Transmission - Heavy Vehicle",
-      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
-      "A": "Automatic Transmission",
-      "V": "Automatic",
-      "X": "Condition Line Number Six",
-      "Y": "Condition Line Number Seven",
-      "Z": "Condition Line Number Eight"
-    },
-    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
-  }
+    "back": {
+        "dob": "1995-05-08",
+        "card_number": "D8397023",
+        "expiry_date": "2030-02-20",
+        "age_indicator": "05-95",
+        "barcode_number": "ABnoteNZ7334816269",
+        "conditions_legend": {
+            "S": "Corrective lenses to be worn while driving",
+            "B": "Synchromesh Transmission - Heavy Vehicle",
+            "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+            "A": "Automatic Transmission",
+            "V": "Automatic",
+            "X": "Condition Line Number Six",
+            "Y": "Condition Line Number Seven",
+            "Z": "Condition Line Number Eight"
+        },
+        "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+    }
 }

@@ -1,61 +1,61 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "VIC",
-  "front": {
-    "holder": {
-      "dob": "1991-04-12",
-      "first_name": "CATHY",
-      "middle_name": null,
-      "last_name": "KELLY",
-      "full_name": "CATHY KELLY",
-      "sex": "F"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "VIC",
+    "front": {
+        "holder": {
+            "dob": "1991-04-12",
+            "first_name": "CATHY",
+            "middle_name": null,
+            "last_name": "KELLY",
+            "full_name": "CATHY KELLY",
+            "sex": "F"
+        },
+        "licence": {
+            "licence_number": "354097172",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CAR",
+            "expiry_date": "2027-11-16",
+            "conditions": [
+                "S",
+                "B",
+                "E",
+                "A",
+                "V",
+                "X",
+                "Y",
+                "Z"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 74",
+            "address_line_2": "5 ANGELA UNDERPASS",
+            "suburb": "NUNEZMOUTH",
+            "state": "VIC",
+            "postcode": "2650"
+        },
+        "card_number": "D1240969",
+        "dob_watermark": "12041991",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "354097172",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CAR",
-      "expiry_date": "2027-11-16",
-      "conditions": [
-        "S",
-        "B",
-        "E",
-        "A",
-        "V",
-        "X",
-        "Y",
-        "Z"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 74",
-      "address_line_2": "5 ANGELA UNDERPASS",
-      "suburb": "NUNEZMOUTH",
-      "state": "VIC",
-      "postcode": "2650"
-    },
-    "card_number": "D1240969",
-    "dob_watermark": "12041991",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "1991-04-12",
-    "card_number": "D6722769",
-    "expiry_date": "2027-11-16",
-    "age_indicator": "04-91",
-    "barcode_number": "ABnoteNZ9253201792",
-    "conditions_legend": {
-      "S": "Corrective lenses to be worn while driving",
-      "B": "Synchromesh Transmission - Heavy Vehicle",
-      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
-      "A": "Automatic Transmission",
-      "V": "Automatic",
-      "X": "Condition Line Number Six",
-      "Y": "Condition Line Number Seven",
-      "Z": "Condition Line Number Eight"
-    },
-    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
-  }
+    "back": {
+        "dob": "1991-04-12",
+        "card_number": "D6722769",
+        "expiry_date": "2027-11-16",
+        "age_indicator": "04-91",
+        "barcode_number": "ABnoteNZ9253201792",
+        "conditions_legend": {
+            "S": "Corrective lenses to be worn while driving",
+            "B": "Synchromesh Transmission - Heavy Vehicle",
+            "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+            "A": "Automatic Transmission",
+            "V": "Automatic",
+            "X": "Condition Line Number Six",
+            "Y": "Condition Line Number Seven",
+            "Z": "Condition Line Number Eight"
+        },
+        "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+    }
 }

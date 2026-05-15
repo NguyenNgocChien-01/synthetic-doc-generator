@@ -1,47 +1,47 @@
 {
-  "document_type": "AUS_DRIVER_LICENCE",
-  "issuing_state": "SA",
-  "front": {
-    "holder": {
-      "dob": "1955-08-14",
-      "first_name": "KAREN",
-      "middle_name": null,
-      "last_name": "OCONNELL",
-      "full_name": "KAREN OCONNELL",
-      "sex": "M"
+    "document_type": "AUS_DRIVER_LICENSE",
+    "issuing_state": "SA",
+    "front": {
+        "holder": {
+            "dob": "1955-08-14",
+            "first_name": "KAREN",
+            "middle_name": null,
+            "last_name": "OCONNELL",
+            "full_name": "KAREN OCONNELL",
+            "sex": "M"
+        },
+        "licence": {
+            "licence_number": "341542952",
+            "licence_classes": [
+                "C"
+            ],
+            "licence_type_raw": "CLASS C",
+            "expiry_date": "2029-11-10",
+            "conditions": [
+                "01"
+            ]
+        },
+        "address": {
+            "address_line_1": "UNIT 63",
+            "address_line_2": "957 CASE FRONT",
+            "suburb": "BRADLEYTOWN",
+            "state": "SA",
+            "postcode": "1747"
+        },
+        "card_number": "D8472821",
+        "dob_watermark": "14081955",
+        "photo_present": true,
+        "signature_present": true
     },
-    "licence": {
-      "licence_number": "341542952",
-      "licence_classes": [
-        "C"
-      ],
-      "licence_type_raw": "CLASS C",
-      "expiry_date": "2029-11-10",
-      "conditions": [
-        "01"
-      ]
-    },
-    "address": {
-      "address_line_1": "UNIT 63",
-      "address_line_2": "957 CASE FRONT",
-      "suburb": "BRADLEYTOWN",
-      "state": "SA",
-      "postcode": "1747"
-    },
-    "card_number": "D8472821",
-    "dob_watermark": "14081955",
-    "photo_present": true,
-    "signature_present": true
-  },
-  "back": {
-    "dob": "14-08-1955",
-    "card_number": "D3838627",
-    "expiry_date": "10-11-2029",
-    "age_indicator": "08-55",
-    "barcode_number": "ABnoteNZ9325770927",
-    "conditions_legend": {
-      "01": "Corrective Lenses"
-    },
-    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
-  }
+    "back": {
+        "dob": "14-08-1955",
+        "card_number": "D3838627",
+        "expiry_date": "10-11-2029",
+        "age_indicator": "08-55",
+        "barcode_number": "ABnoteNZ9325770927",
+        "conditions_legend": {
+            "01": "Corrective Lenses"
+        },
+        "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+    }
 }
