@@ -1,0 +1,36 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "8666 75913 0",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "WILLIAM",
+      "middle_initial": "F",
+      "last_name": "COOLEY",
+      "full_name": "1 WILLIAM F COOLEY"
+    },
+    {
+      "position": 2,
+      "first_name": "ANNA",
+      "middle_initial": null,
+      "last_name": "FOX",
+      "full_name": "2 ANNA FOX"
+    },
+    {
+      "position": 3,
+      "first_name": "A",
+      "middle_initial": "X",
+      "last_name": "WALKER",
+      "full_name": "3 A X WALKER"
+    },
+    {
+      "position": 4,
+      "first_name": "TERESA",
+      "middle_initial": "C",
+      "last_name": "STONE",
+      "full_name": "4 TERESA C STONE"
+    }
+  ],
+  "expiry_date": "03/2029"
+}

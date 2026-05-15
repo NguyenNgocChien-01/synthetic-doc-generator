@@ -127,6 +127,23 @@ PROMPT_TEMPLATES = {
             "stature_handling": "You MUST generate a unique character that is physically distinct. A person specified as 'short boy' or with a child/adolescent age must be a smaller character with appropriate stature and features for that character type, not just a small-adult version. Use height data and name-to-gender logic to create a distinct individual."
         }
     },
+    "medicare_card": {
+            "date_format": "Format 'expiry_date' exactly as MM/YYYY (e.g., 03/2028) or DD/MM/YYYY (e.g., 09/03/2028). It MUST be placed next to the 'VALID TO' text.",
+            
+    
+            "photo_instructions": (
+                "CRITICAL WARNING: Australian Medicare Cards DO NOT contain any portrait photos. Delete avatar if have. "
+                "ABSOLUTELY DO NOT generate, add, or draw any human faces, avatars, or ghost images anywhere on this document."
+            ),
+            
+            "info": {
+                "background_preservation": "The background consists of a repeating 'medicare' watermark text pattern. You MUST preserve this background pattern perfectly. Do not erase, smudge, or blur the background when replacing the names and numbers.",
+                "card_number_formatting": "The 'medicare_card_number' is an 11-digit string. Render it with exact spacing as shown in the template (typically 4 digits, space, 5 digits, space, 1 digit) using the original monospace font style.",
+                "members_list_rendering": "Render the 'members' array sequentially starting from position 1. Format: only using [full_name]. Align the names neatly as shown in the original template. The member list matches the number of people in the json.",
+                "list_truncation": "If the JSON has fewer members than the original template, you MUST leave the remaining lines completely blank. DO NOT copy names from the original template to fill empty slots. Ensure the background pattern remains intact in those blank areas.",
+                "dynamic_data_rendering": "DO NOT invent, infer, or calculate any data. Rely 100% on the JSON. If a key is 'null', leave its designated space entirely blank."
+            }
+        },
     "default": {
         "date_format": "Format all dates exactly as they appear in the provided JSON data.",
         "photo_instructions": "Place the newly generated fictional face in the designated portrait photo slot.",

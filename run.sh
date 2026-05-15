@@ -43,6 +43,8 @@ for i in $(seq 1 $TOTAL); do
     STATUS=${PIPESTATUS[0]}
 
     if [ $STATUS -eq 0 ]; then
+        echo "Delaying for ${DELAY}s..."
+        sleep "$DELAY"
         SUCCESS=$((SUCCESS + 1))
         echo "[$i/$TOTAL] OK"
     else

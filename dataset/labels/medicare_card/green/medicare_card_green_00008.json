@@ -1,0 +1,43 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "3381 38035 0",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "ANTONIO",
+      "middle_initial": "N",
+      "last_name": "GEORGE",
+      "full_name": "1 ANTONIO N GEORGE"
+    },
+    {
+      "position": 2,
+      "first_name": "WILLIAM",
+      "middle_initial": null,
+      "last_name": "SUTTON",
+      "full_name": "2 WILLIAM SUTTON"
+    },
+    {
+      "position": 3,
+      "first_name": "NICHOLAS",
+      "middle_initial": null,
+      "last_name": "WATSON",
+      "full_name": "3 NICHOLAS WATSON"
+    },
+    {
+      "position": 4,
+      "first_name": "JESSE",
+      "middle_initial": "K",
+      "last_name": "DILLON",
+      "full_name": "4 JESSE K DILLON"
+    },
+    {
+      "position": 5,
+      "first_name": "RYAN",
+      "middle_initial": null,
+      "last_name": "NEAL",
+      "full_name": "5 RYAN NEAL"
+    }
+  ],
+  "expiry_date": "04/2030"
+}

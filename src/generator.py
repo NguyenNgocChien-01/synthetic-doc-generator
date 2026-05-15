@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from PIL import Image
+# from rich.prompt import result
 
 from .api_client import APIClient
 from .config import Config
@@ -195,7 +196,7 @@ class DataGenerator:
     def _parse_custom_json(self, data: Any) -> Any:
         if isinstance(data, dict):
             result = {}
-
+            
             _dob_dd = _dob_mm = _dob_yyyy = None
             for k, v in data.items():
                 k_lower = k.lower()
@@ -213,13 +214,57 @@ class DataGenerator:
                 k_lower = k.lower()
 
                 if k in result:
-                    continue  # DOB da xu ly
+                    continue  
 
                 if k_lower == "conditions_legend":
                     result[k] = v
 
-                elif isinstance(v, (dict, list)):
+                elif isinstance(v, (dict, list)) and k_lower not in ["members", "cardholders"]:
                     result[k] = self._parse_custom_json(v)
+                # Medicare, xu ly members/cardholders 
+                elif k_lower in ["members", "cardholders"] and isinstance(v, list):
+                    import random
+                    import string
+                    
+                    num_members = random.randint(1, 5) #Number of cardholders can be from 1 to 6
+                    new_members = []
+                    
+                    for i in range(1, num_members + 1):
+                        
+                        if random.random() < 0.1:
+                            first = random.choice(string.ascii_uppercase)
+                        else:
+                            first = self._faker_factory.faker.first_name().upper()
+                            
+                        if random.random() < 0.1:
+                             last = random.choice(string.ascii_uppercase)
+                        else:
+                             last = self._faker_factory.faker.last_name().upper()
+                             
+                  
+                        middle = random.choice(string.ascii_uppercase) if random.random() > 0.3 else None
+                        
+                
+                        full_name_parts = [str(i), first]
+                        if middle:
+                            full_name_parts.append(middle)
+                        full_name_parts.append(last)
+                        
+                        new_members.append({
+                            "position": i,
+                            "first_name": first,
+                            "middle_initial": middle,
+                            "last_name": last,
+                            "full_name": " ".join(full_name_parts)
+                        })
+                    result[k] = new_members
+
+                elif k_lower == "medicare_card_number":
+                    p1 = self._faker_factory.faker.random_number(digits=4, fix_len=True)
+                    p2 = self._faker_factory.faker.random_number(digits=5, fix_len=True)
+                    p3 = self._faker_factory.faker.random_number(digits=1)
+                    result[k] = f"{p1} {p2} {p3}"
+        
 
                 elif any(w in k_lower for w in ["first_name", "given_name"]):
                     result[k] = self._faker_factory.faker.first_name().upper()
@@ -243,17 +288,27 @@ class DataGenerator:
                         result[k] = v
 
                 elif any(w in k_lower for w in ["expiry", "expiration"]):
-                    result[k] = self._faker_factory.faker.date_between(
-                        start_date="+1y", end_date="+8y"
-                    ).strftime("%d-%m-%Y")
-
+                    v_str = str(v).strip()
+                    if "/" in v_str:
+                        fake_date = self._faker_factory.faker.date_between(
+                            start_date="+1y", end_date="+5y"
+                        )
+        
+                        if v_str.count("/") == 2 or len(v_str) > 7:
+                            result[k] = fake_date.strftime("%d/%m/%Y")
+                        else:
+                            result[k] = fake_date.strftime("%m/%Y")
+                    else:
+                        result[k] = self._faker_factory.faker.date_between(
+                            start_date="+1y", end_date="+8y"
+                        ).strftime("%d-%m-%Y")
                 elif "line_1" in k_lower:
                     result[k] = f"UNIT {self._faker_factory.faker.random_int(min=1, max=99)}"
 
                 elif any(w in k_lower for w in ["line_2", "street"]):
                     result[k] = self._faker_factory.faker.street_address().upper()
 
-                elif any(w in k_lower for w in ["suburb", "city", "town"]):
+                elif any(w in k_lower for w in ["suburb", "city", "town", "place_of_birth", "authority"]):
                     result[k] = self._faker_factory.faker.city().upper()
 
                 elif any(w in k_lower for w in ["postcode", "zip"]):
@@ -275,7 +330,6 @@ class DataGenerator:
                         result[k] = ""
                     else:
                         codes = random.sample(valid, random.randint(1, 3))
-                        # KHONG co space giua cac ma
                         result[k] = "".join(sorted(codes, key=valid.index))
 
                 else:

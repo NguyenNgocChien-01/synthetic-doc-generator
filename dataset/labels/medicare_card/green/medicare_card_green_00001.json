@@ -1,0 +1,43 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "6092 97325 0",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "JOHNNY",
+      "middle_initial": "T",
+      "last_name": "MILLER",
+      "full_name": "1 JOHNNY T MILLER"
+    },
+    {
+      "position": 2,
+      "first_name": "JOSHUA",
+      "middle_initial": "D",
+      "last_name": "BROWN",
+      "full_name": "2 JOSHUA D BROWN"
+    },
+    {
+      "position": 3,
+      "first_name": "KEVIN",
+      "middle_initial": "R",
+      "last_name": "MARTIN",
+      "full_name": "3 KEVIN R MARTIN"
+    },
+    {
+      "position": 4,
+      "first_name": "WILLIAM",
+      "middle_initial": null,
+      "last_name": "JOHNSON",
+      "full_name": "4 WILLIAM JOHNSON"
+    },
+    {
+      "position": 5,
+      "first_name": "CHRIS",
+      "middle_initial": "X",
+      "last_name": "WALSH",
+      "full_name": "5 CHRIS X WALSH"
+    }
+  ],
+  "expiry_date": "10/2030"
+}

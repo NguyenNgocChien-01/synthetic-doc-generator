@@ -1,26 +1,36 @@
 {
   "document_type": "AUS_MEDICARE_CARD",
   "card_type": "regular",
-  "medicare_card_number": "2847 61930 5",
-  "members": [
+  "medicare_card_number": "1234 56789 1",
+  "cardholders": [
     {
       "position": 1,
-      "first_name": "MICHAEL",
-      "middle_initial": "J",
-      "last_name": "HARRISON"
+      "first_name": "JOHN",
+      "middle_initial": "A",
+      "last_name": "CITIZEN",
+      "full_name": "1 JOHN A CITIZEN"
     },
     {
       "position": 2,
-      "first_name": "SARAH",
-      "middle_initial": "L",
-      "last_name": "HARRISON"
+      "first_name": "JANE",
+      "middle_initial": "A",
+      "last_name": "CITIZEN",
+      "full_name": "2 JANE A CITIZEN"
     },
     {
       "position": 3,
-      "first_name": "ETHAN",
-      "middle_initial": "R",
-      "last_name": "HARRISON"
+      "first_name": "JAMES",
+      "middle_initial": "A",
+      "last_name": "CITIZEN",
+      "full_name": "3 JAMES A CITIZEN"
+    },
+        {
+      "position": 4,
+      "first_name": "JESSICA",
+      "middle_initial": "A",
+      "last_name": "CITIZEN",
+      "full_name": "4 JESSICA A CITIZEN"
     }
   ],
-  "expiry_date": "03/2028"
+  "expiry_date": "08/2020"
 }

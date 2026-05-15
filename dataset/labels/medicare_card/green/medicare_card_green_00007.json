@@ -1,0 +1,22 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "3044 45628 3",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "MARVIN",
+      "middle_initial": null,
+      "last_name": "HENRY",
+      "full_name": "1 MARVIN HENRY"
+    },
+    {
+      "position": 2,
+      "first_name": "MELISSA",
+      "middle_initial": "P",
+      "last_name": "Z",
+      "full_name": "2 MELISSA P Z"
+    }
+  ],
+  "expiry_date": "12/2027"
+}

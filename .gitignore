@@ -19,3 +19,5 @@ Thumbs.db
 
 quota_state.json
 .env
+
+update_json.py

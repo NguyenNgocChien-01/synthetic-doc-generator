@@ -1,0 +1,45 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "WA",
+  "front": {
+    "holder": {
+      "dob": "08-03-1967",
+      "first_name": "JEFFREY",
+      "middle_name": null,
+      "last_name": "SIMPSON",
+      "full_name": "MICHAEL BECKER",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "573551027",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "17-10-2028",
+      "conditions": "S"
+    },
+    "address": {
+      "address_line_1": "UNIT 4",
+      "address_line_2": "593/100 WILLIAM GROVE",
+      "suburb": "SAMANTHASIDE",
+      "state": "WA",
+      "postcode": "2624"
+    },
+    "card_number": "D9893273",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "01-01-2000",
+    "card_number": "D7546752",
+    "expiry_date": "14-02-2033",
+    "age_indicator": "01-00",
+    "barcode_number": "ABnoteNZ2516795322",
+    "conditions_legend": {
+      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+    },
+    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+  }
+}

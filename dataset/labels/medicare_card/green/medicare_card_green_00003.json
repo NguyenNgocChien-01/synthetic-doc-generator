@@ -1,0 +1,36 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "6295 71601 1",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "KIMBERLY",
+      "middle_initial": "I",
+      "last_name": "BUTLER",
+      "full_name": "1 KIMBERLY I BUTLER"
+    },
+    {
+      "position": 2,
+      "first_name": "DEBRA",
+      "middle_initial": "T",
+      "last_name": "MAXWELL",
+      "full_name": "2 DEBRA T MAXWELL"
+    },
+    {
+      "position": 3,
+      "first_name": "PAUL",
+      "middle_initial": "K",
+      "last_name": "RICH",
+      "full_name": "3 PAUL K RICH"
+    },
+    {
+      "position": 4,
+      "first_name": "REBECCA",
+      "middle_initial": "N",
+      "last_name": "PRESTON",
+      "full_name": "4 REBECCA N PRESTON"
+    }
+  ],
+  "expiry_date": "08/2027"
+}
