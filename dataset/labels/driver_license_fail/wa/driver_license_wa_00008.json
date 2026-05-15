@@ -1,0 +1,45 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "WA",
+  "front": {
+    "holder": {
+      "dob": "16-08-1995",
+      "first_name": "SARAH",
+      "middle_name": null,
+      "last_name": "POWELL",
+      "full_name": "MICHAEL BECKER",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "724992179",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "05-08-2033",
+      "conditions": "BX"
+    },
+    "address": {
+      "address_line_1": "UNIT 7",
+      "address_line_2": "LEVEL 6 56 RODRIGUEZ ESPLANADE",
+      "suburb": "SOUTH ALEXIS",
+      "state": "WA",
+      "postcode": "2993"
+    },
+    "card_number": "D4234033",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "12-06-1980",
+    "card_number": "D4404017",
+    "expiry_date": "23-11-2031",
+    "age_indicator": "06-80",
+    "barcode_number": "ABnoteNZ8972415913",
+    "conditions_legend": {
+      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+    },
+    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+  }
+}

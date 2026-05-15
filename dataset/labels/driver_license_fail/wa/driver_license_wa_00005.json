@@ -1,0 +1,45 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "WA",
+  "front": {
+    "holder": {
+      "dob": "26-05-1967",
+      "first_name": "CHRISTOPHER",
+      "middle_name": null,
+      "last_name": "GREGORY",
+      "full_name": "MICHAEL BECKER",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "409696537",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "17-11-2027",
+      "conditions": "BX"
+    },
+    "address": {
+      "address_line_1": "UNIT 68",
+      "address_line_2": "APT. 820 596 BURGESS FRONTAGE",
+      "suburb": "CHRISTOPHERMOUTH",
+      "state": "WA",
+      "postcode": "2618"
+    },
+    "card_number": "D3550061",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "28-10-1963",
+    "card_number": "D2368693",
+    "expiry_date": "05-01-2031",
+    "age_indicator": "10-63",
+    "barcode_number": "ABnoteNZ1709958938",
+    "conditions_legend": {
+      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+    },
+    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+  }
+}

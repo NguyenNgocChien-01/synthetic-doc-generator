@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "first_name": "JANE",
+      "middle_name": null,
+      "last_name": "CITIZEN",
+      "full_name": "JANE CITIZEN",
+      "sex": "F",
+      "dob": "1983-07-29"
+    },
+    "licence": {
+      "licence_number": "987654321",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "2019-05-20",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "FLAT 10",
+      "address_line_2": "77 SAMPLE PARADE",
+      "suburb": "KEW EAST",
+      "state": "VIC",
+      "postcode": "3102"
+    },
+    "card_number": null,
+    "dob_watermark": "29071983",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D9999999",
+    "expiry_date": "2019-05-20",
+    "dob": "1983-07-29",
+    "age_indicator": "07-83",
+    "barcode_number": "4B|poxdNZ03041785",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

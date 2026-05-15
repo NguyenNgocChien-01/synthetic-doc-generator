@@ -239,8 +239,17 @@ class VertexAIProvider(BaseAPIProvider):
         doc_type_raw = json_data.get("document_type", json_data.get("doc_type", "document"))
         doc_type_key = doc_type_raw.lower().replace(" ", "_")
         
-        if "driver_licence" in doc_type_key or "driver_license" in doc_type_key:
-            doc_type_key = "driver_license"
+        if "driver_license" in doc_type_key:
+            issuing_state = str(json_data.get("issuing_state", "")).upper().strip()
+            if not issuing_state:
+                # thử tìm trong nested
+                for v in json_data.values():
+                    if isinstance(v, dict):
+                        issuing_state = str(v.get("issuing_state", "")).upper().strip()
+                        if issuing_state:
+                            break
+            state_key = f"driver_license_{issuing_state.lower()}" if issuing_state else ""
+            doc_type_key = state_key if state_key in PROMPT_TEMPLATES else "driver_license"
             
         prompt_config = PROMPT_TEMPLATES.get(doc_type_key, PROMPT_TEMPLATES["default"])
         date_format = prompt_config.get("date_format", PROMPT_TEMPLATES["default"]["date_format"])

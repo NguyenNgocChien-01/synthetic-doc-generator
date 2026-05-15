@@ -99,6 +99,28 @@ class Config:
 
         return config
     
+
+
+_DL_SHARED_INFO = (
+    "SHARED RULES (apply to ALL states):\n"
+    "- DATA: 100% rely on JSON. DO NOT invent. If null → leave blank, erase old text.\n"
+    "- NESTED: Extract from nested objects ('front.holder', 'front.licence', etc.).\n"
+    "- ARRAY: Concatenate without brackets (['S','B'] → 'SB').\n"
+    "- DATES FRONT=BACK: Dates on front MUST exactly match dates on back.\n"
+    "- DOB WATERMARK: If 'dob_watermark' in JSON → render ONCE clearly. If null → wipe clean. NEVER duplicate/hallucinate.\n"
+    "- CONDITIONS: Render exactly from JSON. If null → leave blank.\n"
+)
+ 
+_DL_SHARED_PHOTO = (
+    "PHOTO RULES:\n"
+    "- Generate ONE fictional human face. Do NOT copy or resemble anyone in the template.\n"
+    "- Place ONLY in the clearly designated portrait slot (usually a rectangular box with a visible border).\n"
+    "- LOGOS, COATS OF ARMS, STATE EMBLEMS are NOT photo slots — do NOT place any face over them.\n"
+    "- GHOST/HOLOGRAM layers that are part of the security design must be preserved as-is unless stated otherwise.\n"
+    "- CLEANUP: Erase ALL ghosted numbers, duplicated dates, or floating artefacts around the photo. Background must be clean.\n"
+)
+ 
+
 PROMPT_TEMPLATES = {
     "passport": {
         "date_format": "ALL dates MUST exactly match the format provided in the JSON (e.g., '1983-07-29'). Do not reformat to 'DD-MM-YYYY' or 'DD MMM YYYY'.",
@@ -108,42 +130,131 @@ PROMPT_TEMPLATES = {
             "data_strictness": "If a field in the JSON is 'null', 'None', or empty, leave that corresponding physical area blank on the document."
         }
     },
+     # ── DRIVER LICENSE fallback (no state) ───────────────────────────────────
     "driver_license": {
-        "date_format": "CRITICAL: The JSON dates are in ISO format (YYYY-MM-DD). You MUST format them exactly as YYYY-MM-DD on the generated document image. DO NOT change them to DD/MM/YYYY.",
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": _DL_SHARED_PHOTO,
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── ACT ──────────────────────────────────────────────────────────────────
+    "driver_license_act": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
         "photo_instructions": (
-            "Generate ONE new fictional human face, ensuring it does not resemble anyone in the original template. "
-            "The face MUST be created from scratch, matching the provided JSON details including age, gender, and stature. "
-            "CRITICAL VISUAL INSPECTION - Examine the provided template carefully to determine portrait slots. "
-            "CRITICAL ACT WARNING: The white text and logo area containing the words 'ACT Government' and the coat of arms is NOT a photo slot. This is sacred text/logo data and MUST NOT be modified, replaced, or covered by a face image. Only modify the single, clearly defined portrait photo frame. Delete any other perceived 'extra' photo elements, but do not touch the 'ACT Government' text/logo data. "
-            "CRITICAL PHOTO OVERLAYS: You MUST preserve all state-specific security features, holograms, transparent watermark numbers, guilloche lines, AND ANY handwritten signature or text overlapping the portrait areas. If a signature overlaps a photo, the signature MUST appear *on top* of the newly generated face."
+            _DL_SHARED_PHOTO +
+            "ACT SPECIFIC:\n"
+            "- Background: WHITE with red/dark-blue header bar.\n"
+            "- 'ACT Government' text + Coat of Arms in header = NOT a photo slot. Do NOT touch it.\n"
         ),
-        
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── NSW ──────────────────────────────────────────────────────────────────
+    "driver_license_nsw": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "NSW SPECIFIC:\n"
+            "- Background: bold RED top band, white body, gold/red diagonal security stripe pattern.\n"
+            "- NSW Waratah logo = NOT a photo slot.\n"
+            "- Holographic overlay on card surface → preserve as-is.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── VIC ──────────────────────────────────────────────────────────────────
+    "driver_license_vic": {
+        "date_format": "CRITICAL: Format all dates exactly as DD-MM-YYYY (e.g., 30-03-2030) to match the template. DO NOT use YYYY-MM-DD or DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "VIC SPECIFIC RULES:\n"
+            "- PHOTO SLOT: 1 photo on FRONT ONLY (right side). The back MUST NOT contain any face or portrait artifacts.\n"
+            "- STRICT BOUNDARIES: The portrait MUST stay strictly within its designated rectangular box. DO NOT let the face, hair, or clothing bleed into the green background or overlap text.\n"
+            "- CRITICAL CLEANUP: You MUST completely ERASE any hallucinated ghost text, messy overlapping dates, or scrambled letters (e.g., 'DAPIRY', 'EOXNRY') on both front and back. The background must remain a clean green chevron pattern.\n"
+            "- FRONT DOB WATERMARK: If JSON has 'dob_watermark', render it exactly ONCE as crisp, clean text overlapping the bottom edge of the photo. Do NOT duplicate or smudge it. If null, wipe the area clean.\n"
+            "- BACK WATERMARKS: Preserve the large background numbers (expiry/DOB) on the back, but render them cleanly without scrambling the surrounding text."
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+    # ── QLD ──────────────────────────────────────────────────────────────────
+    "driver_license_qld": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "QLD SPECIFIC:\n"
+            "- Background: WHITE/LIGHT with MAROON top band.\n"
+            "- QLD has a semi-transparent ghost portrait + holographic overlay printed ON TOP of the main photo.\n"
+            "  → New face goes in MAIN portrait slot only. Ghost/hologram layer sits on top → preserve exactly as template.\n"
+            "- Queensland Government logo + Coat of Arms = NOT photo slots.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── WA ───────────────────────────────────────────────────────────────────
+    "driver_license_wa": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "WA SPECIFIC:\n"
+            "- Background: YELLOW/GOLD top section with BLACK text, lighter body.\n"
+            "- 'Government of Western Australia' text + Black Swan emblem = NOT photo slots.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── SA ───────────────────────────────────────────────────────────────────
+    "driver_license_sa": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "SA SPECIFIC:\n"
+            "- Background: RED top band, white body.\n"
+            "- 'Government of South Australia' logo = NOT a photo slot.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── TAS ──────────────────────────────────────────────────────────────────
+    "driver_license_tas": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            _DL_SHARED_PHOTO +
+            "TAS SPECIFIC:\n"
+            "- Background: GREEN top band, white/light body.\n"
+            "- 'Service Tasmania' logo + Tasmanian Devil emblem = NOT photo slots.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── NT ───────────────────────────────────────────────────────────────────
+    "driver_license_nt": {
+        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+        "photo_instructions": (
+            "PHOTO RULES:\n"
+            "- NT license has TWO portrait slots: 1 MAIN (larger) + 1 SECONDARY (smaller).\n"
+            "- Generate ONE fictional person and place the SAME face in BOTH slots (same person, different crop/size).\n"
+            "- Do NOT generate two different faces.\n"
+            "- 'Northern Territory Government' logo = NOT a photo slot.\n"
+            "- Background: ORANGE/OCHRE top band, white body.\n"
+            "- CLEANUP: Erase ghosted numbers/watermarks around BOTH photo areas.\n"
+        ),
+        "info": {"shared": _DL_SHARED_INFO}
+    },
+ 
+    # ── MEDICARE ─────────────────────────────────────────────────────────────
+    "medicare_card": {
+        "date_format": "Format 'expiry_date' as MM/YYYY (e.g. 03/2028). Place next to 'VALID TO' text.",
+        "photo_instructions": (
+            "CRITICAL: Medicare cards have NO portrait photo.\n"
+            "DO NOT generate, add, or draw any human face, avatar, or ghost image anywhere on this card."
+        ),
         "info": {
-            "nested_json_handling": "The JSON structure uses nested objects like 'front.holder', 'front.licence', and 'front.address'. Extract the values from these objects and apply them to the correct sections on the document.",
-            "array_formatting": "If fields like 'licence_classes' or 'conditions' are arrays, concatenate the elements into a single string without brackets. Example: ['S', 'B'] renders as 'SB' or 'S B' depending on the template spacing.",
-            "dynamic_data_rendering": "DO NOT invent, infer, or calculate any data. Rely 100% on the JSON. If a key is 'null', leave its designated space entirely blank.",
-            "front_back_consistency": "Render 'conditions_legend' or 'transport_notice' exactly as provided in the 'back' object. Ensure dates on the Front strictly match dates on the Back.",
-            "variable_watermarks": "Render 'dob_watermark', 'age_indicator', or 'card_number' matching the size, opacity, and specific location shown in the template. If 'null', remove them.",
-            "stature_handling": "You MUST generate a unique character that is physically distinct. A person specified as 'short boy' or with a child/adolescent age must be a smaller character with appropriate stature and features for that character type, not just a small-adult version. Use height data and name-to-gender logic to create a distinct individual."
+            "background": "Preserve the repeating 'medicare' watermark background pattern — do NOT erase or smudge it.",
+            "card_number": "11-digit number. Render with spacing: 4 digits, space, 5 digits, space, 1 digit.",
+            "members": "Render 'members' array sequentially from position 1, full_name only. Fewer members than template → leave remaining lines blank (do NOT copy from template).",
+            "data": "DO NOT invent/infer data. If null → leave blank.",
         }
     },
-    "medicare_card": {
-            "date_format": "Format 'expiry_date' exactly as MM/YYYY (e.g., 03/2028) or DD/MM/YYYY (e.g., 09/03/2028). It MUST be placed next to the 'VALID TO' text.",
-            
-    
-            "photo_instructions": (
-                "CRITICAL WARNING: Australian Medicare Cards DO NOT contain any portrait photos. Delete avatar if have. "
-                "ABSOLUTELY DO NOT generate, add, or draw any human faces, avatars, or ghost images anywhere on this document."
-            ),
-            
-            "info": {
-                "background_preservation": "The background consists of a repeating 'medicare' watermark text pattern. You MUST preserve this background pattern perfectly. Do not erase, smudge, or blur the background when replacing the names and numbers.",
-                "card_number_formatting": "The 'medicare_card_number' is an 11-digit string. Render it with exact spacing as shown in the template (typically 4 digits, space, 5 digits, space, 1 digit) using the original monospace font style.",
-                "members_list_rendering": "Render the 'members' array sequentially starting from position 1. Format: only using [full_name]. Align the names neatly as shown in the original template. The member list matches the number of people in the json.",
-                "list_truncation": "If the JSON has fewer members than the original template, you MUST leave the remaining lines completely blank. DO NOT copy names from the original template to fill empty slots. Ensure the background pattern remains intact in those blank areas.",
-                "dynamic_data_rendering": "DO NOT invent, infer, or calculate any data. Rely 100% on the JSON. If a key is 'null', leave its designated space entirely blank."
-            }
-        },
     "default": {
         "date_format": "Format all dates exactly as they appear in the provided JSON data.",
         "photo_instructions": "Place the newly generated fictional face in the designated portrait photo slot.",

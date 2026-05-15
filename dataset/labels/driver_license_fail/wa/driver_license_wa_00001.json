@@ -1,0 +1,45 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "WA",
+  "front": {
+    "holder": {
+      "dob": "03-11-1979",
+      "first_name": "TRACY",
+      "middle_name": null,
+      "last_name": "RODRIGUEZ",
+      "full_name": "MICHAEL BECKER",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "680616586",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "19-08-2030",
+      "conditions": ""
+    },
+    "address": {
+      "address_line_1": "UNIT 98",
+      "address_line_2": "773 IAN VILLAS",
+      "suburb": "EAST PHILIPMOUTH",
+      "state": "WA",
+      "postcode": "2096"
+    },
+    "card_number": "D5835865",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "10-05-1956",
+    "card_number": "D8411401",
+    "expiry_date": "21-02-2030",
+    "age_indicator": "05-56",
+    "barcode_number": "ABnoteNZ7389790895",
+    "conditions_legend": {
+      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+    },
+    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+  }
+}

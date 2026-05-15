@@ -193,115 +193,137 @@ class DataGenerator:
                 elapsed_seconds=time.monotonic() - start_time,
             )
 
-    def _parse_custom_json(self, data: Any) -> Any:
+    def _parse_custom_json(self, data: Any, _shared: dict = None) -> Any:
+        """
+        _shared: dict dùng để chia sẻ các giá trị cần nhất quán giữa các sub-dict:
+        - dob_dd, dob_mm, dob_yyyy  → từ lần đầu gặp dob/date_of_birth
+        - expiry_date               → từ lần đầu gặp expiry/expiration
+        """
+        if _shared is None:
+            _shared = {}   # root call tạo mới
+
         if isinstance(data, dict):
             result = {}
-            
+
             _dob_dd = _dob_mm = _dob_yyyy = None
+
             for k, v in data.items():
                 k_lower = k.lower()
-                if any(w in k_lower for w in ["dob", "date_of_birth", "birth"]) and "watermark" not in k_lower:
-                    if isinstance(v, str) and "-" not in v and v.isdigit():
-                        dob_obj = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=70)
-                        _dob_dd, _dob_mm, _dob_yyyy = dob_obj.strftime("%d"), dob_obj.strftime("%m"), dob_obj.strftime("%Y")
-                        result[k] = f"{_dob_dd}{_dob_mm}{_dob_yyyy}"
+                if any(w in k_lower for w in ["dob", "date_of_birth", "birth"]) \
+                        and "watermark" not in k_lower:
+
+                    if "dob_dd" in _shared:
+                        _dob_dd = _shared["dob_dd"]
+                        _dob_mm = _shared["dob_mm"]
+                        _dob_yyyy = _shared["dob_yyyy"]
                     else:
-                        dob_obj = self._faker_factory.faker.date_of_birth(minimum_age=18, maximum_age=70)
-                        _dob_dd, _dob_mm, _dob_yyyy = dob_obj.strftime("%d"), dob_obj.strftime("%m"), dob_obj.strftime("%Y")
+                        dob_obj = self._faker_factory.faker.date_of_birth(
+                            minimum_age=18, maximum_age=70
+                        )
+                        _dob_dd  = dob_obj.strftime("%d")
+                        _dob_mm  = dob_obj.strftime("%m")
+                        _dob_yyyy = dob_obj.strftime("%Y")
+                        _shared["dob_dd"]   = _dob_dd
+                        _shared["dob_mm"]   = _dob_mm
+                        _shared["dob_yyyy"] = _dob_yyyy
+
+                    # format output
+                    v_str = str(v).strip() if v else ""
+                    if v_str.isdigit() and "-" not in v_str:
+                        result[k] = f"{_dob_dd}{_dob_mm}{_dob_yyyy}"
+                    elif "-" in v_str and len(v_str) == 10:
+                        result[k] = f"{_dob_yyyy}-{_dob_mm}-{_dob_dd}"   # ISO
+                    else:
                         result[k] = f"{_dob_dd}-{_dob_mm}-{_dob_yyyy}"
+
 
             for k, v in data.items():
                 k_lower = k.lower()
 
                 if k in result:
-                    continue  
+                    continue   
 
+                # ── nested dict/list ──────────────────────────────────────────
                 if k_lower == "conditions_legend":
                     result[k] = v
 
                 elif isinstance(v, (dict, list)) and k_lower not in ["members", "cardholders"]:
-                    result[k] = self._parse_custom_json(v)
-                # Medicare, xu ly members/cardholders 
+                    result[k] = self._parse_custom_json(v, _shared)
+
                 elif k_lower in ["members", "cardholders"] and isinstance(v, list):
-                    import random
-                    import string
-                    
-                    num_members = random.randint(1, 5) #Number of cardholders can be from 1 to 6
+                    import random, string
+                    num_members = random.randint(1, 5)
                     new_members = []
-                    
                     for i in range(1, num_members + 1):
-                        
-                        if random.random() < 0.1:
-                            first = random.choice(string.ascii_uppercase)
-                        else:
-                            first = self._faker_factory.faker.first_name().upper()
-                            
-                        if random.random() < 0.1:
-                             last = random.choice(string.ascii_uppercase)
-                        else:
-                             last = self._faker_factory.faker.last_name().upper()
-                             
-                  
-                        middle = random.choice(string.ascii_uppercase) if random.random() > 0.3 else None
-                        
-                
-                        full_name_parts = [str(i), first]
-                        if middle:
-                            full_name_parts.append(middle)
-                        full_name_parts.append(last)
-                        
+                        first  = (random.choice(string.ascii_uppercase)
+                                if random.random() < 0.1
+                                else self._faker_factory.faker.first_name().upper())
+                        last   = (random.choice(string.ascii_uppercase)
+                                if random.random() < 0.1
+                                else self._faker_factory.faker.last_name().upper())
+                        middle = (random.choice(string.ascii_uppercase)
+                                if random.random() > 0.3 else None)
+                        parts  = [str(i), first] + ([middle] if middle else []) + [last]
                         new_members.append({
-                            "position": i,
-                            "first_name": first,
-                            "middle_initial": middle,
-                            "last_name": last,
-                            "full_name": " ".join(full_name_parts)
+                            "position": i, "first_name": first,
+                            "middle_initial": middle, "last_name": last,
+                            "full_name": " ".join(parts)
                         })
                     result[k] = new_members
 
+                # ── medicare ──────────────────────────────────────────────────
                 elif k_lower == "medicare_card_number":
                     p1 = self._faker_factory.faker.random_number(digits=4, fix_len=True)
                     p2 = self._faker_factory.faker.random_number(digits=5, fix_len=True)
                     p3 = self._faker_factory.faker.random_number(digits=1)
                     result[k] = f"{p1} {p2} {p3}"
-        
 
+                # ── name fields ───────────────────────────────────────────────
                 elif any(w in k_lower for w in ["first_name", "given_name"]):
                     result[k] = self._faker_factory.faker.first_name().upper()
 
                 elif "middle_name" in k_lower:
                     result[k] = self._faker_factory.faker.first_name().upper() if v else None
 
-                elif any(w in k_lower for w in ["last_name", "surname"]):
+                elif any(w in k_lower for w in ["last_name", "surname", "family_name"]):
                     result[k] = self._faker_factory.faker.last_name().upper()
 
+                # ── watermark (dob compact) ───────────────────────────────────
                 elif "watermark" in k_lower:
-                    if _dob_dd:
-                        result[k] = f"{_dob_dd}{_dob_mm}{_dob_yyyy}"
-                    else:
-                        result[k] = v
+                    dd  = _dob_dd  or _shared.get("dob_dd",  "")
+                    mm  = _dob_mm  or _shared.get("dob_mm",  "")
+                    yyyy = _dob_yyyy or _shared.get("dob_yyyy", "")
+                    result[k] = f"{dd}{mm}{yyyy}" if dd else v
 
+                # ── age_indicator: MM-YY────────────────────
                 elif "age_indicator" in k_lower:
-                    if _dob_mm and _dob_yyyy:
-                        result[k] = f"{_dob_mm}-{_dob_yyyy[-2:]}"
-                    else:
-                        result[k] = v
+                    mm   = _dob_mm   or _shared.get("dob_mm",   "")
+                    yyyy = _dob_yyyy or _shared.get("dob_yyyy", "")
+                    result[k] = f"{mm}-{yyyy[-2:]}" if mm and yyyy else v
 
+                # ── expiry / expiration ───────────────────────────────────────
                 elif any(w in k_lower for w in ["expiry", "expiration"]):
-                    v_str = str(v).strip()
-                    if "/" in v_str:
-                        fake_date = self._faker_factory.faker.date_between(
+                    if "expiry_date" not in _shared:
+                        _shared["expiry_date"] = self._faker_factory.faker.date_between(
                             start_date="+1y", end_date="+5y"
                         )
-        
+                    fake_date = _shared["expiry_date"]
+
+                    v_str = str(v).strip()
+                    if "/" in v_str:
                         if v_str.count("/") == 2 or len(v_str) > 7:
                             result[k] = fake_date.strftime("%d/%m/%Y")
                         else:
                             result[k] = fake_date.strftime("%m/%Y")
+                    elif "-" in v_str:
+                        if len(v_str) == 10 and (v_str.startswith("20") or v_str.startswith("19")):
+                            result[k] = fake_date.strftime("%Y-%m-%d")   # ISO
+                        else:
+                            result[k] = fake_date.strftime("%d-%m-%Y")
                     else:
-                        result[k] = self._faker_factory.faker.date_between(
-                            start_date="+1y", end_date="+8y"
-                        ).strftime("%d-%m-%Y")
+                        result[k] = fake_date.strftime("%d-%m-%Y")
+
+                # ── address ───────────────────────────────────────────────────
                 elif "line_1" in k_lower:
                     result[k] = f"UNIT {self._faker_factory.faker.random_int(min=1, max=99)}"
 
@@ -314,6 +336,7 @@ class DataGenerator:
                 elif any(w in k_lower for w in ["postcode", "zip"]):
                     result[k] = str(self._faker_factory.faker.postcode())
 
+                # ── licence / card / barcode ──────────────────────────────────
                 elif any(w in k_lower for w in ["licence_number", "license_number"]):
                     result[k] = str(self._faker_factory.faker.random_number(digits=9, fix_len=True))
 
@@ -323,6 +346,7 @@ class DataGenerator:
                 elif "barcode" in k_lower:
                     result[k] = f"ABnoteNZ{self._faker_factory.faker.random_number(digits=10, fix_len=True)}"
 
+                # ── conditions ────────────────────────────────────────────────
                 elif k_lower == "conditions":
                     import random
                     valid = ["S", "B", "E", "A", "V", "X", "Y", "Z"]
@@ -335,12 +359,25 @@ class DataGenerator:
                 else:
                     result[k] = v
 
+            # ── full_name ─────────────────────────────────────────────
+            full_name_keys = [k for k in result if k.lower() == "full_name"]
+            if full_name_keys:
+                first  = next((v for k, v in result.items()
+                            if any(w in k.lower() for w in ["first_name", "given_name"]) and v), "")
+                middle = next((v for k, v in result.items() if "middle" in k.lower() and v), "")
+                last   = next((v for k, v in result.items()
+                            if any(w in k.lower() for w in ["last_name", "surname", "family_name"]) and v), "")
+                name_parts = [p for p in [first, middle, last] if p]
+                if name_parts:
+                    for fn_key in full_name_keys:
+                        result[fn_key] = " ".join(name_parts)
+
             return result
 
         elif isinstance(data, list):
-            return [self._parse_custom_json(i) for i in data]
+            return [self._parse_custom_json(i, _shared) for i in data]
+
         return data
-    
     def _generate_one(self, doc_type: str, sample_id: str, template_config: Dict, state=None) -> GenerationResult:
         start_time = time.monotonic()
         

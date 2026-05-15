@@ -1,0 +1,47 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "SA",
+  "front": {
+    "holder": {
+      "dob": "1983-01-18",
+      "first_name": "SHAWN",
+      "middle_name": null,
+      "last_name": "HOPKINS",
+      "full_name": "SHAWN HOPKINS",
+      "sex": "M"
+    },
+    "licence": {
+      "licence_number": "647485306",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CLASS C",
+      "expiry_date": "2030-04-29",
+      "conditions": [
+        "01"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 50",
+      "address_line_2": "86/3 CURTIS HIGHROAD",
+      "suburb": "JONATHANSIDE",
+      "state": "SA",
+      "postcode": "5828"
+    },
+    "card_number": "D5587167",
+    "dob_watermark": "18011983",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "18-01-1983",
+    "card_number": "D9894533",
+    "expiry_date": "29-04-2030",
+    "age_indicator": "01-83",
+    "barcode_number": "ABnoteNZ3967587874",
+    "conditions_legend": {
+      "01": "Corrective Lenses"
+    },
+    "transport_notice": "Change of address must be notified within 14 days Call 131084 or visit www.azyreg.sa.gov.au"
+  }
+}

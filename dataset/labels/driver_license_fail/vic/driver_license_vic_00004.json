@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "dob": "19-04-1999",
+      "first_name": "DARLENE",
+      "middle_name": null,
+      "last_name": "KING",
+      "full_name": "JANE CITIZEN",
+      "sex": "F"
+    },
+    "licence": {
+      "licence_number": "868807469",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "04-12-2028",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 32",
+      "address_line_2": "LEVEL 0 2 FRITZ COLONNADE",
+      "suburb": "ST. JENNIFERMOUTH",
+      "state": "VIC",
+      "postcode": "2609"
+    },
+    "card_number": "D7240633",
+    "dob_watermark": "29071983",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "15-11-2002",
+    "card_number": "D9494709",
+    "expiry_date": "12-03-2032",
+    "age_indicator": "11-02",
+    "barcode_number": "ABnoteNZ8067885037",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

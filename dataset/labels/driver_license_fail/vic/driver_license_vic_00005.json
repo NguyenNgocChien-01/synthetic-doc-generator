@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "dob": "10-10-1982",
+      "first_name": "JAMIE",
+      "middle_name": null,
+      "last_name": "PATTON",
+      "full_name": "JANE CITIZEN",
+      "sex": "F"
+    },
+    "licence": {
+      "licence_number": "179468548",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "12-09-2030",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 43",
+      "address_line_2": "SUITE 263 19 MICHAEL FRONTAGE",
+      "suburb": "WEST DALTON",
+      "state": "VIC",
+      "postcode": "2973"
+    },
+    "card_number": "D8230962",
+    "dob_watermark": "29071983",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "07-03-1972",
+    "card_number": "D3726944",
+    "expiry_date": "31-01-2033",
+    "age_indicator": "03-72",
+    "barcode_number": "ABnoteNZ4399783368",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

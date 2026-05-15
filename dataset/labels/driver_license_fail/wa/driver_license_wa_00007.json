@@ -1,0 +1,45 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "WA",
+  "front": {
+    "holder": {
+      "dob": "31-03-1972",
+      "first_name": "RILEY",
+      "middle_name": null,
+      "last_name": "WILLIAMS",
+      "full_name": "MICHAEL BECKER",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "842323480",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "22-02-2032",
+      "conditions": ""
+    },
+    "address": {
+      "address_line_1": "UNIT 19",
+      "address_line_2": "9 KIM RIDGEWAY",
+      "suburb": "LAKE MARISSASIDE",
+      "state": "WA",
+      "postcode": "0899"
+    },
+    "card_number": "D3431810",
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "12-03-2005",
+    "card_number": "D7912815",
+    "expiry_date": "27-12-2031",
+    "age_indicator": "03-05",
+    "barcode_number": "ABnoteNZ3398721836",
+    "conditions_legend": {
+      "CONDITIONS": "WEAR SUITABLE VISUAL AIDS WHEN DRIVING"
+    },
+    "transport_notice": "ISSUED IN WESTERN AUSTRALIA 23 Jan 2021"
+  }
+}

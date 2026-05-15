@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "dob": "1961-02-20",
+      "first_name": "STEVEN",
+      "middle_name": null,
+      "last_name": "COOK",
+      "full_name": "STEVEN COOK",
+      "sex": "F"
+    },
+    "licence": {
+      "licence_number": "149222006",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "2031-04-03",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 45",
+      "address_line_2": "APT. 542 42 GABRIELLA SUBWAY",
+      "suburb": "WILLIAMSTON",
+      "state": "VIC",
+      "postcode": "2619"
+    },
+    "card_number": "D5579836",
+    "dob_watermark": "20021961",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "1961-02-20",
+    "card_number": "D7803933",
+    "expiry_date": "2031-04-03",
+    "age_indicator": "02-61",
+    "barcode_number": "ABnoteNZ3527946952",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

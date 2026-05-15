@@ -1,0 +1,60 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "TAS",
+  "front": {
+    "holder": {
+      "dob": "30-06-1980",
+      "first_name": "JACQUELINE",
+      "middle_name": null,
+      "last_name": "MORALES",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "526837273",
+      "licence_classes": [
+        "C",
+        "D",
+        "T",
+        "U"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "02-11-2027",
+      "conditions": [
+        "L1",
+        "L2",
+        "R1",
+        "R2"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 65",
+      "address_line_2": "39/4 JASON ROADSIDE",
+      "suburb": "AGUILARBOROUGH",
+      "state": "TAS",
+      "postcode": "4661"
+    },
+    "card_number": "D1046292",
+    "dob_watermark": "00000000",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "26-07-1958",
+    "card_number": "D1920706",
+    "expiry_date": "27-09-2033",
+    "age_indicator": "07-58",
+    "barcode_number": "ABnoteNZ5453027291",
+    "conditions_legend": {
+      "L1 C": "DRIVER REQUIREMENT TEST LINE 1",
+      "R1 E": "RIDER REQUIREMENT TEST LINE 1",
+      "C1": "VISUAL AIDS REQUIRED",
+      "C2": "CONDITION TEST DESCRIPTION 2",
+      "C3": "CONDITION TEST DESCRIPTION 3",
+      "C4": "CONDITION TEST DESCRIPTION 4",
+      "C5": "CONDITION TEST DESCRIPTION 5",
+      "C6": "CONDITION TEST DESCRIPTION 6"
+    },
+    "transport_notice": "For any queries regarding your licence visit Service Tasmania or call 1300 851 225 DEPARTMENT OF STATE GROWTH"
+  }
+}

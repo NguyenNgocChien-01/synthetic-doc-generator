@@ -1,8 +1,0 @@
-src/
-template/
-main.py/
-call_api.ipynnb/
-requirements.txt/
-run.sh/
-
-.env/

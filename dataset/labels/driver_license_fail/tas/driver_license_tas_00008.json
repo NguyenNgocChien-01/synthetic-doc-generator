@@ -1,0 +1,60 @@
+{
+  "document_type": "AUS_DRIVER_LICENCE",
+  "issuing_state": "TAS",
+  "front": {
+    "holder": {
+      "dob": "09-02-1956",
+      "first_name": "VINCENT",
+      "middle_name": null,
+      "last_name": "DAVID",
+      "full_name": "JOHN CITIZEN",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "957661823",
+      "licence_classes": [
+        "C",
+        "D",
+        "T",
+        "U"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "10-04-2028",
+      "conditions": [
+        "L1",
+        "L2",
+        "R1",
+        "R2"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 21",
+      "address_line_2": "055 REED STREET",
+      "suburb": "NEW SUZANNEVIEW",
+      "state": "TAS",
+      "postcode": "2627"
+    },
+    "card_number": "D9268517",
+    "dob_watermark": "00000000",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "12-02-1962",
+    "card_number": "D8369109",
+    "expiry_date": "16-04-2034",
+    "age_indicator": "02-62",
+    "barcode_number": "ABnoteNZ4539525596",
+    "conditions_legend": {
+      "L1 C": "DRIVER REQUIREMENT TEST LINE 1",
+      "R1 E": "RIDER REQUIREMENT TEST LINE 1",
+      "C1": "VISUAL AIDS REQUIRED",
+      "C2": "CONDITION TEST DESCRIPTION 2",
+      "C3": "CONDITION TEST DESCRIPTION 3",
+      "C4": "CONDITION TEST DESCRIPTION 4",
+      "C5": "CONDITION TEST DESCRIPTION 5",
+      "C6": "CONDITION TEST DESCRIPTION 6"
+    },
+    "transport_notice": "For any queries regarding your licence visit Service Tasmania or call 1300 851 225 DEPARTMENT OF STATE GROWTH"
+  }
+}
