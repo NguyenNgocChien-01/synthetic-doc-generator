@@ -1,57 +1,60 @@
 # Synthetic Document Generator
 
+## Setup
 
 `.env`:
 
 ```env
-GOOGLE_API_KEY=...[Gemini API + Biling]
-GOOGLE_CLOUD_PROJECT=...[ID_Project]
+GOOGLE_API_KEY=...[Gemini API + Billing]
+GOOGLE_CLOUD_PROJECT=...[Project_ID]
+```
 
-```
-on Local
-```
-https://cloud.google.com/sdk/docs/install#windows
+**Local authentication:**
+```bash
+# Install SDK: https://cloud.google.com/sdk/docs/install#windows
 gcloud auth application-default login
-
-# tạm thời k cần
-<!-- gcloud compute ssh instance-20260506-083338 --zone=us-central1-b --project=first-orc-chien
-cd /home/jupyter/synthetic-doc-generator
-sudo chmod -R 777 dataset/ -->
-
 ```
 
 ---
 
-### Script batch 
+## Batch Script
 
 ```bash
-# ./run.sh [số_mẫu] [delay_giây] [loại_tài_liệu] [bang]
+# ./run.sh [count] [delay_seconds] [doc_type] [state]
 
 ./run.sh 10 15 passport
 ./run.sh 20 15 driver_license
 ./run.sh 20 15 driver_license vic
 ```
 
-**Tham số:**
-- `số_mẫu` — bao nhiêu ảnh cần sinh (mặc định: 10)
-- `delay_giây` — thời gian chờ giữa mỗi lần gọi API để tránh rate limit (mặc định: 8, khuyến nghị: 15)
-- `loại_tài_liệu` — `passport` hoặc `driver_license`... (mặc định: passport)
-- `bang` — (đang vic, có thể thêm cac thư mục template cho cac bang tương ứng).
+**Parameters:**
+- `count` — number of images to generate (default: 10)
+- `delay_seconds` — wait time between API calls to avoid rate limiting
+- `doc_type` — `passport`, `driver_license`, `medicare_card`...
+- `state` — state code for driver license: `vic`, `act`, `nsw`...
 
-### CLI 
+---
+
+## CLI
 
 ```bash
 python main.py \
     --type passport \
     --count 1 \
-    --workers 1 \
-    --project-id [ID-Project] \
+    --image-model gemini-2.5-flash-image
+```
+
+```bash
+python main.py \
+    --type driver_license \
+    --state vic \
+    --count 1 \
     --image-model gemini-2.5-flash-image
 ```
 
 ---
 
-## Cấu trúc thư mục
+## Project Structure
 
 ```
 synthetic-doc-generator/
@@ -59,17 +62,16 @@ synthetic-doc-generator/
 ├── run.sh
 ├── templates/
 │   ├── driver_license/
-|   │   │─vic/
-|   |       |── template.jpg ← ảnh template bằng lái
-|   |       └── base.json ← json genarate
+│   │   └── vic/
+│   │       ├── template.jpg
+│   │       └── base.json
 │   └── passport/
-│       └── template.jpg ← ảnh template hộ chiếu
-|          ...      
-└── dataset/                   ← output sinh ra
-    |── documents/
-    |   ├── passport
-    |   └── ...
-    ├── labels/
-        ├── passport
-        └── ...
+│       └── template.jpg...
+└── dataset/
+    ├── documents/
+    │   ├── passport/
+    │   └── driver_license/
+    └── labels/
+        ├── passport/
+        └── driver_license/
 ```
