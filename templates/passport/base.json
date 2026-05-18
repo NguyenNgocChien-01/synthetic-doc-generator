@@ -1,17 +1,17 @@
 {
-    "document_type": "aus_passport",
+    "document_type": "AUS_PASSPORT",
     "issuing_country": "AUS",
-    "document_number": "J8962843",
-    "family_name": "FIGUEROA",
-    "given_names": "MICHEAL NICHOLAS",
+    "document_number": "HB5437923",
+    "family_name": "HARRIS",
+    "given_names": "NINA",
     "nationality": "AUSTRALIAN",
-    "date_of_birth": "1996-03-05",
-    "sex": "M",
-    "date_of_issue": "2025-01-23",
-    "date_of_expiry": "2035-01-23",
-    "place_of_birth": "BREWERVIEW",
-    "authority": "LONDON",
-    "mrx_line1": "P<AUSFIGUEROA<<MICHEAL<NICHOLAS<<<<<<<<<<<<<<",
-    "mrz_line2": "J8962843<6AUS9603057M3501232<<<<<<<<<<<<<<00"
+    "date_of_birth": "1989-01-31",
+    "sex": "F",
+    "date_of_issue": "2012-03-03",
+    "date_of_expiry": "2022-03-03",
+    "place_of_birth": "GEElONG",
+    "authority": "CANBERRA",
+    "mrz_line1": "P<AUSHARRIS<<NINA<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+    "mrz_line2": "HB5437923<6AUS8901317F3501232<<<<<<<<<<<<<00"
 
 }

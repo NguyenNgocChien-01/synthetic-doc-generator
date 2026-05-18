@@ -1,0 +1,36 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "iterim card",
+  "medicare_card_number": "1004 74000 1",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "JOHN",
+      "middle_initial": "C",
+      "last_name": "ELLIS",
+      "full_name": "1 JOHN C ELLIS"
+    },
+    {
+      "position": 2,
+      "first_name": "SHAWN",
+      "middle_initial": "D",
+      "last_name": "COOK",
+      "full_name": "2 SHAWN D COOK"
+    },
+    {
+      "position": 3,
+      "first_name": "RICHARD",
+      "middle_initial": "V",
+      "last_name": "FRANK",
+      "full_name": "3 RICHARD V FRANK"
+    },
+    {
+      "position": 4,
+      "first_name": "SAMUEL",
+      "middle_initial": "Z",
+      "last_name": "BROWN",
+      "full_name": "4 SAMUEL Z BROWN"
+    }
+  ],
+  "expiry_date": "05/06/2029"
+}

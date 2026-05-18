@@ -1,0 +1,29 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "iterim card",
+  "medicare_card_number": "7783 88397 8",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "BRIAN",
+      "middle_initial": "D",
+      "last_name": "JONES",
+      "full_name": "1 BRIAN D JONES"
+    },
+    {
+      "position": 2,
+      "first_name": "TIFFANY",
+      "middle_initial": "P",
+      "last_name": "MORALES",
+      "full_name": "2 TIFFANY P MORALES"
+    },
+    {
+      "position": 3,
+      "first_name": "JASON",
+      "middle_initial": "D",
+      "last_name": "HARPER",
+      "full_name": "3 JASON D HARPER"
+    }
+  ],
+  "expiry_date": "07/12/2029"
+}

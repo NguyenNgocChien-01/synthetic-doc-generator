@@ -1,0 +1,36 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "iterim card",
+  "medicare_card_number": "5259 26882 0",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "NATHANIEL",
+      "middle_initial": "F",
+      "last_name": "FRYE",
+      "full_name": "1 NATHANIEL F FRYE"
+    },
+    {
+      "position": 2,
+      "first_name": "ALEXANDRIA",
+      "middle_initial": "R",
+      "last_name": "YU",
+      "full_name": "2 ALEXANDRIA R YU"
+    },
+    {
+      "position": 3,
+      "first_name": "JULIE",
+      "middle_initial": null,
+      "last_name": "HARDIN",
+      "full_name": "3 JULIE HARDIN"
+    },
+    {
+      "position": 4,
+      "first_name": "MONICA",
+      "middle_initial": null,
+      "last_name": "CHAMBERS",
+      "full_name": "4 MONICA CHAMBERS"
+    }
+  ],
+  "expiry_date": "01/09/2029"
+}

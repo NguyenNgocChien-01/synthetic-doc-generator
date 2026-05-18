@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "QR0258077",
+  "family_name": "SMITH",
+  "given_names": "SCOTT",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1961-05-03",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-12-30",
+  "place_of_birth": "EAST EVANMOUTH",
+  "authority": "GARRETTBURGH",
+  "mrz_line1": "P<AUSSMITH<<SCOTT<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "QR0258077<AUS610503M271230<<<<<<<<<<<<<<<<02"
+}

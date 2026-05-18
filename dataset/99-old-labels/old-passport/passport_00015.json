@@ -1,0 +1,16 @@
+{
+    "document_type": "aus_passport",
+    "issuing_country": "AUS",
+    "document_number": "J8962843",
+    "family_name": "FIGUEROA",
+    "given_names": "ELIZABETH",
+    "nationality": "AUSTRALIAN",
+    "date_of_birth": "13-05-1997",
+    "sex": "M",
+    "date_of_issue": "2025-01-23",
+    "date_of_expiry": "01-09-2030",
+    "place_of_birth": "EAST JOELMOUTH",
+    "authority": "LONDON",
+    "mrz_line1": "P<AUSFIGUEROA<<MICHEAL<NICHOLAS<<<<<<<<<<<<<<",
+    "mrz_line2": "J8962843<6AUS9603057M3501232<<<<<<<<<<<<<<00"
+}

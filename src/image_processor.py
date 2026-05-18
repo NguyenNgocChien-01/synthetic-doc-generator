@@ -311,6 +311,45 @@ class ImageProcessor:
 
         return img
 
+    def render_document_on_base(
+        self,
+        base_image: Image.Image,
+        doc_type: str,
+        template_config: Dict,
+        fields_data: Dict[str, str],
+    ) -> Tuple[Image.Image, List[Dict]]:
+        """
+        Thực thi Giai đoạn 2: Vẽ văn bản tĩnh lên ảnh nền đồ họa từ API.
+        """
+        image = base_image.copy()
+        draw = ImageDraw.Draw(image)
+        bounding_boxes = []
+
+        # Chỉ lặp qua cấu hình JSON để vẽ văn bản
+        for field_cfg in template_config.get("fields", []):
+            key = field_cfg.get("key", "")
+            value = fields_data.get(key, "")
+            if not value:
+                continue
+
+            bbox = self._draw_field(draw, image, field_cfg, value)
+            if bbox:
+                bounding_boxes.append({
+                    "key": key,
+                    "value": value,
+                    "bounding_box": bbox,
+                    "faker_type": field_cfg.get("faker_type", ""),
+                })
+
+        # Áp dụng Augmentation sau khi đã có toàn bộ văn bản
+        should_augment = True
+        if self.config and not self.config.enable_augmentation:
+            should_augment = False
+
+        if should_augment:
+            image = self._apply_augmentation(image)
+
+        return image, bounding_boxes
     def _draw_field(
         self,
         draw: ImageDraw.Draw,

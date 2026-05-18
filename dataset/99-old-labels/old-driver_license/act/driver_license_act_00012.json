@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "dob": "1973-08-18",
+      "first_name": "JESSICA",
+      "middle_name": null,
+      "last_name": "MARTINEZ",
+      "full_name": "JESSICA MARTINEZ",
+      "sex": null
+    },
+    "licence": {
+      "licence_number": "400336680",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2031-02-23",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 21",
+      "address_line_2": "384 ROBINSON VILLAS",
+      "suburb": "ALBERTFURT",
+      "state": "ACT",
+      "postcode": "2935"
+    },
+    "card_number": "D6069987",
+    "dob_watermark": "18081973",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "dob": "18-08-1973",
+    "card_number": "D4291826",
+    "expiry_date": "23-02-2031",
+    "age_indicator": "08-73",
+    "barcode_number": "ABnoteNZ1944842837",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

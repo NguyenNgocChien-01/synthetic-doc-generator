@@ -1,0 +1,36 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "1060 21987 2",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "N",
+      "middle_initial": "W",
+      "last_name": "ALVARADO",
+      "full_name": "1 N W ALVARADO"
+    },
+    {
+      "position": 2,
+      "first_name": "MELVIN",
+      "middle_initial": "J",
+      "last_name": "ALVAREZ",
+      "full_name": "2 MELVIN J ALVAREZ"
+    },
+    {
+      "position": 3,
+      "first_name": "MICHELLE",
+      "middle_initial": "X",
+      "last_name": "PARRISH",
+      "full_name": "3 MICHELLE X PARRISH"
+    },
+    {
+      "position": 4,
+      "first_name": "ERICA",
+      "middle_initial": "O",
+      "last_name": "RAMOS",
+      "full_name": "4 ERICA O RAMOS"
+    }
+  ],
+  "expiry_date": "10/2027"
+}

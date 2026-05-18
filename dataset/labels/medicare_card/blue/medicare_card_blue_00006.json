@@ -1,0 +1,15 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "iterim card",
+  "medicare_card_number": "2498 22765 2",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "CALVIN",
+      "middle_initial": "T",
+      "last_name": "TATE",
+      "full_name": "1 CALVIN T TATE"
+    }
+  ],
+  "expiry_date": "16/03/2030"
+}

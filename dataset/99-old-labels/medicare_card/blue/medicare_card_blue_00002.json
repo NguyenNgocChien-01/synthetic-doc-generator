@@ -1,0 +1,22 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "iterim card",
+  "medicare_card_number": "8009 19546 8",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "MEAGAN",
+      "middle_initial": "K",
+      "last_name": "VELAZQUEZ",
+      "full_name": "1 MEAGAN K VELAZQUEZ"
+    },
+    {
+      "position": 2,
+      "first_name": "LINDSEY",
+      "middle_initial": "S",
+      "last_name": "TUCKER",
+      "full_name": "2 LINDSEY S TUCKER"
+    }
+  ],
+  "expiry_date": "20/05/2027"
+}

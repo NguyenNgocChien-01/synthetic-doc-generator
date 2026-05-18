@@ -101,256 +101,346 @@ class Config:
     
 
 
-_DL_SHARED_INFO = (
-    "SHARED RULES (apply to ALL states):\n"
-    "- DATA: 100% rely on JSON. DO NOT invent. If null -> leave blank, erase old text.\n"
-    "- NESTED: Extract from nested objects ('front.holder', 'front.licence', etc.).\n"
-    "- ARRAY: Concatenate without brackets (['S','B'] -> 'SB').\n"
-    "- DATES FRONT=BACK: Dates on front MUST exactly match dates on back.\n"
-    "- DOB WATERMARK: If 'dob_watermark' in JSON -> render ONCE clearly. If null -> wipe clean. NEVER duplicate/hallucinate.\n"
-    "- CONDITIONS: Render exactly from JSON. If null -> leave blank.\n"
-)
+# _DL_SHARED_INFO = (
+#     "SHARED RULES (apply to ALL states):\n"
+#     "- DATA: 100% rely on JSON. DO NOT invent. If null -> leave blank, erase old text.\n"
+#     "- NESTED: Extract from nested objects ('front.holder', 'front.licence', etc.).\n"
+#     "- ARRAY: Concatenate without brackets (['S','B'] -> 'SB').\n"
+#     "- DATES FRONT=BACK: Dates on front MUST exactly match dates on back.\n"
+#     "- DOB WATERMARK: If 'dob_watermark' in JSON -> render ONCE clearly. If null -> wipe clean. NEVER duplicate/hallucinate.\n"
+#     "- CONDITIONS: Render exactly from JSON. If null -> leave blank.\n"
+# )
  
-_DL_SHARED_PHOTO = (
-    "PHOTO RULES:\n"
-    "- Generate ONE fictional human face. Do NOT copy or resemble anyone in the template.\n"
-    "- Place ONLY in the clearly designated portrait slot (usually a rectangular box with a visible border).\n"
-    "- LOGOS, COATS OF ARMS, STATE EMBLEMS are NOT photo slots — do NOT place any face over them.\n"
-    "- GHOST/HOLOGRAM layers that are part of the security design must be preserved as-is unless stated otherwise.\n"
-    "- CLEANUP: Erase ALL ghosted numbers, duplicated dates, or floating artefacts around the photo. Background must be clean.\n"
-)
+# _DL_SHARED_PHOTO = (
+#     "PHOTO RULES:\n"
+#     "- Generate ONE fictional human face. Do NOT copy or resemble anyone in the template.\n"
+#     "- Place ONLY in the clearly designated portrait slot (usually a rectangular box with a visible border).\n"
+#     "- LOGOS, COATS OF ARMS, STATE EMBLEMS are NOT photo slots — do NOT place any face over them.\n"
+#     "- GHOST/HOLOGRAM layers that are part of the security design must be preserved as-is unless stated otherwise.\n"
+#     "- CLEANUP: Erase ALL ghosted numbers, duplicated dates, or floating artefacts around the photo. Background must be clean.\n"
+# )
  
+
+# PROMPT_TEMPLATES = {
+#     "passport": {
+#         "date_format": "ALL dates MUST exactly match the format provided in the JSON (e.g., '1983-07-29'). Do not reformat to 'DD-MM-YYYY' or 'DD MMM YYYY'.",
+#         "has_portrait_photo": False,
+#         "photo_instructions": "Place the newly generated fictional face ONLY in the MAIN/LARGEST portrait photo slot. For any secondary 'ghost' or holographic portrait slots, leave the template's default appearance intact.",
+#         "info": {
+#             "mrz_handling": "(44 characters) Maintain the Machine Readable Zone (MRZ) structure at the bottom. Replace the text using the provided data while keeping the chevron '<' alignment and spacing exactly like the template.",
+#             "data_strictness": "If a field in the JSON is 'null', 'None', or empty, leave that corresponding physical area blank on the document."
+#         }
+#     },
+
+#     "driver_license": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": _DL_SHARED_PHOTO,
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+    
+# "driver_license_act": {
+#     "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#     "has_portrait_photo": True,
+#     "photo_instructions": (
+#         "Front card layout:\n"
+#         "- LEFT 60%: text fields only in this order: CITIZEN, full name, address, "
+#         "Date of Birth, Licence No., Licence Class, Conditions, signature.\n"
+#         "- RIGHT 40% bottom half: ONE portrait photo only.\n"
+#         "- TOP RIGHT: ACT Government logo only. NOT a photo slot.\n"
+#         "- No ghost photos. No duplicate addresses. No invented fields."
+#     ),
+#     "info": {"shared": _DL_SHARED_INFO}
+# },
+#     # ── NSW 
+#     "driver_license_nsw": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "NSW SPECIFIC:\n"
+#             "- Background: bold RED top band, white body, gold/red diagonal security stripe pattern.\n"
+#             "- NSW Waratah logo = NOT a photo slot.\n"
+#             "- Holographic overlay on card surface -> preserve as-is.\n"
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+ 
+#     # ── VIC 
+#     "driver_license_vic": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD-MM-YYYY (e.g., 30-03-2030) to match the template. DO NOT use YYYY-MM-DD or DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "VIC SPECIFIC RULES:\n"
+#             "- PHOTO SLOT: 1 photo on FRONT ONLY (right side). The back MUST NOT contain any face or portrait artifacts.\n"
+#             "- STRICT BOUNDARIES: The portrait MUST stay strictly within its designated rectangular box. DO NOT let the face, hair, or clothing bleed into the green background or overlap text.\n"
+#             "- CRITICAL CLEANUP: You MUST completely ERASE any hallucinated ghost text, messy overlapping dates, or scrambled letters (e.g., 'DAPIRY', 'EOXNRY') on both front and back. The background must remain a clean green chevron pattern.\n"
+#             "- FRONT DOB WATERMARK: If JSON has 'dob_watermark', render it exactly ONCE as crisp, clean text overlapping the bottom edge of the photo. Do NOT duplicate or smudge it. If null, wipe the area clean.\n"
+#             "- BACK WATERMARKS: Preserve the large background numbers (expiry/DOB) on the back, but render them cleanly without scrambling the surrounding text."
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+# # ── QLD ───
+#     "driver_license_qld": {
+#         "date_format": (
+#             "CRITICAL DATE FORMATS — no exceptions:\n"
+#             "- DOB on front: 'DD Mmm YYYY' e.g. '03 Feb 1994'\n"
+#             "- Class table Effective + Expiry: 'DD.MM.YY' e.g. '15.12.22'\n"
+#             "- Back DOB field: 'DOB.MM.YYYY' e.g. 'DOB.02.1994' — dot after DOB, dot between MM and YYYY\n"
+#             "- Back age indicator: 'MM-YY' e.g. '02-94' — NO word 'Age', just digits\n"
+#             "- Back Spiicstate: state abbrev + space + 'DD.MM.YYYY' e.g. 'QLD 11.02.1994'\n"
+#             "- Card number: NO spaces, starts with D e.g. 'D463514007'\n"
+#             "- Licence number: NO spaces e.g. '65604018'\n"
+#         ),
+
+#         "layout_front": (
+#             "QLD DRIVER LICENCE FRONT — gold/yellow guilloche background.\n\n"
+
+#             "TOP BAR:\n"
+#             "  LEFT: 'Driver Licence' dark red italic\n"
+#             "  CENTER: 'Australia' large faint diagonal watermark\n"
+#             "  RIGHT: 'LICENCE NO.' label then number — NO spaces in number\n\n"
+
+#             "LEFT COLUMN (top to bottom):\n"
+#             "  1. Surname on line 1 — exactly once, bold large\n"
+#             "  2. Given name on line 2 — exactly once, bold large\n"
+#             "  3. EMV smart card chip (gold) — never cover\n"
+#             "  4. Ghost portrait — grayscale, faded opacity ~25%, small\n"
+#             "  5. Handwritten signature over ghost photo\n"
+#             "  6. 'Queensland, Australia' tiny italic at bottom\n\n"
+
+#             "CENTER COLUMN (top to bottom):\n"
+#             "  1. Full name bold — print ONCE only, no repetition\n"
+#             "  2. 'Sex' label on same line as name, right aligned\n"
+#             "  3. DOB: 'DD Mmm YYYY' — MANDATORY, never omit\n"
+#             "  4. Class table — 4 columns exactly:\n"
+#             "       Class | Type | Effective | Expiry\n"
+#             "       C       O      DD.MM.YY   DD.MM.YY\n"
+#             "       RE      L      DD.MM.YY   DD.MM.YY\n"
+#             "     Both Effective AND Expiry columns MUST be filled\n"
+#             "  5. Address line 1 (unit/flat/street number street name)\n"
+#             "  6. Suburb STATE Postcode\n"
+#             "  7. 'Conditions X' where X is condition code\n"
+#             "  8. 'Drive safely' italic small\n\n"
+
+#             "RIGHT COLUMN:\n"
+#             "  Full portrait photo — color, full face visible, NOT cropped\n"
+#             "  Signature over bottom edge of photo\n\n"
+
+#             "BOTTOM RIGHT: Queensland Government logo + seal\n\n"
+
+#             " NEVER:\n"
+#             "  - Repeat name more than once in center column\n"
+#             "  - Leave DOB blank\n"
+#             "  - Leave Effective date blank\n"
+#             "  - Add spaces to licence number\n"
+#             "  - Add 'Height' field\n"
+#             "  - Crop the main photo\n"
+#         ),
+
+#         "layout_back": (
+#             "QLD DRIVER LICENCE BACK — silver/grey, faint Australia map background.\n\n"
+
+#             "ZONE 1 — TOP LEFT (barcode area):\n"
+#             "  - Wide horizontal barcode (Code 128), flush top\n"
+#             "  - Barcode number text below it: 'ABnoteNZ' + 10 digits\n\n"
+
+#             "ZONE 2 — TOP RIGHT (info block), same height as barcode:\n"
+#             "  Two columns side by side:\n"
+#             "  Left sub-col:      Right sub-col:\n"
+#             "  'Expiry Date'      'Spiicstate' (= 'QLD DD.MM.YYYY')\n"
+#             "  'DOB.MM.YYYY'      (empty)\n"
+#             "  'MM-YY'            (empty)\n\n"
+
+#             "ZONE 3 — MIDDLE LEFT:\n"
+#             "  'View Terms of use and update your information at:'\n"
+#             "  'www.tmr.qld.gov.au'\n"
+#             "   NO address, NO name here\n\n"
+
+#             "ZONE 4 — MIDDLE RIGHT:\n"
+#             "  Holographic Australia map sticker (colorful iridescent)\n\n"
+
+#             "ZONE 5 — BOTTOM:\n"
+#             "  LEFT: small vertical barcode (rotated 90°) + barcode digits\n"
+#             "  RIGHT: 'Card number' label, value below — NO spaces, starts with D\n\n"
+
+#             " NEVER:\n"
+#             "  - Put address or name anywhere on back\n"
+#             "  - Put barcode at bottom instead of top\n"
+#             "  - Use 'Age XX-XX' — just 'MM-YY' digits only\n"
+#             "  - Use 'DOB DD-MM-YYYY' — must be 'DOB.MM.YYYY'\n"
+#             "  - Add spaces to card number\n"
+#             "  - Show two 'Card number' fields\n"
+#         ),
+#         "has_portrait_photo": True,
+
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "QLD SPECIFIC:\n"
+#             "- MAIN PHOTO: color, full face NOT cropped, right column\n"
+#             "- GHOST PHOTO: same face, grayscale + ~25% opacity, bottom left, smaller\n"
+#             "- SIGNATURE: handwritten cursive, over ghost photo AND over main photo bottom\n"
+#             "- EMV chip: gold, left center, never covered\n"
+#             "- QLD Government logo: bottom right always\n"
+#         ),
+
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+#     # ── WA ──
+#     "driver_license_wa": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "WA SPECIFIC:\n"
+#             "- Background: YELLOW/GOLD top section with BLACK text, lighter body.\n"
+#             "- 'Government of Western Australia' text + Black Swan emblem = NOT photo slots.\n"
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+ 
+#     # ── SA ────
+#     "driver_license_sa": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "SA SPECIFIC:\n"
+#             "- Background: RED top band, white body.\n"
+#             "- 'Government of South Australia' logo = NOT a photo slot.\n"
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+ 
+#     # ── TAS ──────────────────────────────────────────────────────────────────
+#     "driver_license_tas": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             _DL_SHARED_PHOTO +
+#             "TAS SPECIFIC:\n"
+#             "- Background: GREEN top band, white/light body.\n"
+#             "- 'Service Tasmania' logo + Tasmanian Devil emblem = NOT photo slots.\n"
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+ 
+#     # ── NT ───────────────────────────────────────────────────────────────────
+#     "driver_license_nt": {
+#         "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+#         "has_portrait_photo": True,
+#         "photo_instructions": (
+#             "PHOTO RULES:\n"
+#             "- NT license has TWO portrait slots: 1 MAIN (larger) + 1 SECONDARY (smaller).\n"
+#             "- Generate ONE fictional person and place the SAME face in BOTH slots (same person, different crop/size).\n"
+#             "- Do NOT generate two different faces.\n"
+#             "- 'Northern Territory Government' logo = NOT a photo slot.\n"
+#             "- Background: ORANGE/OCHRE top band, white body.\n"
+#             "- CLEANUP: Erase ghosted numbers/watermarks around BOTH photo areas.\n"
+#         ),
+#         "info": {"shared": _DL_SHARED_INFO}
+#     },
+ 
+#     # ── MEDICARE ─────────────────────────────────────────────────────────────
+#     "medicare_card": {
+#         "has_portrait_photo": False,
+
+#         "date_format": "Format 'expiry_date' as MM/YYYY (e.g. 03/2028). Place next to 'VALID TO' text.",
+
+#         "photo_instructions": (
+#             "THIS DOCUMENT HAS NO PHOTO AREA.\n"
+#             "DO NOT generate any portrait photo, face, avatar, silhouette, "
+#             "ghost image, or human figure anywhere on this card."
+#         ),
+
+#         "info": {
+#             "background": "Preserve the repeating 'medicare' watermark background pattern — do NOT erase or smudge it.",
+#             "card_number": "11-digit number. Render with spacing: 4 digits, space, 5 digits, space, 1 digit.",
+#             "members": "Render 'members' array sequentially from position 1, full_name only. Fewer members than template -> leave remaining lines blank (do NOT copy from template).",
+#             "data": "DO NOT invent/infer data. If null -> leave blank.",
+#         }
+#     },
+#     "default": {
+#         "date_format": "Format all dates exactly as they appear in the provided JSON data.",
+#         "has_portrait_photo": False,
+#         "photo_instructions": "Place the newly generated fictional face in the designated portrait photo slot.",
+#         "info": {
+#             "strict_copy": "Copy all text exactly from the JSON. Do not invent missing data. 'null' means leave blank."
+#         }
+#     }
+# }
+
 
 PROMPT_TEMPLATES = {
-    "passport": {
-        "date_format": "ALL dates MUST exactly match the format provided in the JSON (e.g., '1983-07-29'). Do not reformat to 'DD-MM-YYYY' or 'DD MMM YYYY'.",
-        "photo_instructions": "Place the newly generated fictional face ONLY in the MAIN/LARGEST portrait photo slot. For any secondary 'ghost' or holographic portrait slots, leave the template's default appearance intact.",
-        "info": {
-            "mrz_handling": "(44 characters) Maintain the Machine Readable Zone (MRZ) structure at the bottom. Replace the text using the provided data while keeping the chevron '<' alignment and spacing exactly like the template.",
-            "data_strictness": "If a field in the JSON is 'null', 'None', or empty, leave that corresponding physical area blank on the document."
-        }
-    },
-
-    "driver_license": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
-        "photo_instructions": _DL_SHARED_PHOTO,
-        "info": {"shared": _DL_SHARED_INFO}
-    },
-    
-"driver_license_act": {
-    "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+"aus_passport": {
+    "has_portrait_photo": True,
     "photo_instructions": (
-        "Front card layout:\n"
-        "- LEFT 60%: text fields only in this order: CITIZEN, full name, address, "
-        "Date of Birth, Licence No., Licence Class, Conditions, signature.\n"
-        "- RIGHT 40% bottom half: ONE portrait photo only.\n"
-        "- TOP RIGHT: ACT Government logo only. NOT a photo slot.\n"
-        "- No ghost photos. No duplicate addresses. No invented fields."
+        "Generate ONE new fictional human face in the MAIN portrait photo slot. "
+        "DO NOT copy the face from the template. "
+        "Preserve all background patterns, watermarks, and security features exactly."
     ),
-    "info": {"shared": _DL_SHARED_INFO}
+    "info": {
+        "mrz_instructions": (
+            "CRITICAL: You MUST render the MRZ zone at the bottom with EXACTLY the values from TARGET DATA. "
+            "DO NOT copy MRZ from the template image. "
+            "MRZ LINE 1 (top row): Render EXACTLY: {mrz_line1} — 44 characters, OCR-B monospace font, black text on light background. "
+            "MRZ LINE 2 (bottom row): Render EXACTLY: {mrz_line2} — 44 characters, OCR-B monospace font, black text on light background. "
+            "Every character must be visible and accurate. < is a filler character, render it as the symbol <."
+        ),
+        "text_fields": (
+            "CRITICAL ANTI-HALLUCINATION: The template is for LAYOUT ONLY. You MUST overwrite ALL data fields with TARGET DATA. "
+            "Do NOT retain any template values (e.g., 'GEELONG', 'CANBERRA', 'HB54...').\n\n"
+            "FIELD MAPPING & FORMATTING:\n"
+            "- Top Page, Left Vertical Laser Dots: EXACTLY document_number\n"
+            "- Top Page, Bottom Right Printed Number: EXACTLY document_number\n"
+            "- Bottom Page, Top Right (Document No.): EXACTLY document_number\n"
+            "- Bottom Page, Family name: family_name\n"
+            "- Bottom Page, Given names: given_names\n"
+            "- Bottom Page, Nationality: nationality\n"
+            "- Bottom Page, Date of birth: date_of_birth (Convert strictly to DD MMM YYYY, e.g., 14 MAR 1960)\n"
+            "- Bottom Page, Sex: sex\n"
+            "- Bottom Page, Place of birth: place_of_birth (Replace template data completely)\n"
+            "- Bottom Page, Date of issue: date_of_issue (Convert strictly to DD MMM YYYY)\n"
+            "- Bottom Page, Date of expiry: date_of_expiry (Convert strictly to DD MMM YYYY)\n"
+            "- Bottom Page, Authority: authority (Single line only, clear any existing template text below it)\n"
+            "- Bottom Page, Holder's signature: Generate cursive text strictly reading given_names + space + family_name\n"
+            "- Bottom Page, MRZ Lines: Replace completely with mrz_line1 and mrz_line2\n\n"
+            "STRICT RULES:\n"
+            "- document_number MUST be identical in ALL 4 physical locations (Laser, Top page bottom-right, Bottom page top-right, MRZ).\n"
+            "- Verify spelling of all names, dates, and locations before generation.\n"
+        ),
+    }
 },
-    # ── NSW 
-    "driver_license_nsw": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
+    "driver_license_act": {
+        "date_format": "CRITICAL: Format all dates exactly as DD MMM YYYY (e.g., '09 SEP 1986' or '14 JUL 2033'). Do NOT use DD/MM/YYYY.",
+        "has_portrait_photo": True,
         "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "NSW SPECIFIC:\n"
-            "- Background: bold RED top band, white body, gold/red diagonal security stripe pattern.\n"
-            "- NSW Waratah logo = NOT a photo slot.\n"
-            "- Holographic overlay on card surface -> preserve as-is.\n"
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
- 
-    # ── VIC 
-    "driver_license_vic": {
-        "date_format": "CRITICAL: Format all dates exactly as DD-MM-YYYY (e.g., 30-03-2030) to match the template. DO NOT use YYYY-MM-DD or DD/MM/YYYY.",
-        "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "VIC SPECIFIC RULES:\n"
-            "- PHOTO SLOT: 1 photo on FRONT ONLY (right side). The back MUST NOT contain any face or portrait artifacts.\n"
-            "- STRICT BOUNDARIES: The portrait MUST stay strictly within its designated rectangular box. DO NOT let the face, hair, or clothing bleed into the green background or overlap text.\n"
-            "- CRITICAL CLEANUP: You MUST completely ERASE any hallucinated ghost text, messy overlapping dates, or scrambled letters (e.g., 'DAPIRY', 'EOXNRY') on both front and back. The background must remain a clean green chevron pattern.\n"
-            "- FRONT DOB WATERMARK: If JSON has 'dob_watermark', render it exactly ONCE as crisp, clean text overlapping the bottom edge of the photo. Do NOT duplicate or smudge it. If null, wipe the area clean.\n"
-            "- BACK WATERMARKS: Preserve the large background numbers (expiry/DOB) on the back, but render them cleanly without scrambling the surrounding text."
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
-# ── QLD ───
-    "driver_license_qld": {
-        "date_format": (
-            "CRITICAL DATE FORMATS — no exceptions:\n"
-            "- DOB on front: 'DD Mmm YYYY' e.g. '03 Feb 1994'\n"
-            "- Class table Effective + Expiry: 'DD.MM.YY' e.g. '15.12.22'\n"
-            "- Back DOB field: 'DOB.MM.YYYY' e.g. 'DOB.02.1994' — dot after DOB, dot between MM and YYYY\n"
-            "- Back age indicator: 'MM-YY' e.g. '02-94' — NO word 'Age', just digits\n"
-            "- Back Spiicstate: state abbrev + space + 'DD.MM.YYYY' e.g. 'QLD 11.02.1994'\n"
-            "- Card number: NO spaces, starts with D e.g. 'D463514007'\n"
-            "- Licence number: NO spaces e.g. '65604018'\n"
-        ),
-
-        "layout_front": (
-            "QLD DRIVER LICENCE FRONT — gold/yellow guilloche background.\n\n"
-
-            "TOP BAR:\n"
-            "  LEFT: 'Driver Licence' dark red italic\n"
-            "  CENTER: 'Australia' large faint diagonal watermark\n"
-            "  RIGHT: 'LICENCE NO.' label then number — NO spaces in number\n\n"
-
-            "LEFT COLUMN (top to bottom):\n"
-            "  1. Surname on line 1 — exactly once, bold large\n"
-            "  2. Given name on line 2 — exactly once, bold large\n"
-            "  3. EMV smart card chip (gold) — never cover\n"
-            "  4. Ghost portrait — grayscale, faded opacity ~25%, small\n"
-            "  5. Handwritten signature over ghost photo\n"
-            "  6. 'Queensland, Australia' tiny italic at bottom\n\n"
-
-            "CENTER COLUMN (top to bottom):\n"
-            "  1. Full name bold — print ONCE only, no repetition\n"
-            "  2. 'Sex' label on same line as name, right aligned\n"
-            "  3. DOB: 'DD Mmm YYYY' — MANDATORY, never omit\n"
-            "  4. Class table — 4 columns exactly:\n"
-            "       Class | Type | Effective | Expiry\n"
-            "       C       O      DD.MM.YY   DD.MM.YY\n"
-            "       RE      L      DD.MM.YY   DD.MM.YY\n"
-            "     Both Effective AND Expiry columns MUST be filled\n"
-            "  5. Address line 1 (unit/flat/street number street name)\n"
-            "  6. Suburb STATE Postcode\n"
-            "  7. 'Conditions X' where X is condition code\n"
-            "  8. 'Drive safely' italic small\n\n"
-
-            "RIGHT COLUMN:\n"
-            "  Full portrait photo — color, full face visible, NOT cropped\n"
-            "  Signature over bottom edge of photo\n\n"
-
-            "BOTTOM RIGHT: Queensland Government logo + seal\n\n"
-
-            " NEVER:\n"
-            "  - Repeat name more than once in center column\n"
-            "  - Leave DOB blank\n"
-            "  - Leave Effective date blank\n"
-            "  - Add spaces to licence number\n"
-            "  - Add 'Height' field\n"
-            "  - Crop the main photo\n"
-        ),
-
-        "layout_back": (
-            "QLD DRIVER LICENCE BACK — silver/grey, faint Australia map background.\n\n"
-
-            "ZONE 1 — TOP LEFT (barcode area):\n"
-            "  - Wide horizontal barcode (Code 128), flush top\n"
-            "  - Barcode number text below it: 'ABnoteNZ' + 10 digits\n\n"
-
-            "ZONE 2 — TOP RIGHT (info block), same height as barcode:\n"
-            "  Two columns side by side:\n"
-            "  Left sub-col:      Right sub-col:\n"
-            "  'Expiry Date'      'Spiicstate' (= 'QLD DD.MM.YYYY')\n"
-            "  'DOB.MM.YYYY'      (empty)\n"
-            "  'MM-YY'            (empty)\n\n"
-
-            "ZONE 3 — MIDDLE LEFT:\n"
-            "  'View Terms of use and update your information at:'\n"
-            "  'www.tmr.qld.gov.au'\n"
-            "   NO address, NO name here\n\n"
-
-            "ZONE 4 — MIDDLE RIGHT:\n"
-            "  Holographic Australia map sticker (colorful iridescent)\n\n"
-
-            "ZONE 5 — BOTTOM:\n"
-            "  LEFT: small vertical barcode (rotated 90°) + barcode digits\n"
-            "  RIGHT: 'Card number' label, value below — NO spaces, starts with D\n\n"
-
-            " NEVER:\n"
-            "  - Put address or name anywhere on back\n"
-            "  - Put barcode at bottom instead of top\n"
-            "  - Use 'Age XX-XX' — just 'MM-YY' digits only\n"
-            "  - Use 'DOB DD-MM-YYYY' — must be 'DOB.MM.YYYY'\n"
-            "  - Add spaces to card number\n"
-            "  - Show two 'Card number' fields\n"
-        ),
-
-        "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "QLD SPECIFIC:\n"
-            "- MAIN PHOTO: color, full face NOT cropped, right column\n"
-            "- GHOST PHOTO: same face, grayscale + ~25% opacity, bottom left, smaller\n"
-            "- SIGNATURE: handwritten cursive, over ghost photo AND over main photo bottom\n"
-            "- EMV chip: gold, left center, never covered\n"
-            "- QLD Government logo: bottom right always\n"
-        ),
-
-        "info": {"shared": _DL_SHARED_INFO}
-    },
-    # ── WA ──
-    "driver_license_wa": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
-        "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "WA SPECIFIC:\n"
-            "- Background: YELLOW/GOLD top section with BLACK text, lighter body.\n"
-            "- 'Government of Western Australia' text + Black Swan emblem = NOT photo slots.\n"
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
- 
-    # ── SA ────
-    "driver_license_sa": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
-        "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "SA SPECIFIC:\n"
-            "- Background: RED top band, white body.\n"
-            "- 'Government of South Australia' logo = NOT a photo slot.\n"
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
- 
-    # ── TAS ──────────────────────────────────────────────────────────────────
-    "driver_license_tas": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
-        "photo_instructions": (
-            _DL_SHARED_PHOTO +
-            "TAS SPECIFIC:\n"
-            "- Background: GREEN top band, white/light body.\n"
-            "- 'Service Tasmania' logo + Tasmanian Devil emblem = NOT photo slots.\n"
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
- 
-    # ── NT ───────────────────────────────────────────────────────────────────
-    "driver_license_nt": {
-        "date_format": "CRITICAL: Format all dates exactly as DD/MM/YYYY.",
-        "photo_instructions": (
-            "PHOTO RULES:\n"
-            "- NT license has TWO portrait slots: 1 MAIN (larger) + 1 SECONDARY (smaller).\n"
-            "- Generate ONE fictional person and place the SAME face in BOTH slots (same person, different crop/size).\n"
-            "- Do NOT generate two different faces.\n"
-            "- 'Northern Territory Government' logo = NOT a photo slot.\n"
-            "- Background: ORANGE/OCHRE top band, white body.\n"
-            "- CLEANUP: Erase ghosted numbers/watermarks around BOTH photo areas.\n"
-        ),
-        "info": {"shared": _DL_SHARED_INFO}
-    },
- 
-    # ── MEDICARE ─────────────────────────────────────────────────────────────
-    "medicare_card": {
-        "date_format": "Format 'expiry_date' as MM/YYYY (e.g. 03/2028). Place next to 'VALID TO' text.",
-        "photo_instructions": (
-            "CRITICAL: Medicare cards have NO portrait photo.\n"
-            "DO NOT generate, add, or draw any human face, avatar, or ghost image anywhere on this card."
+            "Front card layout:\n"
+            "- LEFT 60%: text fields only in this order: CITIZEN, full name, address, "
+            "Date of Birth, Licence No., Licence Class, Conditions, signature.\n"
+            "- RIGHT 40% bottom half: ONE portrait photo only.\n"
+            "- TOP RIGHT: ACT Government logo only. NOT a photo slot.\n"
+            "- No ghost photos. No duplicate addresses. No invented fields."
         ),
         "info": {
-            "background": "Preserve the repeating 'medicare' watermark background pattern — do NOT erase or smudge it.",
-            "card_number": "11-digit number. Render with spacing: 4 digits, space, 5 digits, space, 1 digit.",
-            "members": "Render 'members' array sequentially from position 1, full_name only. Fewer members than template -> leave remaining lines blank (do NOT copy from template).",
-            "data": "DO NOT invent/infer data. If null -> leave blank.",
-        }
-    },
+            "name_and_address": "Names and Addresses must be printed in BLACK without any field labels (DO NOT write 'Name:' or 'Address:'). Family name is first and UPPERCASE.",
+            "purple_text": "CRITICAL: The values for Date of Birth, Licence No., Expires, Class, and Conditions MUST be printed in PURPLE color.",
+            "vertical_card_number": "CRITICAL: The card_number (e.g., F987654321) MUST be rotated exactly 90-degrees vertically (reading bottom-to-top) and placed inside the solid red-bordered box. Do not print it horizontally.",
+            "data_strictness": "If a field is 'null', leave the physical area blank."
+            "CRITICAL: The authority field and ALL fields above the MRZ zone must be fully visible. "
+            "The bottom 9% of the image is reserved for MRZ — do NOT place any data fields there.\n"
+        },
+        "base_json": { ""
+
+},
     "default": {
         "date_format": "Format all dates exactly as they appear in the provided JSON data.",
+        "has_portrait_photo": False,
         "photo_instructions": "Place the newly generated fictional face in the designated portrait photo slot.",
         "info": {
             "strict_copy": "Copy all text exactly from the JSON. Do not invent missing data. 'null' means leave blank."
         }
+    }
     }
 }

@@ -1,0 +1,43 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "3241 42241 7",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "MAURICE",
+      "middle_initial": "T",
+      "last_name": "CHRISTENSEN",
+      "full_name": "1 MAURICE T CHRISTENSEN"
+    },
+    {
+      "position": 2,
+      "first_name": "CONNIE",
+      "middle_initial": "Z",
+      "last_name": "WILSON",
+      "full_name": "2 CONNIE Z WILSON"
+    },
+    {
+      "position": 3,
+      "first_name": "RONALD",
+      "middle_initial": "C",
+      "last_name": "STEVENSON",
+      "full_name": "3 RONALD C STEVENSON"
+    },
+    {
+      "position": 4,
+      "first_name": "LAURA",
+      "middle_initial": "U",
+      "last_name": "KELLY",
+      "full_name": "4 LAURA U KELLY"
+    },
+    {
+      "position": 5,
+      "first_name": "JACQUELINE",
+      "middle_initial": null,
+      "last_name": "CAMPBELL",
+      "full_name": "5 JACQUELINE CAMPBELL"
+    }
+  ],
+  "expiry_date": "06/2030"
+}
