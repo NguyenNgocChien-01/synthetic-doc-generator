@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "OB3570830",
+  "family_name": "MASON",
+  "given_names": "ANTHONY",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1978-07-25",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-12-05",
+  "place_of_birth": "ST. FRANCISCOVIEW",
+  "authority": "PORT KIMBERLY",
+  "mrz_line1": "P<AUSMASON<<ANTHONY<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "OB3570830<AUS780725M271205<<<<<<<<<<<<<<<<03"
+}

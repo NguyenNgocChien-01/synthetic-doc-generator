@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "FF5706469",
+  "family_name": "DUNCAN",
+  "given_names": "LEAH",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "2003-07-28",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2031-01-30",
+  "place_of_birth": "SOUTH NICHOLAS",
+  "authority": "FITZGERALDLAND",
+  "mrz_line1": "P<AUSDUNCAN<<LEAH<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "FF5706469<AUS030728F310130<<<<<<<<<<<<<<<<03"
+}

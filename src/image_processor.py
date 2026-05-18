@@ -1,6 +1,6 @@
 """
-Module xử lý ảnh: render văn bản lên template và áp dụng biến đổi ngẫu nhiên.
-Sử dụng Pillow để vẽ văn bản, dán ảnh đại diện và tạo hiệu ứng thực tế.
+Module for image processing: rendering text on templates and applying random transformations.
+Uses Pillow to draw text, paste avatars, and create realistic effects.
 """
 
 import io
@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
 
 logger = logging.getLogger(__name__)
 
-# Danh sách font hệ thống theo thứ tự ưu tiên
+# System font priority list
 SYSTEM_FONTS_PRIORITY = [
     "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
@@ -40,22 +40,21 @@ SYSTEM_FONTS_MONO_PRIORITY = [
     "C:/Windows/Fonts/cour.ttf",
 ]
 
-
 def _load_best_font(
     font_paths: List[str],
     size: int,
     fallback_size: Optional[int] = None,
 ) -> ImageFont.FreeTypeFont:
     """
-    Tải font tốt nhất có sẵn từ danh sách ưu tiên.
+    Load the best available font from the priority list.
 
-    Tham số:
-        font_paths: Danh sách đường dẫn font theo thứ tự ưu tiên.
-        size: Kích thước font.
-        fallback_size: Kích thước dự phòng (dùng font mặc định).
+    Args:
+        font_paths: List of font paths in priority order.
+        size: Font size.
+        fallback_size: Fallback size (uses default font).
 
-    Trả về:
-        Đối tượng ImageFont.
+    Returns:
+        ImageFont object.
     """ 
     for path in font_paths:
         if Path(path).exists():
@@ -64,27 +63,26 @@ def _load_best_font(
             except (IOError, OSError):
                 continue
 
-    # Dự phòng: dùng font mặc định của PIL
-    logger.debug("Khong tim thay font he thong, dung font mac dinh cua PIL.")
+    # Fallback: use PIL default font
+    logger.debug("System fonts not found, using PIL default font.")
     return ImageFont.load_default()
 
-
 class FontCache:
-    """Bộ nhớ đệm font để tránh tải lại nhiều lần."""
+    """Font cache to avoid reloading fonts multiple times."""
 
     def __init__(self):
         self._cache: Dict[Tuple, ImageFont.FreeTypeFont] = {}
 
     def get(self, style: str, size: int) -> ImageFont.FreeTypeFont:
         """
-        Lấy font từ bộ nhớ đệm hoặc tải mới.
+        Retrieve font from cache or load a new one.
 
-        Tham số:
-            style: Kiểu font ('regular', 'bold', 'mono').
-            size: Kích thước font.
+        Args:
+            style: Font style ('regular', 'bold', 'mono').
+            size: Font size.
 
-        Trả về:
-            Đối tượng ImageFont.
+        Returns:
+            ImageFont object.
         """
         key = (style, size)
         if key not in self._cache:
@@ -97,26 +95,25 @@ class FontCache:
             self._cache[key] = _load_best_font(font_paths, size)
         return self._cache[key]
 
-
 class ImageProcessor:
     """
-    Xử lý ảnh tài liệu: render văn bản, dán ảnh và áp dụng biến đổi.
+    Document image processing: render text, paste images, and apply transformations.
 
-    Chức năng chính:
-        - Tải ảnh template hoặc tạo nền tài liệu mới.
-        - Vẽ các trường văn bản tại vị trí được định nghĩa trong base.json.
-        - Dán ảnh đại diện vào vị trí được chỉ định.
-        - Áp dụng các biến đổi ngẫu nhiên (rotation, noise, brightness) để
-          tăng tính đa dạng cho tập huấn luyện OCR.
+    Main functions:
+        - Load template images or create new document backgrounds.
+        - Draw text fields at positions defined in base.json.
+        - Paste avatar images at specified positions.
+        - Apply random transformations (rotation, noise, brightness) to
+          increase diversity for OCR training datasets.
     """
 
     def __init__(self, templates_dir: str, config: Any = None):
         """
-        Khởi tạo ImageProcessor.
+        Initialize ImageProcessor.
 
-        Tham số:
-            templates_dir: Đường dẫn thư mục chứa các template.
-            config: Đối tượng cấu hình (ImageConfig).
+        Args:
+            templates_dir: Path to the directory containing templates.
+            config: Configuration object (ImageConfig).
         """
         self.templates_dir = Path(templates_dir)
         self.config = config
@@ -124,7 +121,7 @@ class ImageProcessor:
         self._template_cache: Dict[str, Image.Image] = {}
 
         logger.debug(
-            "Khoi tao ImageProcessor, thu muc template: %s.", self.templates_dir
+            "Initialized ImageProcessor, template directory: %s.", self.templates_dir
         )
 
     def render_document(
@@ -135,25 +132,25 @@ class ImageProcessor:
         avatar_image: Optional[Image.Image] = None,
     ) -> Tuple[Image.Image, List[Dict]]:
         """
-        Render tài liệu đầy đủ với dữ liệu đã cung cấp.
+        Render a complete document with the provided data.
 
-        Tham số:
-            doc_type: Loại tài liệu (passport, driver_license, ...).
-            template_config: Cấu hình từ base.json.
-            fields_data: Dữ liệu các trường đã được sinh.
-            avatar_image: Ảnh đại diện (tùy chọn).
+        Args:
+            doc_type: Document type (passport, driver_license, etc.).
+            template_config: Configuration from base.json.
+            fields_data: Generated field data.
+            avatar_image: Optional avatar image.
 
-        Trả về:
-            Tuple (anh_da_render, danh_sach_bounding_box).
+        Returns:
+            Tuple (rendered_image, bounding_boxes).
         """
-        # Tải ảnh template
+        # Load template image
         image = self._load_template_image(doc_type, template_config)
-        image = image.copy()  # Tạo bản sao để không ảnh hưởng đến cache
+        image = image.copy()  # Create a copy to avoid affecting the cache
 
         draw = ImageDraw.Draw(image)
         bounding_boxes = []
 
-        # Dán ảnh đại diện nếu có
+        # Paste avatar image if available
         avatar_config = template_config.get("avatar", {})
         if avatar_config.get("enabled", False) and avatar_image:
             bbox = self._paste_avatar(image, avatar_image, avatar_config)
@@ -164,7 +161,7 @@ class ImageProcessor:
                     "bounding_box": bbox,
                 })
 
-        # Vẽ từng trường văn bản
+        # Draw each text field
         for field_cfg in template_config.get("fields", []):
             key = field_cfg.get("key", "")
             value = fields_data.get(key, "")
@@ -180,7 +177,7 @@ class ImageProcessor:
                     "faker_type": field_cfg.get("faker_type", ""),
                 })
 
-        # Áp dụng biến đổi ngẫu nhiên nếu được bật
+        # Apply random transformations if enabled
         should_augment = True
         if self.config and not self.config.enable_augmentation:
             should_augment = False
@@ -189,13 +186,13 @@ class ImageProcessor:
             image = self._apply_augmentation(image)
 
         logger.debug(
-            "Da render tai lieu '%s' voi %d truong va %d bounding box.",
+            "Rendered document '%s' with %d fields and %d bounding boxes.",
             doc_type,
             len(fields_data),
             len(bounding_boxes),
         )
         return image, bounding_boxes
-    
+
     def _load_template_image(self, doc_type: str, template_config: Dict, state: str = None) -> Image.Image:
         cache_key = f"{doc_type}_{state}" if state else doc_type
         if cache_key in self._template_cache:
@@ -218,10 +215,10 @@ class ImageProcessor:
             try:
                 img = Image.open(template_path).convert("RGB")
                 self._template_cache[cache_key] = img
-                logger.debug("Da tai anh template tu: %s.", template_path)
+                logger.debug("Loaded template from: %s.", template_path)
                 return img.copy()
             except Exception as loi:
-                logger.warning("Khong the tai template '%s': %s.", template_path, loi)
+                logger.warning("Could not load template '%s': %s.", template_path, loi)
     
         img_size = template_config.get("image_size", [1200, 850])
         img = self._generate_document_background(doc_type, img_size, template_config)
@@ -236,19 +233,19 @@ class ImageProcessor:
         template_config: Dict,
     ) -> Image.Image:
         """
-        Tạo ảnh nền tài liệu giả đơn giản khi không có template thực.
+        Create a simple background image for documents when no template is available.
 
-        Tham số:
-            doc_type: Loại tài liệu.
-            size: [chiều rộng, chiều cao].
-            template_config: Cấu hình template.
+        Args:
+            doc_type: Document type.
+            size: [width, height].
+            template_config: Template configuration.
 
-        Trả về:
-            Đối tượng PIL Image đã vẽ nền.
+        Returns:
+            PIL Image object.
         """
         width, height = size[0], size[1]
 
-        # Màu nền theo loại tài liệu
+        # Background color based on document type
         bg_colors = {
             "passport": (245, 245, 240),
             "driver_license": (235, 240, 250),
@@ -259,7 +256,7 @@ class ImageProcessor:
         img = Image.new("RGB", (width, height), color=bg_color)
         draw = ImageDraw.Draw(img)
 
-        # Vẽ viền
+        # Draw border
         border_colors = {
             "passport": (0, 60, 120),
             "driver_license": (20, 80, 160),
@@ -271,11 +268,11 @@ class ImageProcessor:
         draw.rectangle([0, 0, width - 1, height - 1], outline=border_color, width=8)
         draw.rectangle([10, 10, width - 11, height - 11], outline=border_color, width=2)
 
-        # Vẽ vùng tiêu đề
+        # Draw header
         header_height = 80
         draw.rectangle([0, 0, width, header_height], fill=border_color)
 
-        # Tiêu đề tài liệu
+        # Document title
         titles = {
             "passport": "PASSPORT / HO CHIEU",
             "driver_license": "DRIVER LICENCE",
@@ -293,7 +290,7 @@ class ImageProcessor:
             anchor="mm",
         )
 
-        # Vẽ các đường phân chia trường dữ liệu
+        # Draw field lines
         field_line_color = (200, 200, 200)
         for field_cfg in template_config.get("fields", []):
             pos = field_cfg.get("position", {})
@@ -301,12 +298,12 @@ class ImageProcessor:
             max_w = field_cfg.get("max_width", 300)
             fs = field_cfg.get("font_size", 18)
 
-            # Vẽ nhãn trường
+            # Draw field label
             label = field_cfg.get("label", field_cfg.get("key", ""))
             font_label = self.font_cache.get("regular", max(10, fs - 6))
             draw.text((x, y - (fs - 2)), label.upper(), fill=(120, 120, 120), font=font_label)
 
-            # Vẽ đường gạch chân
+            # Draw field line
             draw.line([(x, y + fs + 4), (x + max_w, y + fs + 4)], fill=field_line_color, width=1)
 
         return img
@@ -319,13 +316,13 @@ class ImageProcessor:
         fields_data: Dict[str, str],
     ) -> Tuple[Image.Image, List[Dict]]:
         """
-        Thực thi Giai đoạn 2: Vẽ văn bản tĩnh lên ảnh nền đồ họa từ API.
+        Execute Phase 2: Draw static text on a base image from API.
         """
         image = base_image.copy()
         draw = ImageDraw.Draw(image)
         bounding_boxes = []
 
-        # Chỉ lặp qua cấu hình JSON để vẽ văn bản
+        # Only loop through JSON configuration to draw text
         for field_cfg in template_config.get("fields", []):
             key = field_cfg.get("key", "")
             value = fields_data.get(key, "")
@@ -341,7 +338,7 @@ class ImageProcessor:
                     "faker_type": field_cfg.get("faker_type", ""),
                 })
 
-        # Áp dụng Augmentation sau khi đã có toàn bộ văn bản
+        # Apply Augmentation after having all text
         should_augment = True
         if self.config and not self.config.enable_augmentation:
             should_augment = False
@@ -358,16 +355,16 @@ class ImageProcessor:
         value: str,
     ) -> Optional[List[int]]:
         """
-        Vẽ một trường văn bản lên ảnh tại vị trí xác định.
+        Draw a text field on an image at a specific position.
 
-        Tham số:
-            draw: Đối tượng ImageDraw.
-            image: Ảnh đang vẽ lên.
-            field_cfg: Cấu hình trường từ base.json.
-            value: Giá trị văn bản cần vẽ.
+        Args:
+            draw: ImageDraw object.
+            image: Image to draw on.
+            field_cfg: Field configuration from base.json.
+            value: Text value to draw.
 
-        Trả về:
-            Bounding box [x1, y1, x2, y2] của văn bản đã vẽ, hoặc None nếu thất bại.
+        Returns:
+            Bounding box [x1, y1, x2, y2] of the drawn text, or None if failed.
         """
         pos = field_cfg.get("position", {})
         x = pos.get("x", 0)
@@ -380,17 +377,17 @@ class ImageProcessor:
         anchor = field_cfg.get("anchor", "lt")  # lt = left-top
         rotation = field_cfg.get("rotation", 0)
 
-        # Lấy font từ cache
+        # Load font from cache
         font = self.font_cache.get(font_style, font_size)
 
         try:
             if rotation != 0:
-                # Vẽ văn bản xoay (dùng cho một số trường đặc biệt)
+                # Draw text rotated (for some special fields)
                 bbox = self._draw_rotated_text(
                     image, x, y, value, font, font_color, rotation
                 )
             else:
-                # Vẽ văn bản thẳng
+                # Draw text straight
                 bbox = draw.textbbox((x, y), value, font=font, anchor=anchor)
                 draw.text((x, y), value, fill=font_color, font=font, anchor=anchor)
 
@@ -398,7 +395,7 @@ class ImageProcessor:
 
         except Exception as loi:
             logger.warning(
-                "Loi khi ve truong '%s' (gia tri='%s'): %s",
+                "Error when drawing field '%s' (value='%s'): %s",
                 field_cfg.get("key", "?"),
                 value[:20],
                 loi,
@@ -416,20 +413,20 @@ class ImageProcessor:
         angle: float,
     ) -> List[int]:
         """
-        Vẽ văn bản xoay góc bằng cách tạo layer trung gian.
+        Draw text rotated by an angle using an intermediate layer.
 
-        Tham số:
-            image: Ảnh chính cần vẽ lên.
-            x, y: Tọa độ bắt đầu.
-            text: Nội dung văn bản.
-            font: Font chữ.
-            color: Màu chữ.
-            angle: Góc xoay (độ).
+        Args:
+            image: Main image to draw on.
+            x, y: Starting position.
+            text: Text content.
+            font: Font.
+            color: Color.
+            angle: Angle (degrees).
 
-        Trả về:
-            Bounding box xấp xỉ [x1, y1, x2, y2].
+        Returns:
+            Bounding box [x1, y1, x2, y2].
         """
-        # Tạo ảnh tạm cho văn bản
+        # Create a temporary image for the text
         tmp_draw = ImageDraw.Draw(image)
         bbox = tmp_draw.textbbox((0, 0), text, font=font)
         text_width = bbox[2] - bbox[0]
@@ -439,10 +436,10 @@ class ImageProcessor:
         tmp_draw = ImageDraw.Draw(tmp_img)
         tmp_draw.text((10, 10), text, fill=(*color, 255), font=font)
 
-        # Xoay ảnh tạm
+        # Rotate the temporary image
         rotated = tmp_img.rotate(angle, expand=True, resample=Image.Resampling.BICUBIC)
 
-        # Dán vào ảnh chính
+        # Paste into the main image
         image.paste(rotated, (x, y), rotated)
 
         return [x, y, x + rotated.width, y + rotated.height]
@@ -454,15 +451,15 @@ class ImageProcessor:
         avatar_config: Dict,
     ) -> Optional[List[int]]:
         """
-        Dán ảnh đại diện vào vị trí xác định trên tài liệu.
+        Paste an avatar image into a specific position on the document.
 
-        Tham số:
-            image: Ảnh tài liệu chính.
-            avatar: Ảnh đại diện cần dán.
-            avatar_config: Cấu hình vị trí và kích thước.
+        Args:
+            image: Main image.
+            avatar: Avatar image.
+            avatar_config: Configuration for position and size.
 
-        Trả về:
-            Bounding box [x1, y1, x2, y2] hoặc None.
+        Returns:
+            Bounding box [x1, y1, x2, y2] or None.
         """
         pos = avatar_config.get("position", {"x": 50, "y": 100})
         size = avatar_config.get("size", [150, 190])
@@ -473,7 +470,7 @@ class ImageProcessor:
         try:
             avatar_resized = avatar.resize((w, h), Image.Resampling.LANCZOS)
 
-            # Vẽ viền cho ảnh đại diện
+            # Draw border for the avatar
             draw = ImageDraw.Draw(image)
             border_width = 2
             draw.rectangle(
@@ -486,23 +483,23 @@ class ImageProcessor:
             return [x, y, x + w, y + h]
 
         except Exception as loi:
-            logger.warning("Loi khi dan anh dai dien: %s", loi)
+            logger.warning("Error when pasting avatar: %s", loi)
             return None
 
     def _apply_augmentation(self, image: Image.Image) -> Image.Image:
         """
-        Áp dụng các biến đổi ngẫu nhiên để tăng tính đa dạng.
+        Apply random transformations to increase diversity.
 
-        Biến đổi bao gồm: xoay nhỏ, điều chỉnh độ sáng,
-        thêm nhiễu Gaussian và làm mờ nhẹ.
+        Transformations include: small rotation, brightness adjustment,
+        Gaussian noise, and light blurring.
 
-        Tham số:
-            image: Ảnh gốc cần biến đổi.
+        Args:
+            image: Original image.
 
-        Trả về:
-            Ảnh đã được biến đổi.
+        Returns:
+            Transformed image.
         """
-        # 1. Xoay nhỏ (mô phỏng ảnh chụp hơi nghiêng)
+        # 1. Small rotation (mimics slightly tilted images)
         max_rotation = 2.0
         if self.config:
             max_rotation = self.config.augmentation_rotation_max_degrees
@@ -512,7 +509,7 @@ class ImageProcessor:
             if abs(angle) > 0.3:
                 image = image.rotate(angle, resample=Image.Resampling.BICUBIC, expand=False)
 
-        # 2. Điều chỉnh độ sáng
+        # 2. Brightness adjustment
         brightness_range = (0.90, 1.10)
         if self.config:
             brightness_range = self.config.augmentation_brightness_range
@@ -521,12 +518,12 @@ class ImageProcessor:
         enhancer = ImageEnhance.Brightness(image)
         image = enhancer.enhance(brightness_factor)
 
-        # 3. Điều chỉnh độ tương phản nhẹ
+        # 3. Contrast adjustment
         contrast_factor = random.uniform(0.92, 1.08)
         enhancer = ImageEnhance.Contrast(image)
         image = enhancer.enhance(contrast_factor)
 
-        # 4. Thêm nhiễu Gaussian
+        # 4. Gaussian noise
         noise_sigma = 3.0
         if self.config:
             noise_sigma = self.config.augmentation_noise_sigma
@@ -534,7 +531,7 @@ class ImageProcessor:
         if noise_sigma > 0:
             image = self._add_gaussian_noise(image, sigma=noise_sigma)
 
-        # 5. Làm mờ nhẹ (xác suất thấp)
+        # 5. Light blurring
         blur_prob = 0.15
         blur_radius = 0.8
         if self.config:
@@ -548,14 +545,14 @@ class ImageProcessor:
 
     def _add_gaussian_noise(self, image: Image.Image, sigma: float = 3.0) -> Image.Image:
         """
-        Thêm nhiễu Gaussian vào ảnh.
+        Add Gaussian noise to the image.
 
-        Tham số:
-            image: Ảnh gốc.
-            sigma: Độ lệch chuẩn của nhiễu.
+        Args:
+            image: Original image.
+            sigma: Standard deviation of the noise.
 
-        Trả về:
-            Ảnh đã thêm nhiễu.
+        Returns:
+            Image with added noise.
         """
         try:
             import numpy as np
@@ -564,13 +561,13 @@ class ImageProcessor:
             noisy = np.clip(img_array + noise, 0, 255).astype(np.uint8)
             return Image.fromarray(noisy)
         except ImportError:
-            # Không có numpy: bỏ qua bước thêm nhiễu
+            # No numpy: skip the noise step
             return image
         except Exception as loi:
-            logger.debug("Khong the them nhieu Gaussian: %s", loi)
+            logger.debug("Could not add Gaussian noise: %s", loi)
             return image
 
     def clear_template_cache(self) -> None:
-        """Xóa bộ nhớ đệm template để giải phóng bộ nhớ."""
+        """Clear the template cache to free memory."""
         self._template_cache.clear()
-        logger.debug("Da xoa bo nho dem template.")
+        logger.debug("Template cache cleared.")

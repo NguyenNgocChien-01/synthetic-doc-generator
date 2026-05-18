@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "UA8825754",
+  "family_name": "RUIZ",
+  "given_names": "ROBERT",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1981-06-29",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-06-13",
+  "place_of_birth": "ROBINSONBOROUGH",
+  "authority": "EAST MICHAEL",
+  "mrz_line1": "P<AUSRUIZ<<ROBERT<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "UA8825754<AUS810629M270613<<<<<<<<<<<<<<<<04"
+}

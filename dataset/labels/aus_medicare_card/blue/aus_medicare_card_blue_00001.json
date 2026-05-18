@@ -1,0 +1,15 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "interim card",
+  "medicare_card_number": "1992 81371 9",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "LOGAN",
+      "middle_initial": "J",
+      "last_name": "HALL",
+      "full_name": "1 LOGAN J HALL"
+    }
+  ],
+  "expiry_date": "23/03/2029"
+}

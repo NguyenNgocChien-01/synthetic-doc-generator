@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "QT6158066",
+  "family_name": "DAVIS",
+  "given_names": "ANDREA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1963-11-24",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-11-04",
+  "place_of_birth": "LAKE RYANFURT",
+  "authority": "MARTINSTAD",
+  "mrz_line1": "P<AUSDAVIS<<ANDREA<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "QT6158066<AUS631124M291104<<<<<<<<<<<<<<<<03"
+}

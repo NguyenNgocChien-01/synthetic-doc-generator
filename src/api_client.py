@@ -1,6 +1,3 @@
-"""
-Module kết nối với Vertex AI.
-"""
 
 import io
 import json
@@ -12,12 +9,19 @@ import urllib.parse
 from abc import ABC, abstractmethod
 from typing import Optional
 from PIL import ImageOps, Image, ImageDraw, ImageFont
-
+from pathlib import Path
 from .config import APIConfig, PROMPT_TEMPLATES
 from .rate_limiter import RateLimiter, RateLimitExceededError
 
 logger = logging.getLogger(__name__)
 
+MEDICARE_CARD_MAP = {
+    "regular": "green",
+    "interim card": "blue",
+    "interim": "blue",
+    "reciprocal": "yellow",
+    "reciprocal health care": "yellow"
+}
 
 class APIError(Exception):
     def __init__(self, message: str, status_code: Optional[int] = None):
@@ -369,13 +373,106 @@ class VertexAIProvider(BaseAPIProvider):
             zone_top, zone_h, font_size,
         )
         return img
-
+    
+    def _format_date_to_doc_str(self, date_val: str) -> str:
+        """ YYYY-MM-DD --> DD MMM YYYY """
+        if not date_val or not isinstance(date_val, str) or "-" not in date_val:
+            return date_val
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(date_val.strip(), "%Y-%m-%d")
+            return dt.strftime("%d %b %Y").upper()
+        except Exception:
+            return date_val
+        
+    def format_cardholders(self, cardholders_list):
+        if not cardholders_list:
+            return ""
+        return "\n".join([str(c.get("full_name", "")).strip() for c in cardholders_list if c.get("full_name")])
+        
     def _build_payload(self, doc_type_key: str, json_data: dict, context: dict, img_b64: str) -> dict:
         config = context["config"]
-        date_format = config.get("date_format", "")
-        photo_instructions = config.get("photo_instructions", "")
-        has_portrait_photo = config.get("has_portrait_photo", True)
-        base_json = config.get("base_json")
+        
+        has_portrait_photo = config.get("has_portrait_photo", True) if isinstance(config, dict) else True
+        if "medicare" in doc_type_key.lower():
+            has_portrait_photo = False 
+
+        photo_instructions = config.get("photo_instructions", "") if isinstance(config, dict) else ""
+        
+        raw_config = {}
+        try:
+            storage_cfg = getattr(getattr(self, "config", None), "storage", None)
+            root_path = Path(getattr(storage_cfg, "templates_dir", "templates"))
+
+            doc_dir = doc_type_key
+            if doc_dir == "aus_medicare_card" and not (root_path / "aus_medicare_card").exists():
+                if (root_path / "medicare_card").exists():
+                    doc_dir = "medicare_card"
+
+            raw_sub = context.get("state") or json_data.get("card_type") or json_data.get("state") or ""
+            sub_val = str(raw_sub).strip().lower()
+
+            if "medicare" in doc_dir:
+                sub_val = MEDICARE_CARD_MAP.get(sub_val, sub_val)
+
+            base_path = root_path / doc_dir
+            if sub_val:
+                json_path = base_path / sub_val / "base.json"
+            else:
+                json_path = base_path / "base.json"
+      
+            if not json_path.exists() and sub_val:
+                json_path = base_path / "base.json"
+            if json_path.exists():
+                with open(json_path, "r", encoding="utf-8") as f:
+                    raw_config = json.load(f)
+            else:
+                logger.error("Khong tim thay base.json tai: %s", json_path)
+
+        except Exception as e:
+            logger.error("Loi doc base.json: %s", e)
+
+        formatted_base = {}
+        formatted_target = {}
+
+        if "medicare" in doc_type_key.lower():
+            base_cardholders = raw_config.get("cardholders", [])
+            target_cardholders = json_data.get("cardholders", [])
+ 
+            formatted_base["cardholders"] = self.format_cardholders(base_cardholders)
+            formatted_target["cardholders"] = self.format_cardholders(target_cardholders)
+      
+            formatted_base["medicare_card_number"] = raw_config.get("medicare_card_number")
+            formatted_target["medicare_card_number"] = json_data.get("medicare_card_number")
+            formatted_base["expiry_date"] = raw_config.get("expiry_date")
+            formatted_target["expiry_date"] = self._format_date_to_doc_str(json_data.get("expiry_date"))
+
+        def extract_recursive(goc, moi, target_dict, base_dict):
+            for k, v in moi.items():
+                if k not in goc:
+                    continue
+
+                if isinstance(v, list) and isinstance(goc[k], list):
+                    target_dict[k] = []
+                    base_dict[k] = []
+                    for i, sub_moi in enumerate(v):
+                        sub_target = {}
+                        if i < len(goc[k]):
+                            # IF index i in leng(base) --> extract 
+                            sub_base = {}
+                            if isinstance(sub_moi, dict) and isinstance(goc[k][i], dict):
+                                extract_recursive(goc[k][i], sub_moi, sub_target, sub_base)
+                                target_dict[k].append(sub_target)
+                                base_dict[k].append(sub_base)
+                        else:
+                            # if index i > leng(base) --> only TARGET_DATA
+                            target_dict[k].append(sub_moi)
+                else:
+                    if str(goc[k]).strip() != str(v).strip():
+                        base_dict[k] = goc[k]
+                        target_dict[k] = v
+
+        extract_recursive(raw_config, json_data, formatted_target, formatted_base)
 
         if has_portrait_photo:
             photo_section = (
@@ -388,54 +485,35 @@ class VertexAIProvider(BaseAPIProvider):
         else:
             photo_section = (
                 "## PHOTO SLOT\n"
-                "DO NOT generate any portrait, face, avatar, silhouette, or human figure.\n"
-                f"{photo_instructions}\n"
+                "CRITICAL: This document DOES NOT contain any portrait or photo slot.\n"
+                "DO NOT generate or add any portrait, face, avatar, silhouette, or human figure onto the image.\n"
             )
 
-        if base_json:
-            layout_section = (
-                "## STEP 1 — LEARN LAYOUT FROM TEMPLATE\n"
-                "Study the attached template image carefully.\n"
-                "The JSON below maps each field to its EXACT position, font, size, "
-                "alignment, rotation, and color in the template. Use it as a layout reference ONLY — "
-                "do NOT copy these values into the output.\n\n"
-                "CRITICAL: Reserve the bottom 9% of the image for MRZ zone. "
-                "LAYOUT REFERENCE (do not output these values):\n"
-                f"{json.dumps(base_json, ensure_ascii=False, indent=2)}\n\n"
-                "## STEP 2 — FILL WITH NEW DATA\n"
-                "Now replace every field using the TARGET DATA below. "
-                "Keep the learned layout from Step 1 exactly — same positions, fonts, sizes.\n"
-                f"DATE FORMAT RULES:\n{date_format}\n\n"
-                "TARGET DATA (output exactly these values):\n"
-                f"{json.dumps(json_data, ensure_ascii=False, indent=2)}\n"
-            )
-        else:
-            layout_section = (
-                "## FILL WITH NEW DATA\n"
-                "Replace all text fields using the TARGET DATA below. "
-                "Preserve the template layout exactly.\n"
-                f"DATE FORMAT RULES:\n{date_format}\n\n"
-                "TARGET DATA:\n"
-                f"{json.dumps(json_data, ensure_ascii=False, indent=2)}\n"
+        text_fields_instruction = config.get("info", {}).get("text_fields", "") if isinstance(config, dict) else ""
+        if not text_fields_instruction:
+            text_fields_instruction = (
+                "Locate each text string from BASE_JSON on the template image "
+                "and overwrite it with the corresponding string from TARGET_DATA at the exact same position."
             )
 
-        info_rules = context.get("info_rules", "")
-        specific_rules = f"## SPECIFIC RULES\n{info_rules}\n" if info_rules else ""
-
-        mrz_section = ""    # MRZ do Pillow render sau — không cần AI
+        layout_section = (
+            "## TEXT SUBSTITUTION MISSION\n"
+            "You must act as a strict 1-to-1 text replacement engine on the image. \n\n"
+            f"{text_fields_instruction}\n\n"
+            "BASE_JSON (Current text strings present on the template image to be replaced):\n"
+            f"{json.dumps(formatted_base, ensure_ascii=False, indent=2)}\n\n"
+            "TARGET_DATA (Exact new text strings that must overwrite the base values):\n"
+            f"{json.dumps(formatted_target, ensure_ascii=False, indent=2)}\n"
+        )
 
         prompt_text = (
             f"You are given a {doc_type_key} document template image.\n"
-            "Generate ONE photorealistic version of this document with new data.\n\n"
+            "Modify this image by replacing text fields according to the substitution mapping.\n\n"
             "## STRICT RULES\n"
-            "1. LAYOUT: Keep EXACT same layout, colors, fonts, logos, watermarks, "
-            "borders, background patterns. Do NOT move or remove any element.\n"
-            "2. TEXT: Replace ALL text fields with TARGET DATA values EXACTLY as given. "
-            "Never invent, alter, or omit any value.\n\n"
+            "1. LAYOUT: Keep EXACT same layout, colors, fonts, logos, watermarks, borders, background patterns. Do NOT shift any coordinates.\n"
+            "2. BACKGROUND PRESERVATION: Retain the underlying security textures and patterns behind the text 100% intact.\n\n"
             f"{layout_section}\n"
             f"{photo_section}\n"
-            f"{specific_rules}"
-            f"{mrz_section}"
             "## OUTPUT\n"
             "Return ONE single photorealistic document image.\n"
             "Same dimensions and orientation as the template.\n"

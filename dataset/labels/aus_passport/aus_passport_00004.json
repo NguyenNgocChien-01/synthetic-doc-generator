@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "WC1357604",
+  "family_name": "WILSON",
+  "given_names": "DEREK",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1995-07-08",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-01-15",
+  "place_of_birth": "NEW JOSHUAMOUTH",
+  "authority": "LORIFURT",
+  "mrz_line1": "P<AUSWILSON<<DEREK<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "WC1357604<AUS950708F290115<<<<<<<<<<<<<<<<03"
+}

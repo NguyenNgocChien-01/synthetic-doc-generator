@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "QO0702063",
+  "family_name": "ODONNELL",
+  "given_names": "MARIE",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1979-09-28",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2031-02-22",
+  "place_of_birth": "WEST JESSICA",
+  "authority": "NATALIELAND",
+  "mrz_line1": "P<AUSODONNELL<<MARIE<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "QO0702063<AUS790928F310222<<<<<<<<<<<<<<<<03"
+}

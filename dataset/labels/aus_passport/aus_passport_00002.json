@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "PK1678786",
+  "family_name": "JONES",
+  "given_names": "CHRISTOPHER",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1957-01-25",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-07-23",
+  "place_of_birth": "ELIZABETHFURT",
+  "authority": "ST. DANAVILLE",
+  "mrz_line1": "P<AUSJONES<<CHRISTOPHER<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "PK1678786<AUS570125F270723<<<<<<<<<<<<<<<<05"
+}
