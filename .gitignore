@@ -23,3 +23,6 @@ quota_state.json
 update_json.py
 up_to_hf.py
 test_all_states.sh
+
+99-old-labels/
+99-old-documents/
