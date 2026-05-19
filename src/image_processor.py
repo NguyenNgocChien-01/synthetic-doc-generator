@@ -571,3 +571,5 @@ class ImageProcessor:
         """Clear the template cache to free memory."""
         self._template_cache.clear()
         logger.debug("Template cache cleared.")
+
+

@@ -484,13 +484,17 @@ class DataGenerator:
 
                             middle = (
                                 faker.first_name()[0].upper()
-                                if random.random() > 0.4
+                                if random.random() > 0.8
                                 else None
                             )
 
                             full_name = " ".join(
                                 filter(None, [str(i), first, middle, last])
                             )
+                            # full_name = " ".join(
+                            #     filter(None, [first, middle, last])
+                            # )
+
 
                             members.append({
                                 "position": i,

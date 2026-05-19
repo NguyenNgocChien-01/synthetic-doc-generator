@@ -1,0 +1,15 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "reciprocal health care",
+  "medicare_card_number": "3398 26321 7",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "TIFFANY",
+      "middle_initial": "K",
+      "last_name": "WALKER",
+      "full_name": "1 TIFFANY K WALKER"
+    }
+  ],
+  "expiry_date": "29/05/2029"
+}

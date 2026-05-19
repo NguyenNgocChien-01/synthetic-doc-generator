@@ -92,7 +92,6 @@ for i in $(seq 1 $TOTAL); do
         --type "$DOC_TYPE" \
         $STATE_ARG \
         --count 1 \
-        --workers 1 \
         --project-id "$PROJECT_ID" \
         --image-model gemini-2.5-flash-image \
         2>&1 | tee /tmp/run_output.txt > /dev/null

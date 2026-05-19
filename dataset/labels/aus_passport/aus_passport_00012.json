@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "SL0240645",
+  "family_name": "GLOVER",
+  "given_names": "GRANT",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1979-08-05",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-02-18",
+  "place_of_birth": "WILCOXSIDE",
+  "authority": "PORT STEFANIE",
+  "mrz_line1": "P<AUSGLOVER<<GRANT<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "SL0240645<AUS790805F290218<<<<<<<<<<<<<<<<01"
+}
