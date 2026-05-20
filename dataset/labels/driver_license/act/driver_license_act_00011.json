@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "first_name": "JAY",
+      "middle_name": null,
+      "last_name": "FRYE",
+      "full_name": "JAY FRYE",
+      "sex": "M",
+      "dob": "1970-08-25"
+    },
+    "licence": {
+      "licence_number": "919005826",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2027-06-25",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 76",
+      "address_line_2": "LEVEL 3 7 PATTON TRUNKWAY",
+      "suburb": "ERICAPORT",
+      "state": "ACT",
+      "postcode": "1363"
+    },
+    "card_number": "D5846856",
+    "dob_watermark": "25081970",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D1154633",
+    "expiry_date": "25-06-2027",
+    "dob": "25-08-1970",
+    "age_indicator": "08-70",
+    "barcode_number": "ABnoteNZ6755420741",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

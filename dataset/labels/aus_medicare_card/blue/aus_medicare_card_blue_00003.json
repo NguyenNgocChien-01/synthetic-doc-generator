@@ -1,0 +1,29 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "interim card",
+  "medicare_card_number": "5840 42931 6",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "MARCUS",
+      "middle_initial": null,
+      "last_name": "MILLER",
+      "full_name": "1 MARCUS MILLER"
+    },
+    {
+      "position": 2,
+      "first_name": "MARIA",
+      "middle_initial": null,
+      "last_name": "ZAVALA",
+      "full_name": "2 MARIA ZAVALA"
+    },
+    {
+      "position": 3,
+      "first_name": "STEPHANIE",
+      "middle_initial": null,
+      "last_name": "SMITH",
+      "full_name": "3 STEPHANIE SMITH"
+    }
+  ],
+  "expiry_date": "29/08/2029"
+}

@@ -10,10 +10,6 @@ from abc import ABC, abstractmethod
 from typing import Optional
 from PIL import ImageOps, Image, ImageDraw, ImageFont
 from pathlib import Path
-
-# from rich.json import json_data
-
-# from rich.json import json_data
 from .config import APIConfig, PROMPT_TEMPLATES
 from .rate_limiter import RateLimiter, RateLimitExceededError
 
@@ -145,9 +141,13 @@ class VertexAIProvider(BaseAPIProvider):
             template_image, json_data, image_model, orig_is_portrait
         )
 
-    def _fix_avatar_consistency(self, output_img: Image.Image, doc_type_key: str) -> Image.Image:
-        if "act" in doc_type_key:
-            logger.debug("Bang lai ACT khong dung ghost face, bo qua fix_avatar.")
+    def _fix_avatar_consistency(self, output_img: Image.Image, doc_type_key: str, context: Optional[dict]) -> Image.Image:
+
+        config = context.get("config", {}) if isinstance(context, dict) else {}
+        has_ghost_photo = config.get("has_ghost_photo", True)
+
+        if not has_ghost_photo:
+            logger.info("has_ghost_photo = False.")
             return output_img
 
         try:
@@ -254,7 +254,7 @@ class VertexAIProvider(BaseAPIProvider):
                 return ""
 
             issuing_state = find_issuing_state(json_data)
-            state_key = f"driver_license_{issuing_state.lower()}" if issuing_state else ""
+            state_key = f"driver_license/{issuing_state.lower()}" if issuing_state else ""
             doc_type_key = state_key if state_key in PROMPT_TEMPLATES else "driver_license"
 
         prompt_config = PROMPT_TEMPLATES.get(doc_type_key, PROMPT_TEMPLATES.get("default", {}))
@@ -378,202 +378,168 @@ class VertexAIProvider(BaseAPIProvider):
         )
         return img
     
-    def _format_date_to_doc_str(self, date_val: str) -> str:
-        """ YYYY-MM-DD --> DD MMM YYYY """
-        if not date_val or not isinstance(date_val, str) or "-" not in date_val:
-            return date_val
-        try:
-            from datetime import datetime
-            dt = datetime.strptime(date_val.strip(), "%Y-%m-%d")
-            return dt.strftime("%d %b %Y").upper()
-        except Exception:
-            return date_val
-        
     def format_cardholders(self, cardholders_list: list) -> str:
-        """
- 
-        Layout  Medicare aus:
-            1  JOHN          A     CITIZEN
-            2  JANE          A     CITIZEN
-            3  JAMES               CITIZEN
-            4  JESSICA       B     CITIZEN
- 
-        4 column 
-            Col1 = index (1 chu so)
-            Col2 = given_name  (pad 12 ky tu)
-            Col3 = middle init (pad 4 ky tu)
-            Col4 = family_name (pad 14 ky tu)
-        """
         if not cardholders_list:
             return ""
- 
-        COL_GIVEN  = 12
-        COL_MIDDLE = 4
-        COL_FAMILY = 14
- 
+
         lines = []
         for idx, c in enumerate(cardholders_list, start=1):
             if not isinstance(c, dict):
                 continue
- 
+
             family = (c.get("family_name") or c.get("last_name") or c.get("surname") or "").strip().upper()
-            given  = (c.get("given_name")  or c.get("first_name") or "").strip().upper()
+            given = (c.get("given_name") or c.get("first_name") or "").strip().upper()
             middle = (c.get("middle_name") or c.get("middle_initial") or "").strip().upper()
             if middle:
-                middle = middle[0] 
- 
-        
+                middle = middle[0]
+
+      
             if not family and not given:
-                full  = str(c.get("full_name", "")).strip().upper()
+                full = str(c.get("full_name", "")).strip().upper()
                 parts = full.split()
                 if parts and parts[0].isdigit():
                     parts = parts[1:]
                 if len(parts) >= 3:
                     family = parts[-1]
                     middle = parts[-2][0] if not parts[-2].isdigit() else ""
-                    given  = " ".join(parts[:-2])
+                    given = " ".join(parts[:-2])
                 elif len(parts) == 2:
                     family = parts[-1]
-                    given  = parts[0]
+                    given = parts[0]
                 elif len(parts) == 1:
                     family = parts[0]
- 
+
             if not family and not given:
                 continue
- 
-            line = (
-                f"{idx}  "
-                f"{given.ljust(COL_GIVEN)}  "
-                f"{middle.ljust(COL_MIDDLE)}  "
-                f"{family.ljust(COL_FAMILY)}"
-            ).rstrip()
+
+            line = f"{idx}[use tab]{given}[use tab]{middle}[use tab]{family}[NextLine]"
             lines.append(line)
- 
+
         return "\n".join(lines)
     
-    #  Load base.json --> doc_type 
-    def _load_base_config(self, doc_type_key: str, json_data: dict, context: dict) -> dict:
+    def _load_base_config(self, doc_type_key: str, json_data: dict, context: dict) -> tuple[dict, dict]:
         try:
             storage_cfg = getattr(getattr(self, "config", None), "storage", None)
             root_path   = Path(getattr(storage_cfg, "templates_dir", "templates"))
- 
+
             doc_dir = doc_type_key
-            # Compat alias: aus_medicare_card <-> medicare_card
+            
+            raw_sub = (context.get("state") or context.get("country") or context.get("issuing_state") or 
+                       json_data.get("card_type") or json_data.get("state") or json_data.get("issuing_state") or "")
+            sub_val = str(raw_sub).strip().lower()
+
+            if not (root_path / doc_dir).exists() and "_" in doc_dir:
+                parts = doc_dir.rsplit("_", 1)
+                possible_dir = parts[0]
+                possible_sub = parts[1]
+                if (root_path / possible_dir).exists():
+                    doc_dir = possible_dir
+                    if not sub_val:
+                        sub_val = possible_sub
+
             if doc_dir == "aus_medicare_card" and not (root_path / "aus_medicare_card").exists():
                 if (root_path / "medicare_card").exists():
                     doc_dir = "medicare_card"
- 
-            # sub-folder (card_type / state)
-            raw_sub = context.get("state") or json_data.get("card_type") or json_data.get("state") or ""
-            sub_val = str(raw_sub).strip().lower()
+
             if "medicare" in doc_dir:
-                sub_val = MEDICARE_CARD_MAP.get(sub_val, sub_val)
- 
+                sub_val = MEDICARE_CARD_MAP.get(sub_val, sub_val) if 'MEDICARE_CARD_MAP' in globals() else sub_val
+
             base_path = root_path / doc_dir
-            json_path = (base_path / sub_val / "base.json") if sub_val else (base_path / "base.json")
-            if not json_path.exists() and sub_val:
-                json_path = base_path / "base.json"
- 
-            if json_path.exists():
-                with open(json_path, "r", encoding="utf-8") as f:
-                    return json.load(f)
+
+            base_json_path = (base_path / sub_val / "base.json") if sub_val else (base_path / "base.json")
+            if not base_json_path.exists() and sub_val:
+                base_json_path = base_path / "base.json"
+
+            layout_json_path = (base_path / sub_val / "layout.json") if sub_val else (base_path / "layout.json")
+            if not layout_json_path.exists() and sub_val:
+                layout_json_path = base_path / "layout.json"
+
+            base_data = {}
+            layout_data = {}
+
+            if base_json_path.exists():
+                with open(base_json_path, "r", encoding="utf-8") as f:
+                    base_data = json.load(f)
             else:
-                logger.error("Khong tim thay base.json tai: %s", json_path)
+                logger.error("not find base.json tai: %s", base_json_path)
+
+            if layout_json_path.exists():
+                with open(layout_json_path, "r", encoding="utf-8") as f:
+                    layout_data = json.load(f)
+            else:
+                logger.error("not find layout.json tai: %s", layout_json_path)
+
+            return base_data, layout_data
+
         except Exception as e:
-            logger.error("Loi doc base.json: %s", e)
-        return {}
- 
+            logger.error("Loi doc config files (base/layout): %s", e)
+            return {}, {}
   
-    #  Build formatted_base + formatted_target each type
-
-    def _format_fields_by_doctype(
-        self, doc_type_key: str, json_data: dict, raw_config: dict
-    ) -> tuple[dict, dict]:
-        """
-        return (formatted_base, formatted_target) each type.
- 
-        Doc types now:
-            - aus_medicare_card / medicare_card  -> xu ly cardholders, card_number, expiry
-            - aus_passport                       -> giu nguyen (MRZ xu ly o _render_mrz_overlay)
-            - driver_license / driver_license_*  -> giu nguyen (extract_recursive xu ly)
-            - utility_bill / default             -> giu nguyen (extract_recursive xu ly)
-        """
-        base   = {}
-        target = {}
- 
-        # Medicare Card
-        if "medicare" in doc_type_key.lower():
-            base["cardholders"]        = self.format_cardholders(raw_config.get("cardholders", []))
-            target["cardholders"]      = self.format_cardholders(json_data.get("cardholders", []))
-            base["medicare_card_number"]   = raw_config.get("medicare_card_number")
-            target["medicare_card_number"] = json_data.get("medicare_card_number")
-            base["expiry_date"]   = raw_config.get("expiry_date")
-            target["expiry_date"] = self._format_date_to_doc_str(json_data.get("expiry_date"))
- 
-        # ── Passport 
-        # MRZ -->  _render_mrz_overlay
-        # remaining fields --> extract_recursive
- 
-        # ── Driver License 
-        
-        # ── Utility Bill / Default 
-    
- 
-        return base, target
-    
-
     def _build_payload(self, doc_type_key: str, json_data: dict, context: dict, img_b64: str) -> dict:
         config = context["config"]
         has_portrait_photo = config.get("has_portrait_photo", True) if isinstance(config, dict) else True
         if "medicare" in doc_type_key.lower():
             has_portrait_photo = False
+            
         photo_instructions = config.get("photo_instructions", "") if isinstance(config, dict) else ""
+        text_fields_instruction = config.get("info", {}).get("text_fields", "") if isinstance(config, dict) else ""
 
+        raw_base_config, raw_layout_config = self._load_base_config(doc_type_key, json_data, context)
 
-        raw_base_config = self._load_base_config(doc_type_key, json_data, context)
-
-
-        def process_fields(source_dict: dict) -> dict:
-            formatted = {}
-            for k, v in source_dict.items():
-                # if k in ["mrz_line1", "mrz_line2"]:
-                #     continue
-                
-                if k in ["cardholders", "members"] and "medicare" in doc_type_key.lower():
-                    formatted["cardholders"] = self.format_cardholders(v)
-                    continue
-
-                val_str = str(v).strip()
-                if any(date_key in k.lower() for date_key in ["date", "dob", "expiry", "issue"]):
+        def process_fields(source_data):
+            if isinstance(source_data, dict):
+                formatted = {}
+                for k, v in source_data.items():
+                    if k in ["cardholders", "members"] and "medicare" in doc_type_key.lower():
+                        formatted["cardholders"] = self.format_cardholders(v)
+                        continue
+                    formatted[k] = process_fields(v)
+                return formatted
+            elif isinstance(source_data, list):
+                return [process_fields(item) for item in source_data]
+            else:
+                val_str = str(source_data).strip()
+                if len(val_str) == 10 and "-" in val_str:
                     try:
                         import datetime
-                        if len(val_str) == 10 and "-" in val_str:
-                            date_obj = datetime.datetime.strptime(val_str, "%Y-%m-%d")
-                            formatted[k] = date_obj.strftime("%d %b %Y").upper()
-                            continue
+                        date_obj = datetime.datetime.strptime(val_str, "%Y-%m-%d")
+                        return date_obj.strftime("%d %b %Y").upper()
                     except ValueError:
                         pass
-                formatted[k] = val_str
-            return formatted
+                return val_str
 
         formatted_base = process_fields(raw_base_config)
         formatted_target = process_fields(json_data)
-
+        # formatted_layout = process_fields(raw_layout_config)
 
         if has_portrait_photo:
+            try:
+                formatted_photo_inst = photo_instructions.format(
+                    target_gender=context.get('target_gender', 'person'), 
+                    target_dob=context.get('target_dob', 'unknown')
+                )
+            except KeyError:
+                formatted_photo_inst = photo_instructions
+                
             photo_section = (
                 "## PHOTO REPLACEMENT\n"
-                f"{photo_instructions.format(target_gender=context.get('target_gender', 'person'), target_dob=context.get('target_dob', 'unknown'))}\n"
+                f"{formatted_photo_inst}\n"
             )
         else:
             photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face, human figure, or portrait to this document.\n"
 
-        text_fields_instruction = config.get("info", {}).get("text_fields", "") if isinstance(config, dict) else ""
+        # layout_section = ""
+        # if formatted_layout:
+        #     layout_section = (
+        #         "## LAYOUT CONFIGURATION:\n"
+        #         "Use the following structure to position and style the text:\n"
+        #         f"{json.dumps(formatted_layout, ensure_ascii=False, indent=2)}\n\n"
+        #     )
 
-   
         prompt_text = (
             f"Task: Generate a photorealistic {doc_type_key} by replacing specific data fields on the provided template.\n\n"
             f"{text_fields_instruction}\n\n"
+            # f"{layout_section}"
             "## BASE_JSON (OLD DATA TO ERASE):\n"
             "Locate these values on the template and erase them seamlessly:\n"
             f"{json.dumps(formatted_base, ensure_ascii=False, indent=2)}\n\n"
@@ -586,7 +552,7 @@ class VertexAIProvider(BaseAPIProvider):
         )
 
         logger.debug("Prompt length: %d chars", len(prompt_text))
-        print("Prompt to Vertex AI Gemini:\n", prompt_text, "\n")
+        print("Prompt to Gemini:\n", prompt_text, "\n")
 
         return {
             "contents": [
@@ -600,21 +566,20 @@ class VertexAIProvider(BaseAPIProvider):
             ],
             "generationConfig": {
                 "responseModalities": ["IMAGE"],
-                "temperature": 0.0,
-                "topK": 1,
-                "topP": 0.1
+                # "temperature": 2.0,
+                #     "topK": 32,
+                #     "topP": 0.95
             },
         }
-        
+    
     def _call_api(self, payload: dict, image_model: str) -> Optional[dict]:
-        image_model_clean = image_model.replace("models/", "")
-        url = f"{self.base_url}/{image_model_clean}:generateContent"
-        logger.debug("Vertex AI endpoint: %s", url)
+        url = self.config.get_image_endpoint()
+        logger.debug(" AI endpoint: %s", url)
 
         try:
             token = self._get_access_token()
         except APIError as err:
-            logger.error("Vertex AI auth error: %s", err)
+            logger.error(" AI auth error: %s", err)
             return None
 
         body = json.dumps(payload).encode("utf-8")
@@ -625,7 +590,7 @@ class VertexAIProvider(BaseAPIProvider):
         logger.debug("Sending request to Vertex AI...")
 
         try:
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with urllib.request.urlopen(req, timeout=120) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as err:
             error_body = err.read().decode("utf-8", errors="replace")
@@ -638,7 +603,7 @@ class VertexAIProvider(BaseAPIProvider):
             logger.error("Unknown Vertex AI error: %s", err)
 
         return None
-
+    
     def _postprocess_image(
         self,
         api_result: dict,
@@ -646,69 +611,91 @@ class VertexAIProvider(BaseAPIProvider):
         doc_type_key: str,
         is_portrait: bool,
         json_data: Optional[dict] = None,
+        context: Optional[dict] = None,
     ) -> Optional[Image.Image]:
         try:
-            parts = api_result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+            prompt_feedback = api_result.get("promptFeedback", {})
+            if prompt_feedback.get("blockReason"):
+                logger.error("BLOCK EVIDENCE: Prompt rejected. Reason: %s", prompt_feedback.get("blockReason"))
+                return None
+
+            candidates = api_result.get("candidates", [])
+            if not candidates:
+                logger.error("BLOCK EVIDENCE: No candidates returned.")
+                return None
+
+            candidate = candidates[0]
+            
+            finish_reason = candidate.get("finishReason")
+            if finish_reason:
+                if finish_reason in ["SAFETY", "BLOCKLIST", "PROHIBITED_CONTENT"]:
+                    safety_ratings = candidate.get("safetyRatings", [])
+                    logger.error(
+                        "BLOCK EVIDENCE: Request blocked by safety system. FinishReason: %s | SafetyRatings: %s", 
+                        finish_reason, json.dumps(safety_ratings)
+                    )
+                    return None
+                elif finish_reason != "STOP":
+                    logger.warning("Image generation stopped abnormally. FinishReason: %s", finish_reason)
+
+            content = candidate.get("content", {})
+            parts = content.get("parts", [])
+            
+            if not parts:
+                logger.error("Không tìm thấy thuộc tính 'parts' trong 'content'.")
+                return None
+
+            raw_data = None
             for part in parts:
-                raw_data = None
                 if "inlineData" in part:
-                    raw_data = base64.b64decode(part["inlineData"]["data"])
+                    raw_data = base64.b64decode(part["inlineData"].get("data", ""))
+                    break
                 elif "inline_data" in part:
-                    raw_data = base64.b64decode(part["inline_data"]["data"])
+                    raw_data = base64.b64decode(part["inline_data"].get("data", ""))
+                    break
 
-                if not raw_data:
-                    continue
+            if not raw_data:
+                logger.error("Không tìm thấy dữ liệu ảnh (inlineData/inline_data) trong parts.")
+                return None
 
-                img = Image.open(io.BytesIO(raw_data))
-                img = ImageOps.exif_transpose(img).convert("RGB")
+            img = Image.open(io.BytesIO(raw_data))
+            img = ImageOps.exif_transpose(img).convert("RGB")
 
-                out_is_portrait = img.height > img.width
-                if is_portrait and not out_is_portrait:
-                    img = img.rotate(90, expand=True)
-                    logger.debug("Xoay output +90 ve portrait.")
-                elif not is_portrait and out_is_portrait:
-                    img = img.rotate(-90, expand=True)
-                    logger.debug("Xoay output -90 ve landscape.")
+            out_is_portrait = img.height > img.width
+            if is_portrait and not out_is_portrait:
+                img = img.rotate(90, expand=True)
+                logger.debug("Xoay output +90 ve portrait.")
+            elif not is_portrait and out_is_portrait:
+                img = img.rotate(-90, expand=True)
+                logger.debug("Xoay output -90 ve landscape.")
 
-                if img.size != orig_size:
-                    logger.debug(
-                        "Resize output (%dx%d) -> (%dx%d)",
-                        img.width, img.height, orig_size[0], orig_size[1],
-                    )
-                    img = img.resize(orig_size, Image.Resampling.LANCZOS)
+            if img.size != orig_size:
+                logger.debug(
+                    "Resize output (%dx%d) -> (%dx%d)",
+                    img.width, img.height, orig_size[0], orig_size[1],
+                )
+                img = img.resize(orig_size, Image.Resampling.LANCZOS)
 
-                img = self._fix_avatar_consistency(img, doc_type_key)
+            img = self._fix_avatar_consistency(img, doc_type_key, context)
 
-                if json_data:
-                    img = self._render_mrz_overlay(
-                        img,
-                        json_data,
-                        doc_type_key,
-                        ocr_b_path=None,
-                        bg_color=(230, 225, 215),
-                        text_color=(10, 10, 10),
-                        zone_ratio=0.11,
-                        side_pad_ratio=0.04,
-                    )
+            if json_data:
+                img = self._render_mrz_overlay(
+                    img,
+                    json_data,
+                    doc_type_key,
+                    ocr_b_path=None,
+                    bg_color=(230, 225, 215),
+                    text_color=(10, 10, 10),
+                    zone_ratio=0.11,
+                    side_pad_ratio=0.04,
+                )
 
-                # if "passport" in doc_type_key.lower() and json_data:
-                #     from .image_processor import draw_laser_perforations
-                #     doc_num = json_data.get("document_number", "")
-                #     if doc_num:
-                #         img = draw_laser_perforations(img, doc_num)
+            logger.info("Document generated successfully.")
+            return img
 
-
-                logger.info("Document generated successfully.")
-                return img
-
-            logger.error("Gemini returned no image. Parts: %s", str(parts)[:300])
         except (KeyError, IndexError, Exception) as err:
-            logger.error(
-                "Failed parsing Gemini response: %s | %s",
-                err, json.dumps(api_result)[:300],
-            )
-
-        return None
+            logger.error("Failed parsing Gemini response: %s", err)
+            return None
 
     def _generate_single_page(
         self,
@@ -726,7 +713,7 @@ class VertexAIProvider(BaseAPIProvider):
         if api_result:
       
             final_img = self._postprocess_image(
-                api_result, orig_size, doc_type_key, is_portrait, json_data
+                api_result, orig_size, doc_type_key, is_portrait, json_data, context
             )
 
         

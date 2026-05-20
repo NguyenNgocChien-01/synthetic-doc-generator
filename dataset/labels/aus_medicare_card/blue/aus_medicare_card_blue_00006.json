@@ -1,0 +1,15 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "interim card",
+  "medicare_card_number": "6727 45151 8",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "JAMES",
+      "middle_initial": null,
+      "last_name": "ATKINSON",
+      "full_name": "1 JAMES ATKINSON"
+    }
+  ],
+  "expiry_date": "02/08/2030"
+}

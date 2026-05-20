@@ -3,43 +3,43 @@
   "issuing_state": "ACT",
   "front": {
     "holder": {
-      "first_name": "BENJAMIN",
-      "middle_name": "RYAN",
-      "last_name": "O'CONNOR",
-      "full_name": "BENJAMIN RYAN O'CONNOR",
-      "sex": "M",
-      "dob": "1995-08-28"
+      "first_name": "Joan",
+      "middle_name": null,
+      "last_name": "CITIZEN",
+      "full_name": "CITIZEN Joan",
+      "sex": null,
+      "dob": "1985-08-30"
     },
     "licence": {
-      "licence_number": "4561237890",
+      "licence_number": "1234567890",
       "licence_classes": [
         "C",
         "R"
       ],
-      "licence_type_raw": "FULL",
-      "expiry_date": "2034-10-11",
+      "licence_type_raw": null,
+      "expiry_date": "2020-12-31",
       "conditions": [
         "S"
       ]
     },
     "address": {
-      "address_line_1": "APARTMENT 34, 10 CONSTITUTION AVENUE",
+      "address_line_1": "13 CHALLIS ST",
       "address_line_2": null,
-      "suburb": "CANBERRA",
+      "suburb": "DICKSON",
       "state": "ACT",
-      "postcode": "2601"
+      "postcode": "2602"
     },
-    "card_number": "E123789456",
-    "dob_watermark": "28081995",
+    "card_number": "A123456789",
+    "dob_watermark": null,
     "photo_present": true,
     "signature_present": true
   },
   "back": {
-    "card_number": "E123789456",
-    "expiry_date": "2034-10-11",
-    "dob": "1995-08-28",
-    "age_indicator": "08-95",
-    "barcode_number": "ABnoteNZ4561237890",
+    "card_number": null,
+    "expiry_date": null,
+    "dob": null,
+    "age_indicator": null,
+    "barcode_number": null,
     "conditions_legend": {
       "S": "Licensee must wear corrective lenses at all times",
       "1": "May only drive a vehicle fitted with a breath alcohol interlock device",

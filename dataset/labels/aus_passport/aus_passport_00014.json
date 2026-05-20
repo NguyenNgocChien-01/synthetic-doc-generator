@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "GP7437983",
+  "family_name": "HANSEN",
+  "given_names": "VICTORIA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1996-03-21",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-04-29",
+  "place_of_birth": "NORTH MICHAEL",
+  "authority": "BRANDONSIDE",
+  "mrz_line1": "P<AUSHANSEN<<VICTORIA<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "GP7479783<AUS960321M300429<<<<<<<<<<<<<<<<05"
+}
