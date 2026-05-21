@@ -1,4 +1,4 @@
-# src/config.py
+
 import os
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any
@@ -17,21 +17,25 @@ PLATFORM_ENDPOINTS: Dict[str, str] = {
     PLATFORM_VERTEX_AI: "https://{region}-aiplatform.googleapis.com/v1",
 }
 
-
+#  Gemini model use :generateContent
 VERTEX_STANDARD_MODELS = {
-    "gemini-2.5-flash-image",
-    "gemini-2.0-flash-preview-image-generation",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
+    "gemini-2.5-flash-image"
 }
-
-
+# preview (dont use)
 AGENT_PLATFORM_MODELS = {
     "gemini-3.1-flash-image-preview",
     "gemini-3-pro-image-preview",
 }
 
-ALL_IMAGE_MODELS = VERTEX_STANDARD_MODELS | AGENT_PLATFORM_MODELS
+# text --> Img, no using
+# Imagen model use :predict
+# IMAGEN_MODELS = {
+#     "imagen-3.0-generate-001",
+#     "imagen-3.0-fast-generate-001",
+# }
+
+ALL_IMAGE_MODELS = VERTEX_STANDARD_MODELS | AGENT_PLATFORM_MODELS 
+# |  IMAGEN_MODELS
 
 
 def get_model_endpoint(region: str, project_id: str, model: str) -> str:
@@ -39,9 +43,14 @@ def get_model_endpoint(region: str, project_id: str, model: str) -> str:
         base = f"https://{region}-aiplatform.googleapis.com/v1beta1"
     else:
         base = f"https://{region}-aiplatform.googleapis.com/v1"
+        
+    
+    # action = "predict" if "imagen" in model.lower() else "generateContent"
+    action = "generateContent"
+    
     return (
         f"{base}/projects/{project_id}/locations/{region}"
-        f"/publishers/google/models/{model}:generateContent"
+        f"/publishers/google/models/{model}:{action}"
     )
 
 
@@ -67,7 +76,9 @@ class APIConfig:
     def get_image_endpoint(self) -> str:
         """return endpoint --> image model"""
         if self.endpoint:
-            return f"{self.endpoint}/{self.image_model}:generateContent"
+            # action = "predict" if "imagen" in self.image_model.lower() else "generateContent"
+            action = "generateContent"
+            return f"{self.endpoint}/{self.image_model}:{action}"
         return get_model_endpoint(self.region, self.project_id or "", self.image_model)
 
     def is_agent_platform_model(self) -> bool:
@@ -142,7 +153,7 @@ class Config:
 
 PROMPT_TEMPLATES = {
     "aus_passport": {
-        "has_portrait_photo": True,
+        "photo_mode": "MULTIPLE", 
         "photo_instructions": (
             "Generate ONE highly realistic portrait of a {target_gender} (age: {target_dob}).\n"
             "Seamlessly integrate this same face into all 3 designated photo slots: MAIN, GHOST (top-right), and HOLOGRAM (bottom-right)."
@@ -165,30 +176,19 @@ PROMPT_TEMPLATES = {
     },
     "aus_medicare_card": {
         "date_format": "Format expiry_date exactly as DD/MM/YYYY or MM/YYYY depending on template.",
-        "has_portrait_photo": False,
+        "photo_mode": "NONE",
         "photo_instructions": "CRITICAL: This document DOES NOT contain any portrait or photo slot.",
         "info": { 
-        "text_fields": (
-            "## 1-TO-1 INPAINTING CONSTRAINTS\n"
-            "You are an exact text replacement engine.\n"
-            "1. PRESERVE BACKGROUND: Maintain the background colors and 'medicare' watermark text pattern 100% intact.\n"
-            "2. Locate the values in BASE_JSON (medicare_card_number, cardholders block, expiry_date) on the image.\n"
-            "3. Erase the old values completely.\n"
-            "4. Render the corresponding values from TARGET_DATA in the exact same spatial positions.\n"
-            "5. For 'cardholders', render the multiline string exactly.\n"
-            "6. Keep the cardholder rows evenly distributed vertically \n"
-            "7. Ensure all names and member codes are horizontally aligned in clean columns exactly "
-            #   like the reference image.\n"
-            # "8. Maintain consistent character spacing, baseline alignment, and row padding so the layout appears naturally balanced.\n"
-            "9. Preserve the original font style, weight, scale, black color, and OCR-like appearance.\n"
-            "10. Do not distort, shift, resize, rotate, or regenerate any non-text elements.\n"
-        )
+            "text_fields": (
+                "Replace ONLY text fields (medicare_card_number, cardholders, expiry_date). "
+                "Preserve background, watermark, font style, color, and layout exactly. "
+                "Cardholders: multiline, evenly spaced rows, columns aligned."
+            )
         }
     },
     "driver_license/act": {
         "date_format": "Format dates exactly as DD MMM YYYY (e.g., 13 FEB 1990) for ALL .",
-        "has_portrait_photo": True,
-        "has_ghost_photo": False,
+        "photo_mode": "SINGLE",  
         "photo_instructions": (
             "Preserve the existing portrait placement and frame on the middle right of the front card. "
             "Generate a highly realistic driver license style front-facing photo of a {target_gender} (age: {target_dob}). "
@@ -216,9 +216,8 @@ PROMPT_TEMPLATES = {
                 "- DOB Watermark (8 digits): Top right corner.\n"
                 "- Vertical Card Number: Printed vertically (rotated -90 degrees) near the right edge of the portrait.\n"
                 "- Horizontal Card Number: Bottom left corner, below the signature.\n\n"
-
             )
         }
     }
-
 }
+

@@ -3,6 +3,7 @@ import io
 import json
 import logging
 import base64
+from logging import config
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -475,15 +476,15 @@ class VertexAIProvider(BaseAPIProvider):
             logger.error("Loi doc config files (base/layout): %s", e)
             return {}, {}
   
-    def _build_payload(self, doc_type_key: str, json_data: dict, context: dict, img_b64: str) -> dict:
+    def _build_payload(self, doc_type_key: str, json_data: dict, context: dict, img_b64: str, image_model: str) -> dict:
+        # Prompt in config.py
         config = context["config"]
-        has_portrait_photo = config.get("has_portrait_photo", True) if isinstance(config, dict) else True
-        if "medicare" in doc_type_key.lower():
-            has_portrait_photo = False
-            
+
+        photo_mode = config.get("photo_mode", "NONE")
         photo_instructions = config.get("photo_instructions", "") if isinstance(config, dict) else ""
         text_fields_instruction = config.get("info", {}).get("text_fields", "") if isinstance(config, dict) else ""
 
+        # base.json + layout.json -> format -> prompt
         raw_base_config, raw_layout_config = self._load_base_config(doc_type_key, json_data, context)
 
         def process_fields(source_data):
@@ -512,7 +513,12 @@ class VertexAIProvider(BaseAPIProvider):
         formatted_target = process_fields(json_data)
         # formatted_layout = process_fields(raw_layout_config)
 
-        if has_portrait_photo:
+        if photo_mode == "NONE":
+            photo_section = (
+                "## PHOTO REPLACEMENT\n"
+                "CRITICAL INSTRUCTION: DO NOT add any face.\n"
+            )
+        elif photo_mode in ["SINGLE", "MULTIPLE"]:
             try:
                 formatted_photo_inst = photo_instructions.format(
                     target_gender=context.get('target_gender', 'person'), 
@@ -521,13 +527,14 @@ class VertexAIProvider(BaseAPIProvider):
             except KeyError:
                 formatted_photo_inst = photo_instructions
                 
+            constraint = "Generate EXACTLY ONE portrait." if photo_mode == "SINGLE" else "Generate EXACTLY the number of portraits requested."
             photo_section = (
                 "## PHOTO REPLACEMENT\n"
                 f"{formatted_photo_inst}\n"
+                f"STRICT CONSTRAINT: {constraint} Do NOT hallucinate extra faces or figures outside the defined bounding boxes.\n"
             )
         else:
-            photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face, human figure, or portrait to this document.\n"
-
+             photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face, human figure, or portrait to this document.\n"
         # layout_section = ""
         # if formatted_layout:
         #     layout_section = (
@@ -552,8 +559,25 @@ class VertexAIProvider(BaseAPIProvider):
         )
 
         logger.debug("Prompt length: %d chars", len(prompt_text))
-        print("Prompt to Gemini:\n", prompt_text, "\n")
-
+        print("Prompt to API:\n", prompt_text, "\n")
+        # if "imagen" in image_model.lower():
+        #     # Vertex AI Imagen 3
+        #     return {
+        #         "instances": [
+        #             {
+        #                 "prompt": prompt_text,
+        #                 "image": {
+        #                     "bytesBase64Encoded": img_b64
+        #                 }
+        #             }
+        #         ],
+        #         "parameters": {
+        #             "sampleCount": 1
+        #         }
+        #     }
+        # else:
+        
+        # Vertex AI Gemini / AI Studio
         return {
             "contents": [
                 {
@@ -566,14 +590,32 @@ class VertexAIProvider(BaseAPIProvider):
             ],
             "generationConfig": {
                 "responseModalities": ["IMAGE"],
-                # "temperature": 2.0,
-                #     "topK": 32,
-                #     "topP": 0.95
+                "temperature": 0.2,
+                "topK": 1,
+                "topP": 0.1
             },
-        }
+        }   
     
+
+
+    
+  
     def _call_api(self, payload: dict, image_model: str) -> Optional[dict]:
-        url = self.config.get_image_endpoint()
+        # endpoint base
+        if "preview" in image_model.lower():
+            api_version = "v1beta1"
+        else:
+            api_version = "v1"
+        action = "generateContent"
+        
+        # if "imagen" in image_model.lower():
+        #     action = "predict"
+        # else:
+        #     action = "generateContent"
+            
+        url = f"https://{self.region}-aiplatform.googleapis.com/{api_version}/projects/{self.project_id}/locations/{self.region}/publishers/google/models/{image_model}:{action}"
+
+        
         logger.debug(" AI endpoint: %s", url)
 
         try:
@@ -587,22 +629,12 @@ class VertexAIProvider(BaseAPIProvider):
         req.add_header("Authorization", f"Bearer {token}")
         req.add_header("Content-Type", "application/json")
 
-        logger.debug("Sending request to Vertex AI...")
-
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 return json.loads(resp.read().decode("utf-8"))
-        except urllib.error.HTTPError as err:
-            error_body = err.read().decode("utf-8", errors="replace")
-            logger.error("Vertex AI HTTP %s: %s", err.code, error_body[:500])
-        except urllib.error.URLError as err:
-            logger.error("Vertex AI connection error: %s", err.reason)
-        except TimeoutError:
-            logger.error("Vertex AI timeout after 15s.")
         except Exception as err:
-            logger.error("Unknown Vertex AI error: %s", err)
-
-        return None
+            logger.error("API error: %s", err)
+            return None
     
     def _postprocess_image(
         self,
@@ -610,64 +642,43 @@ class VertexAIProvider(BaseAPIProvider):
         orig_size: tuple[int, int],
         doc_type_key: str,
         is_portrait: bool,
-        json_data: Optional[dict] = None,
+        json_data: Optional[dict] = None, # using to draw mrz overlay if needed
         context: Optional[dict] = None,
     ) -> Optional[Image.Image]:
         try:
-            prompt_feedback = api_result.get("promptFeedback", {})
-            if prompt_feedback.get("blockReason"):
-                logger.error("BLOCK EVIDENCE: Prompt rejected. Reason: %s", prompt_feedback.get("blockReason"))
-                return None
-
-            candidates = api_result.get("candidates", [])
-            if not candidates:
-                logger.error("BLOCK EVIDENCE: No candidates returned.")
-                return None
-
-            candidate = candidates[0]
-            
-            finish_reason = candidate.get("finishReason")
-            if finish_reason:
-                if finish_reason in ["SAFETY", "BLOCKLIST", "PROHIBITED_CONTENT"]:
-                    safety_ratings = candidate.get("safetyRatings", [])
-                    logger.error(
-                        "BLOCK EVIDENCE: Request blocked by safety system. FinishReason: %s | SafetyRatings: %s", 
-                        finish_reason, json.dumps(safety_ratings)
-                    )
-                    return None
-                elif finish_reason != "STOP":
-                    logger.warning("Image generation stopped abnormally. FinishReason: %s", finish_reason)
-
-            content = candidate.get("content", {})
-            parts = content.get("parts", [])
-            
-            if not parts:
-                logger.error("Không tìm thấy thuộc tính 'parts' trong 'content'.")
-                return None
-
             raw_data = None
-            for part in parts:
-                if "inlineData" in part:
-                    raw_data = base64.b64decode(part["inlineData"].get("data", ""))
-                    break
-                elif "inline_data" in part:
-                    raw_data = base64.b64decode(part["inline_data"].get("data", ""))
-                    break
+
+            # if "predictions" in api_result:
+            #     # Imagen
+            #     predictions = api_result.get("predictions", [])
+            #     if not predictions:
+            #         logger.error("BLOCK EVIDENCE: No predictions returned from Imagen.")
+            #         return None
+            #     raw_data = base64.b64decode(predictions[0].get("bytesBase64Encoded", ""))
+
+            if "candidates" in api_result:
+                # Gemini
+                candidates = api_result.get("candidates", [])
+                if not candidates:
+                    logger.error("BLOCK EVIDENCE: No candidates returned from Gemini.")
+                    return None
+        
+                
+                parts = candidates[0].get("content", {}).get("parts", [])
+                for part in parts:
+                    if "inlineData" in part:
+                        raw_data = base64.b64decode(part["inlineData"].get("data", ""))
+                        break
+                    elif "inline_data" in part:
+                        raw_data = base64.b64decode(part["inline_data"].get("data", ""))
+                        break
 
             if not raw_data:
-                logger.error("Không tìm thấy dữ liệu ảnh (inlineData/inline_data) trong parts.")
+                logger.error("Không tìm thấy dữ liệu ảnh gốc trong phản hồi API.")
                 return None
 
             img = Image.open(io.BytesIO(raw_data))
             img = ImageOps.exif_transpose(img).convert("RGB")
-
-            out_is_portrait = img.height > img.width
-            if is_portrait and not out_is_portrait:
-                img = img.rotate(90, expand=True)
-                logger.debug("Xoay output +90 ve portrait.")
-            elif not is_portrait and out_is_portrait:
-                img = img.rotate(-90, expand=True)
-                logger.debug("Xoay output -90 ve landscape.")
 
             if img.size != orig_size:
                 logger.debug(
@@ -676,8 +687,11 @@ class VertexAIProvider(BaseAPIProvider):
                 )
                 img = img.resize(orig_size, Image.Resampling.LANCZOS)
 
+            # fix 2 avatar
             img = self._fix_avatar_consistency(img, doc_type_key, context)
 
+
+            # draw mrz overlay if needed
             if json_data:
                 img = self._render_mrz_overlay(
                     img,
@@ -706,7 +720,7 @@ class VertexAIProvider(BaseAPIProvider):
     ) -> Optional[Image.Image]:
         img_b64, orig_size = self._preprocess_image(page_image)
         doc_type_key, context = self._extract_context(json_data)
-        payload = self._build_payload(doc_type_key, json_data, context, img_b64)
+        payload = self._build_payload(doc_type_key, json_data, context, img_b64, image_model)
         api_result = self._call_api(payload, image_model)
 
 

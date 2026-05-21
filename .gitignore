@@ -26,3 +26,5 @@ test_all_states.sh
 
 dataset/99-old-labels/
 dataset/99-old-documents/
+
+setup_adc.sh
