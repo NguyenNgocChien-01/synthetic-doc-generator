@@ -4,7 +4,7 @@ import urllib.error
 import base64
 
 # 1. Lấy API Key miễn phí từ: https://aistudio.google.com/app/apikey
-API_KEY = "AIzaSyD7NyD0vcEyHPpi7scmBh5yqfHfecQkiNs"
+API_KEY = "AIzs...."
 MODEL = "imagen-3.0-generate-001" 
 
 # Endpoint của Google AI Studio khác hoàn toàn Vertex AI

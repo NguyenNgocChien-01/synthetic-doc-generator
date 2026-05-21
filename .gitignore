@@ -8,7 +8,7 @@ __pycache__/
 
 logs/
 *.log
-
+test_api.py
 .vscode/
 .idea/
 *.swp
