@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "OR7436148",
+  "family_name": "BENNETT",
+  "given_names": "MICHAEL",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1959-07-10",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2028-04-17",
+  "place_of_birth": "LAKE JENNIFERPORT",
+  "authority": "LAKE CATHERINE",
+  "mrz_line1": "P<AUSBENNETT<<MICHAEL<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "OR7436148<AUS590710M280417<<<<<<<<<<<<<<<<08"
+}

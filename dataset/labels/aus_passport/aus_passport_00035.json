@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "SY1185835",
+  "family_name": "MARTINEZ",
+  "given_names": "JUSTIN",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1956-10-05",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-10-28",
+  "place_of_birth": "STEPHANIELAND",
+  "authority": "SOUTH THOMAS",
+  "mrz_line1": "P<AUSMARTINEZ<<JUSTIN<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "SY1185835<AUS561005F291028<<<<<<<<<<<<<<<<08"
+}

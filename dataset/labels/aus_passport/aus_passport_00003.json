@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "SD7982738",
+  "family_name": "BECKER",
+  "given_names": "ALICIA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "2007-04-15",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-12-16",
+  "place_of_birth": "KATHLEENCHESTER",
+  "authority": "SOUTH HOLLY",
+  "mrz_line1": "P<AUSBECKER<<ALICIA<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "SD7982738<AUS070415F301216<<<<<<<<<<<<<<<<07"
+}

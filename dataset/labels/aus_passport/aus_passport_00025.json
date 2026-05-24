@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "NI7991287",
+  "family_name": "RICHARDSON",
+  "given_names": "PAUL",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1996-11-01",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-08-10",
+  "place_of_birth": "SOUTH STACY",
+  "authority": "LAKE BEVERLY",
+  "mrz_line1": "P<AUSRICHARDSON<<PAUL<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "NI7991287<AUS961101M300810<<<<<<<<<<<<<<<<02"
+}

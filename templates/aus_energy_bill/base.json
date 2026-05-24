@@ -1,0 +1,22 @@
+{
+  "document_type": "ENERGY_BILL",
+  "type": "electricity",
+  "provider_name": "EnergyAustralia",
+  "provider_abn": "99 086 014 968",
+  "account_holder_name": "Miss S Sample",
+  "account_number": "1234 567 890",
+  "nmi": "1234567890",
+  "mirn": null,
+  "service_address": {
+    "street": "37 Sample Road",
+    "suburb": "SAMPLE SUBURB",
+    "state": "VIC",
+    "postcode": "3000"
+  },
+  "issue_date": "2023-08-04",
+  "due_date": "2023-08-21",
+  "total_amount_due": 538.77,
+  "document_front": [
+    "aus_energry_bill/template_aus_energy_bill.jpg"
+  ]
+}

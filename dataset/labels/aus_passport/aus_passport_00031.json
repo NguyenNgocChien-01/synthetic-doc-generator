@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "OW8213316",
+  "family_name": "BERNARD",
+  "given_names": "JULIE",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1957-07-10",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2028-06-17",
+  "place_of_birth": "BRITTANYMOUTH",
+  "authority": "NEW KEVIN",
+  "mrz_line1": "P<AUSBERNARD<<JULIE<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "OW8213316<AUS570710M280617<<<<<<<<<<<<<<<<08"
+}

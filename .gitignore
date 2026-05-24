@@ -28,3 +28,7 @@ dataset/99-old-labels/
 dataset/99-old-documents/
 
 setup_adc.sh
+sort_name.py
+test_api.py
+
+

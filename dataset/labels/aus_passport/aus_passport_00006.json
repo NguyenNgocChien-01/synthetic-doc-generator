@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "OZ7812458",
+  "family_name": "PARKER",
+  "given_names": "JOEL",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1980-01-19",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2028-01-01",
+  "place_of_birth": "AMYHAVEN",
+  "authority": "MYERSSTAD",
+  "mrz_line1": "P<AUSPARKER<<JOEL<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "OZ7812458<AUS800119F280101<<<<<<<<<<<<<<<<07"
+}

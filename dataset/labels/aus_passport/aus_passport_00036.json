@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "LR0930637",
+  "family_name": "WILLIAMS",
+  "given_names": "DAVID",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1965-02-16",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2028-08-08",
+  "place_of_birth": "MCDOWELLCHESTER",
+  "authority": "NORTH ANTHONY",
+  "mrz_line1": "P<AUSWILLIAMS<<DAVID<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "LR0930637<AUS650216M280808<<<<<<<<<<<<<<<<04"
+}

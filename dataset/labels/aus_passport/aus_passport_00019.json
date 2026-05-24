@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "TH3252817",
+  "family_name": "JONES",
+  "given_names": "DEANNA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1981-08-17",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2031-04-13",
+  "place_of_birth": "JOHNSONCHESTER",
+  "authority": "JASONBOROUGH",
+  "mrz_line1": "P<AUSJONES<<DEANNA<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "TH3252817<AUS810817F310413<<<<<<<<<<<<<<<<07"
+}

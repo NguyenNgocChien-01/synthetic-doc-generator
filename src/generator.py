@@ -455,6 +455,10 @@ class DataGenerator:
             for key, value in data.items():
 
                 kl = key.lower()
+                
+                if value is None or value == "":
+                    result[key] = value
+                    continue
 
                 if kl in {
                     "conditions_legend",

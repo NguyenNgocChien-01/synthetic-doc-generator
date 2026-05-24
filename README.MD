@@ -75,3 +75,9 @@ synthetic-doc-generator/
         ├── passport/
         └── driver_license/
 ```
+
+
+passport 10
+blue 13
+yellow 12
+green 10

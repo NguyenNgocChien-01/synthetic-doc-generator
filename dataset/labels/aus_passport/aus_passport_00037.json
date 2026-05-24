@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "CJ1423646",
+  "family_name": "BALDWIN",
+  "given_names": "KIMBERLY",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1997-05-07",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-08-29",
+  "place_of_birth": "CARRIECHESTER",
+  "authority": "ANNEHAVEN",
+  "mrz_line1": "P<AUSBALDWIN<<KIMBERLY<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "CJ1423646<AUS970507F290829<<<<<<<<<<<<<<<<01"
+}

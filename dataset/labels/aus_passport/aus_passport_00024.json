@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "LN8554509",
+  "family_name": "CASTRO",
+  "given_names": "CHRISTINE",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1982-03-18",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-10-10",
+  "place_of_birth": "GALLEGOSVILLE",
+  "authority": "SOUTH ROBERTO",
+  "mrz_line1": "P<AUSCASTRO<<CHRISTINE<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "LN8554509<AUS820318F291010<<<<<<<<<<<<<<<<07"
+}

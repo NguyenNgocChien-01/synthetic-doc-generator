@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "MR1519379",
+  "family_name": "WALKER",
+  "given_names": "ASHLEY",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1993-04-09",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-11-08",
+  "place_of_birth": "EAST NICOLETON",
+  "authority": "NEW WENDYSHIRE",
+  "mrz_line1": "P<AUSWALKER<<ASHLEY<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "MR1519379<AUS930409M301108<<<<<<<<<<<<<<<<04"
+}

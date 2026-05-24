@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "RF9025370",
+  "family_name": "FRANCO",
+  "given_names": "KENNETH",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1983-08-18",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-05-25",
+  "place_of_birth": "JONATHANBURGH",
+  "authority": "SMITHPORT",
+  "mrz_line1": "P<AUSFRANCO<<KENNETH<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "RF9025370<AUS830818M300525<<<<<<<<<<<<<<<<05"
+}

@@ -1,16 +1,16 @@
 {
   "document_type": "AUS_PASSPORT",
   "issuing_country": "AUS",
-  "document_number": "PL5381158",
-  "family_name": "RICHARDSON",
+  "document_number": "TG3919170",
+  "family_name": "SMITH",
   "given_names": "JAMES",
-  "nationality": "RICHARDIAN",
-  "date_of_birth": "1968-09-29",
-  "sex": "F",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "2007-10-09",
+  "sex": "M",
   "date_of_issue": "2012-03-03",
-  "date_of_expiry": "2029-07-27",
-  "place_of_birth": "PUMEES",
-  "authority": "CANBERRA",
-  "mrz_line1": "P<AUSRICHARDSON<<JAMES<<<<<<<<<<<<<<<<<<<<<<",
-  "mrz_line2": "PL5381158<AUS680929F290727<<<<<<<<<<<<<<<<02"
+  "date_of_expiry": "2030-05-03",
+  "place_of_birth": "PORT RYAN",
+  "authority": "NORTH MARY",
+  "mrz_line1": "P<AUSSMITH<<JAMES<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "TG3919170<AUS071009M300503<<<<<<<<<<<<<<<<09"
 }

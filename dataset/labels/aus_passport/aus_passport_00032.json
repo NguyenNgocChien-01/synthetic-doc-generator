@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "ZO7555145",
+  "family_name": "BROWN",
+  "given_names": "ALEXIS",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1990-05-25",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2029-11-08",
+  "place_of_birth": "HORNBURGH",
+  "authority": "BENJAMINLAND",
+  "mrz_line1": "P<AUSBROWN<<ALEXIS<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "ZO7555145<AUS900525F291108<<<<<<<<<<<<<<<<03"
+}

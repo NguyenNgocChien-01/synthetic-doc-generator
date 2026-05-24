@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Australian Energy Bill",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "description": "Always ENERGY_BILL.",
+      "required": true
+    },
+    "energy_bill_type": {
+      "type": "string",
+      "title": "Energy Type",
+      "description": "Type of energy supply as shown on the bill (e.g., 'electricity', 'gas', 'dual').",
+      "enum": ["electricity", "gas", "dual"],
+      "required": true
+    },
+    "energy_bill_provider_name": {
+      "type": "string",
+      "title": "Provider Name",
+      "description": "Trading name of the energy provider (e.g., 'EnergyAustralia').",
+      "required": true
+    },
+    "energy_bill_provider_abn": {
+      "type": ["string", "null"],
+      "title": "Provider ABN",
+      "description": "Australian Business Number of the energy provider (e.g., '99 086 014 968').",
+      "required": false
+    },
+    "energy_bill_account_holder_name": {
+      "type": "string",
+      "title": "Account Holder Name",
+      "description": "Full name of the account holder as shown on the bill (e.g., 'Miss S Sample').",
+      "required": true
+    },
+    "energy_bill_account_number": {
+      "type": "string",
+      "title": "Account Number",
+      "description": "Customer account number as shown on the bill (e.g., '1234 567 890').",
+      "required": true
+    },
+    "energy_bill_nmi": {
+      "type": ["string", "null"],
+      "title": "National Metering Identifier (NMI)",
+      "description": "10-character electricity meter identifier assigned to the supply point (e.g., '1234567890'). Electricity only.",
+      "required": false
+    },
+    "energy_bill_mirn": {
+      "type": ["string", "null"],
+      "title": "Meter Installation Reference Number (MIRN)",
+      "description": "Gas meter identifier assigned to the supply point. Gas or dual only.",
+      "required": false
+    },
+    "energy_bill_service_address": {
+      "type": "object",
+      "title": "Service Address",
+      "description": "Physical supply address used for Proof of Address verification.",
+      "required": true,
+      "properties": {
+        "street": {
+          "type": "string",
+          "title": "Street",
+          "description": "Street number and name (e.g., '37 Sample Road').",
+          "required": true
+        },
+        "suburb": {
+          "type": "string",
+          "title": "Suburb",
+          "description": "Suburb or locality (e.g., 'SAMPLE SUBURB').",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "title": "State",
+          "description": "Australian state or territory abbreviation (e.g., 'VIC').",
+          "required": true
+        },
+        "postcode": {
+          "type": "string",
+          "title": "Postcode",
+          "description": "4-digit Australian postcode (e.g., '3000').",
+          "required": true
+        }
+      }
+    },
+    "energy_bill_issue_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Bill Issue Date",
+      "description": "Date the bill was issued (YYYY-MM-DD), used to verify document recency (e.g., '2023-08-04').",
+      "required": true
+    },
+    "energy_bill_due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Bill Due Date",
+      "description": "Payment due date (YYYY-MM-DD), used to confirm document validity (e.g., '2023-08-21').",
+      "required": true
+    },
+    "energy_bill_total_amount_due": {
+      "type": "number",
+      "title": "Total Amount Due (AUD)",
+      "description": "Total amount payable in AUD as shown on the bill (e.g., 538.77).",
+      "required": true
+    },
+    "document_front": {
+      "type": "array",
+      "title": "Bill Page Images",
+      "description": "List of file paths for the original bill page images, in page order.",
+      "required": true,
+      "items": {
+        "type": "string",
+        "title": "Image Path",
+        "description": "File path of each bill page image (e.g., 'images/energy_bill_page001.png').",
+        "required": true
+      }
+    }
+  }
+}

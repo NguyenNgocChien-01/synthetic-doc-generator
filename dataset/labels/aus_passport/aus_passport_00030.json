@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "GW5955403",
+  "family_name": "ZUNIGA",
+  "given_names": "JANICE",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1966-09-16",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2028-05-18",
+  "place_of_birth": "NEW MATTHEWPORT",
+  "authority": "RACHELVILLE",
+  "mrz_line1": "P<AUSZUNIGA<<JANICE<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "GW5955403<AUS660916F280518<<<<<<<<<<<<<<<<07"
+}

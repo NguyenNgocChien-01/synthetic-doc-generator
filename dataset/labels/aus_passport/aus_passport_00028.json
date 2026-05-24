@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "LI9373886",
+  "family_name": "DORSEY",
+  "given_names": "YOLANDA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "2002-08-06",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-09-30",
+  "place_of_birth": "JAMESLAND",
+  "authority": "PORT HEATHER",
+  "mrz_line1": "P<AUSDORSEY<<YOLANDA<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "LI9373886<AUS020806F300930<<<<<<<<<<<<<<<<08"
+}

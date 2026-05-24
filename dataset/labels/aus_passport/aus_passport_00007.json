@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "QI1508620",
+  "family_name": "BURKE",
+  "given_names": "SARAH",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1957-04-20",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-09-08",
+  "place_of_birth": "LAKE MARKSHIRE",
+  "authority": "WEST ZACHARY",
+  "mrz_line1": "P<AUSBURKE<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "QI1508620<AUS570420F300908<<<<<<<<<<<<<<<<06"
+}
