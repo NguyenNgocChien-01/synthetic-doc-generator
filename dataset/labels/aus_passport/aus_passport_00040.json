@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "RZ5772572",
+  "family_name": "MORGAN",
+  "given_names": "ROBERT",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1997-10-07",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-10-17",
+  "place_of_birth": "LISABURGH",
+  "authority": "NORTH IVAN",
+  "mrz_line1": "P<AUSMORGAN<<ROBERT<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "RZ5772572<AUS971007M271017<<<<<<<<<<<<<<<<09"
+}

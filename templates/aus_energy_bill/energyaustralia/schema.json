@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AUS Energy Bill",
+  "type": "object",
+  "properties": {
+
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "description": "Always AUS_ENERGY_BILL.",
+      "required": true
+    },
+
+    "provider_name": {
+      "type": "string",
+      "title": "Provider Name",
+      "description": "Trading name of the energy provider (e.g. 'EnergyAustralia').",
+      "required": true
+    },
+
+    "provider_abn": {
+      "type": ["string", "null"],
+      "title": "Provider ABN",
+      "description": "Australian Business Number of the energy provider (e.g. '99 086 014 968').",
+      "required": false
+    },
+
+    "account_holder_name": {
+      "type": "string",
+      "title": "Account Holder Name",
+      "description": "Full name of the account holder as shown on the bill (e.g. 'Miss S Sample').",
+      "required": true
+    },
+
+    "account_number": {
+      "type": "string",
+      "title": "Account Number",
+      "description": "Customer account number as shown on the bill (e.g. '1234 567 890').",
+      "required": true
+    },
+
+    "service_address": {
+      "type": "object",
+      "title": "Service Address",
+      "description": "Physical supply address used for Proof of Address verification.",
+      "required": true,
+      "properties": {
+        "street": {
+          "type": "string",
+          "title": "Street",
+          "description": "Street number and name (e.g. '37 Sample Road').",
+          "required": true
+        },
+        "suburb": {
+          "type": "string",
+          "title": "Suburb",
+          "description": "Suburb or locality (e.g. 'SAMPLE SUBURB').",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "title": "State",
+          "description": "Australian state or territory abbreviation (e.g. 'VIC').",
+          "required": true
+        },
+        "postcode": {
+          "type": "string",
+          "title": "Postcode",
+          "description": "4-digit Australian postcode (e.g. '3000').",
+          "required": true
+        }
+      }
+    },
+
+    "issue_date": {
+      "type": "string",
+      "title": "Bill Issue Date",
+      "description": "Date the bill was issued in DD MMM YYYY format (e.g. '04 Aug 2023').",
+      "required": true
+    },
+
+    "due_date": {
+      "type": "string",
+      "title": "Bill Due Date",
+      "description": "Payment due date in DD MMM YYYY format, typically 14-21 days after issue (e.g. '21 Aug 2023').",
+      "required": true
+    },
+
+    "total_amount_due": {
+      "type": "string",
+      "title": "Total Amount Due",
+      "description": "Total payable amount in AUD including GST as shown on the bill (e.g. '$538.77').",
+      "required": true
+    },
+
+    "pages": {
+      "type": "array",
+      "title": "Bill Pages",
+      "description": "List of template page files in page order. Pages marked changeable=false are copied from template without AI generation.",
+      "required": true,
+      "items": {
+        "type": "object",
+        "title": "Page Entry",
+        "description": "A single page of the bill template.",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "title": "Page Number",
+            "description": "1-based page index.",
+            "required": true
+          },
+          "file": {
+            "type": "string",
+            "title": "File Path",
+            "description": "Relative path to the template image for this page.",
+            "required": true
+          },
+          "changeable": {
+            "type": "boolean",
+            "title": "Changeable",
+            "description": "True if this page contains data fields that need AI generation. False if the page is static and copied as-is.",
+            "required": true
+          }
+        }
+      }
+    }
+
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "document_type": "ENERGY_BILL",
+  "document_type": "AUS_ENERGY_BILL",
   "type": "electricity",
   "provider_name": "EnergyAustralia",
   "provider_abn": "99 086 014 968",

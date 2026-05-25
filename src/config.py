@@ -11,6 +11,8 @@ SUPPORTED_DOC_TYPES = [
     "driver_license",
     "aus_medicare_card",
     "utility_bill",
+    "aus_energy_bill",
+    "aus_wwc_card"
 ]
 
 PLATFORM_ENDPOINTS: Dict[str, str] = {
@@ -216,6 +218,54 @@ PROMPT_TEMPLATES = {
                 "- DOB Watermark (8 digits): Top right corner.\n"
                 "- Vertical Card Number: Printed vertically (rotated -90 degrees) near the right edge of the portrait.\n"
                 "- Horizontal Card Number: Bottom left corner, below the signature.\n\n"
+            )
+        }
+    },
+    "driver_license/vic": {
+        "date_format": "Format dates exactly as DD-MM-YYYY for ALL.Not is DD-MMM-YYYY",
+        "photo_mode": "SINGLE",  
+        "photo_instructions": (
+            "Preserve the existing portrait placement and frame on the middle right of the front card. "
+            "Generate a highly realistic driver license style front-facing photo of a {target_gender} (age: {target_dob}). "
+            "Generate a random black ink cursive signature on the bottom left of the front card."
+        ),
+        "info": {
+            "text_fields": (
+                "You are an exact image editing and text replacement engine.\n"
+                "STRICT RULES:\n"
+                "1. PRESERVE EVERYTHING: Maintain original layout, background texture, gradients, kerning, colors, watermarks, holograms, shadows, and compression artifacts 100% intact.\n"
+                "2. Do NOT redesign, regenerate, or hallucinate any part of the card.\n"
+                "3. Do NOT move or alter any non-text structural element.\n"
+                "4. Locate the old text values from BASE_JSON and erase them completely without leaving blur patches or smudge artifacts.\n"
+                "5. Render the corresponding new values from TARGET_DATA in the exact same spatial positions.\n"
+                "6. TYPOGRAPHY: You MUST match the original font weight, scale, color, and baseline alignment exactly.\n"
+                "7. CRITICAL: Do NOT add any QR codes, barcodes, or extra visual elements not present in the original template.\n"
+                "8. Do NOT blindly dump all JSON values onto the image. Only replace existing fields according to the layout.\n"
+                "9. CRITICAL FIX: Do NOT print JSON keys or descriptive labels (e.g., 'Full Name:', 'Address:'). Render ONLY the target values. Ensure the name is printed exactly once to avoid overlapping with address lines.\n\n"
+                "LAYOUT MAPPING HINTS (FRONT CARD):\n"
+                "- Name: Top left area under the blue header. (Value only, NO label).\n"
+                "- Address Lines: Directly below the Name. (Value only, NO label).\n"
+                "- Licence No: Top right area, immediately below the 'LICENCE NO.' label.\n"
+                "- Licence Expiry: Middle left, below the 'LICENCE EXPIRY' label.\n"
+                "- Date of Birth: Middle area, below the 'DATE OF BIRTH' label.\n"
+                "- Licence Type: Bottom left, below the 'LICENCE TYPE' label.\n"
+                "- Conditions: Bottom area, below the 'CONDITIONS' label.\n"
+                "- Vertical Card Number: Printed vertically (rotated -90 degrees) near the left edge of the portrait.\n\n"
+            )
+        }
+    },
+        "aus_wwc_card/vic": {
+        "date_format": "Format dates exactly as DD-MM-YYYY for ALL.Not is DD-MMM-YYYY",
+        "photo_mode": "SINGLE",  
+        "photo_instructions": (
+            "Preserve the existing portrait placement and frame on the middle right of the front card. "
+            "Generate a highly realistic driver license style front-facing photo of a {target_gender} (age: {target_dob}). "
+            "Generate a random black ink cursive signature on the bottom left of the front card."
+        ),
+        "info": {
+            "text_fields": (
+                "You are an exact image editing and text replacement engine.\n"
+
             )
         }
     }

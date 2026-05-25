@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Australian Passport",
+  "type": "object",
+  "properties": {
+    "australian_passport_first_name": {
+      "type": "string",
+      "title": "First Name",
+      "description": "Given name(s) as shown on the Australian passport",
+      "required": true
+    },
+    "australian_passport_middle_name": {
+      "type": "string",
+      "title": "Middle Name",
+      "description": "Middle name as shown on the Australian passport",
+      "required": false
+    },
+    "australian_passport_last_name": {
+      "type": "string",
+      "title": "Last Name",
+      "description": "Surname as shown on the Australian passport",
+      "required": true
+    },
+    "australian_passport_number": {
+      "type": "string",
+      "title": "Passport Number",
+      "description": "Document number as shown in the top-right of the Australian passport data page (e.g. RA0123456)",
+      "required": true
+    },
+    "australian_passport_date_of_birth": {
+      "type": "string",
+      "title": "Date of Birth",
+      "description": "Date of birth as shown on the Australian passport data page",
+      "required": true
+    },
+    "australian_passport_date_of_issue": {
+      "type": "string",
+      "title": "Date of Issue",
+      "description": "Date of issue as shown on the Australian passport data page",
+      "required": true
+    },
+    "australian_passport_expiry_date": {
+      "type": "string",
+      "title": "Expiry Date",
+      "description": "Date of expiry as shown on the Australian passport data page",
+      "required": true
+    },
+    "australian_passport_nationality": {
+      "type": "string",
+      "title": "Nationality",
+      "description": "Nationality as shown on the Australian passport data page (e.g. AUSTRALIAN)",
+      "required": true
+    },
+    "australian_passport_gender": {
+      "type": "string",
+      "title": "Gender",
+      "description": "Sex as shown on the Australian passport data page (M, F, or X)",
+      "required": true
+    },
+    "australian_passport_place_of_birth": {
+      "type": "string",
+      "title": "Place of Birth",
+      "description": "Place of birth as shown on the Australian passport data page (e.g. CANBERRA)",
+      "required": true
+    },
+    "commencement_document_front": {
+      "type": "array",
+      "title": "Document Front Photo",
+      "description": "Photo of the Australian passport data page",
+      "required": true
+    },
+    "commencement_document_back": {
+      "type": "array",
+      "title": "Document Back Photo",
+      "description": "Photo of the Australian passport observations page",
+      "required": false
+    }
+  }
+}

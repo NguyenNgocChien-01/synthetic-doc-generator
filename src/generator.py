@@ -734,6 +734,18 @@ class DataGenerator:
 
                     continue
 
+                if kl == "wwc_type":
+                    result[key] = random.choice(["EMPLOYEE", "VOLUNTEER"])
+                    continue
+                if "wwc_number" in kl:
+                    prefix_length = random.choice([6, 7])
+                    prefix = faker.random_number(digits=prefix_length, fix_len=True)
+                    letter = random.choice(string.ascii_uppercase)
+                    suffix = faker.random_number(digits=2, fix_len=True)
+                    
+                    result[key] = f"{prefix}{letter}-{suffix:02d}"
+                    continue
+
                 result[key] = value
 
             return result

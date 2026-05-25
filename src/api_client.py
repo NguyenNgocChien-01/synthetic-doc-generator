@@ -241,7 +241,9 @@ class VertexAIProvider(BaseAPIProvider):
         doc_type_raw = json_data.get("document_type", json_data.get("doc_type", "document"))
         doc_type_key = doc_type_raw.lower().replace(" ", "_")
 
-        if "driver_license" in doc_type_key:
+        STATE_DEPENDENT_DOCS = {"driver_license", "aus_wwc_card"}
+
+        if any(doc in doc_type_key for doc in STATE_DEPENDENT_DOCS):
             def find_issuing_state(data):
                 if not isinstance(data, dict):
                     return ""
@@ -255,8 +257,10 @@ class VertexAIProvider(BaseAPIProvider):
                 return ""
 
             issuing_state = find_issuing_state(json_data)
-            state_key = f"driver_license/{issuing_state.lower()}" if issuing_state else ""
-            doc_type_key = state_key if state_key in PROMPT_TEMPLATES else "driver_license"
+            if issuing_state:
+      
+                state_key = f"{doc_type_key}/{issuing_state.lower()}"
+                doc_type_key = state_key if state_key in PROMPT_TEMPLATES else doc_type_key
 
         prompt_config = PROMPT_TEMPLATES.get(doc_type_key, PROMPT_TEMPLATES.get("default", {}))
 
@@ -280,7 +284,7 @@ class VertexAIProvider(BaseAPIProvider):
         info_rules = "\n".join(
             f"- {k.upper()}: {v}"
             for k, v in prompt_config.get("info", {}).items()
-            if "mrz" not in k.lower()         
+            if "mrz" not in k.lower()        
         )
 
         return doc_type_key, {
@@ -418,64 +422,43 @@ class VertexAIProvider(BaseAPIProvider):
 
         return "\n".join(lines)
     
+
+    
+
     def _load_base_config(self, doc_type_key: str, json_data: dict, context: dict) -> tuple[dict, dict]:
         try:
+            SUBDOC_TYPES = {"medicare", "driver_license"}  
             storage_cfg = getattr(getattr(self, "config", None), "storage", None)
-            root_path   = Path(getattr(storage_cfg, "templates_dir", "templates"))
+            root_path = Path(getattr(storage_cfg, "templates_dir", "templates"))
+            base_path = root_path / doc_type_key
 
-            doc_dir = doc_type_key
-            
-            raw_sub = (context.get("state") or context.get("country") or context.get("issuing_state") or 
-                       json_data.get("card_type") or json_data.get("state") or json_data.get("issuing_state") or "")
-            sub_val = str(raw_sub).strip().lower()
+            sub_val = ""
+            if any(t in doc_type_key for t in SUBDOC_TYPES):
+                raw_sub = next((
+                    v for v in [
+                        context.get("state"), context.get("issuing_state"),
+                        json_data.get("card_type"), json_data.get("state"),
+                    ] if v
+                ), "")
+                sub_val = str(raw_sub).strip().lower()
+                if "medicare" in doc_type_key and "MEDICARE_CARD_MAP" in globals():
+                    sub_val = MEDICARE_CARD_MAP.get(sub_val, sub_val)
 
-            if not (root_path / doc_dir).exists() and "_" in doc_dir:
-                parts = doc_dir.rsplit("_", 1)
-                possible_dir = parts[0]
-                possible_sub = parts[1]
-                if (root_path / possible_dir).exists():
-                    doc_dir = possible_dir
-                    if not sub_val:
-                        sub_val = possible_sub
+            def load(filename: str) -> dict:
+                p = base_path / sub_val / filename if sub_val else base_path / filename
+                if not p.exists() and sub_val:
+                    p = base_path / filename  # fallback
+                if p.exists():
+                    return json.load(open(p, encoding="utf-8"))
+                logger.error("Not found %s: %s", filename, p)
+                return {}
 
-            if doc_dir == "aus_medicare_card" and not (root_path / "aus_medicare_card").exists():
-                if (root_path / "medicare_card").exists():
-                    doc_dir = "medicare_card"
-
-            if "medicare" in doc_dir:
-                sub_val = MEDICARE_CARD_MAP.get(sub_val, sub_val) if 'MEDICARE_CARD_MAP' in globals() else sub_val
-
-            base_path = root_path / doc_dir
-
-            base_json_path = (base_path / sub_val / "base.json") if sub_val else (base_path / "base.json")
-            if not base_json_path.exists() and sub_val:
-                base_json_path = base_path / "base.json"
-
-            layout_json_path = (base_path / sub_val / "layout.json") if sub_val else (base_path / "layout.json")
-            if not layout_json_path.exists() and sub_val:
-                layout_json_path = base_path / "layout.json"
-
-            base_data = {}
-            layout_data = {}
-
-            if base_json_path.exists():
-                with open(base_json_path, "r", encoding="utf-8") as f:
-                    base_data = json.load(f)
-            else:
-                logger.error("not find base.json tai: %s", base_json_path)
-
-            if layout_json_path.exists():
-                with open(layout_json_path, "r", encoding="utf-8") as f:
-                    layout_data = json.load(f)
-            else:
-                logger.error("not find layout.json tai: %s", layout_json_path)
-
-            return base_data, layout_data
+            return load("base.json"), load("layout.json")
 
         except Exception as e:
-            logger.error("Loi doc config files (base/layout): %s", e)
+            logger.error("Loi doc config: %s", e)
             return {}, {}
-  
+    
     def _build_payload(self, doc_type_key: str, json_data: dict, context: dict, img_b64: str, image_model: str) -> dict:
         # Prompt in config.py
         config = context["config"]
@@ -514,27 +497,20 @@ class VertexAIProvider(BaseAPIProvider):
         # formatted_layout = process_fields(raw_layout_config)
 
         if photo_mode == "NONE":
-            photo_section = (
-                "## PHOTO REPLACEMENT\n"
-                "CRITICAL INSTRUCTION: DO NOT add any face.\n"
-            )
-        elif photo_mode in ["SINGLE", "MULTIPLE"]:
+            photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face.\n"
+        elif photo_mode in ("SINGLE", "MULTIPLE"):
             try:
-                formatted_photo_inst = photo_instructions.format(
-                    target_gender=context.get('target_gender', 'person'), 
-                    target_dob=context.get('target_dob', 'unknown')
+                inst = photo_instructions.format(
+                    target_gender=context.get("target_gender", "person"),
+                    target_dob=context.get("target_dob", "unknown"),
                 )
             except KeyError:
-                formatted_photo_inst = photo_instructions
-                
-            constraint = "Generate EXACTLY ONE portrait." if photo_mode == "SINGLE" else "Generate EXACTLY the number of portraits requested."
-            photo_section = (
-                "## PHOTO REPLACEMENT\n"
-                f"{formatted_photo_inst}\n"
-                f"STRICT CONSTRAINT: {constraint} Do NOT hallucinate extra faces or figures outside the defined bounding boxes.\n"
-            )
+                inst = photo_instructions
+            constraint = "EXACTLY ONE portrait." if photo_mode == "SINGLE" else "EXACTLY the number of portraits requested."
+            photo_section = f"## PHOTO REPLACEMENT\n{inst}\nSTRICT CONSTRAINT: Generate {constraint} Do NOT hallucinate extra faces outside bounding boxes.\n"
         else:
-             photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face, human figure, or portrait to this document.\n"
+            photo_section = "## PHOTO REPLACEMENT\nCRITICAL: DO NOT add any face, human figure, or portrait.\n"
+
         # layout_section = ""
         # if formatted_layout:
         #     layout_section = (
@@ -725,6 +701,15 @@ class VertexAIProvider(BaseAPIProvider):
 
 
         if api_result:
+
+            usage = api_result.get("usageMetadata", {})
+            if usage:
+                prompt_tokens = usage.get("promptTokenCount", 0)
+                candidates_tokens = usage.get("candidatesTokenCount", 0)
+                total_tokens = usage.get("totalTokenCount", 0)
+                logger.info("Token usage - Prompt: %s, Output: %s, Total: %s", prompt_tokens, candidates_tokens, total_tokens)
+                # print(f"Token usage - Prompt: {prompt_tokens}, Output: {candidates_tokens}, Total: {total_tokens}")
+
       
             final_img = self._postprocess_image(
                 api_result, orig_size, doc_type_key, is_portrait, json_data, context
