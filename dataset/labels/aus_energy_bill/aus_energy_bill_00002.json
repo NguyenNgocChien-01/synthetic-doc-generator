@@ -1,0 +1,42 @@
+{
+  "document_type": "AUS_ENERGY_BILL",
+  "energy_type": "electricity",
+
+  "provider_name": "People Energy",
+  "provider_abn": null,
+
+  "account_holder_name": "Nicole Richardson",
+  "account_number": null,
+  "nmi": null,
+  "mirn": null,
+
+  "service_address_street": "35 Worchester Terrace",
+  "service_address_suburb": "REEDY CREEK",
+  "service_address_state": "QLD",
+  "service_address_postcode": "4227",
+
+  "bill_issue_date": null,
+  "bill_due_date": null,
+
+  "billing_period_start": "2019-07-25",
+  "billing_period_end": "2019-10-01",
+  "billing_days": 68,
+
+  "electricity_kwh": null,
+  "gas_mj": null,
+  "meter_read_type": null,
+
+  "previous_balance": 43.33,
+  "payments_received": 43.33,
+  "usage_charges": 96.72,
+  "supply_charge": null,
+  "concession": 0.00,
+  "total_discount": 0.00,
+  "gst": 9.67,
+  "amount_due": 106.39,
+  "pay_on_time_amount": null,
+
+  "document_pages": [
+    "aus_energy_bill_00002_page1.png"
+  ]
+}
