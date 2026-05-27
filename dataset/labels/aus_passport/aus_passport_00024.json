@@ -1,16 +1,16 @@
 {
   "document_type": "AUS_PASSPORT",
   "issuing_country": "AUS",
-  "document_number": "LN8554509",
-  "family_name": "CASTRO",
-  "given_names": "CHRISTINE",
-  "nationality": "AUSTRALIAN",
-  "date_of_birth": "1982-03-18",
+  "document_number": "GT2004444",
+  "family_name": "LANE",
+  "given_names": "LALLY",
+  "nationality": "KELLY",
+  "date_of_birth": "1964-06-23",
   "sex": "F",
-  "date_of_issue": "2012-03-03",
-  "date_of_expiry": "2029-10-10",
-  "place_of_birth": "GALLEGOSVILLE",
-  "authority": "SOUTH ROBERTO",
-  "mrz_line1": "P<AUSCASTRO<<CHRISTINE<<<<<<<<<<<<<<<<<<<<<<",
-  "mrz_line2": "LN8554509<AUS820318F291010<<<<<<<<<<<<<<<<07"
+  "date_of_issue": "2012-03-01",
+  "date_of_expiry": "2029-03-03",
+  "place_of_birth": "AURLIAN",
+  "authority": "CANBERRA",
+  "mrz_line1": "P<AUSLANE<<KELLY<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "GT2004444<AUS640623F290601<<<<<<<<<<<<<<<<02"
 }

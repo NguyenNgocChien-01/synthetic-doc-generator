@@ -1,22 +1,45 @@
 {
   "document_type": "AUS_ENERGY_BILL",
-  "type": "electricity",
-  "provider_name": "EnergyAustralia",
-  "provider_abn": "99 086 014 968",
-  "account_holder_name": "Miss S Sample",
-  "account_number": "1234 567 890",
-  "nmi": "1234567890",
-  "mirn": null,
-  "service_address": {
-    "street": "37 Sample Road",
-    "suburb": "SAMPLE SUBURB",
-    "state": "VIC",
-    "postcode": "3000"
+
+  "page1": {
+    "provider_name": "EnergyAustralia",
+    "provider_abn": "99 086 014 968",
+    "account_holder_name": "Miss S Sample",
+    "account_number": "1234 567 890",
+    "nmi": "1234567890",
+    "service_address_street": "37 Sample Road",
+    "service_address_suburb": "SAMPLE SUBURB",
+    "service_address_state": "VIC",
+    "service_address_postcode": "3000",
+    "issue_date": "2023-08-04",
+    "due_date": "2023-08-21",
+    "total_amount_due": 538.77
   },
-  "issue_date": "2023-08-04",
-  "due_date": "2023-08-21",
-  "total_amount_due": 538.77,
-  "document_front": [
-    "aus_energry_bill/template_aus_energy_bill.jpg"
-  ]
+
+  "page2": {
+    "billing_period_start": "2023-04-30",
+    "billing_period_end": "2023-07-30",
+    "billing_days": 92,
+    "plan_name": "Secure Saver - Home",
+    "peak_usage_kwh": 4442.596,
+    "peak_rate_per_kwh": 0.38368,
+    "peak_charge": 1704.54,
+    "offpeak_usage_kwh": 3088.990,
+    "offpeak_rate_per_kwh": 0.1661,
+    "offpeak_charge": 513.08,
+    "supply_days": 92,
+    "supply_rate_per_day": 1.067,
+    "supply_charge": 98.16,
+    "solar_export_kwh": 15.741,
+    "solar_export_credit": 1.89,
+    "govt_concession_credit": 280.15,
+    "plan_discount_credit": 354.82,
+    "total_current_charges": 1678.93,
+    "opening_balance": 203.39,
+    "total_payments_received": 432.00,
+    "total_amount_due": 538.77,
+    "total_amount_without_discount": 1204.06
+  },
+
+  "page3": {}
 }

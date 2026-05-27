@@ -464,6 +464,7 @@ class VertexAIProvider(BaseAPIProvider):
         config = context["config"]
 
         photo_mode = config.get("photo_mode", "NONE")
+        date_format = config.get("date_format", "")
         photo_instructions = config.get("photo_instructions", "") if isinstance(config, dict) else ""
         text_fields_instruction = config.get("info", {}).get("text_fields", "") if isinstance(config, dict) else ""
 
@@ -520,6 +521,7 @@ class VertexAIProvider(BaseAPIProvider):
         #     )
 
         prompt_text = (
+            f"Date format instruction: {date_format}\n\n"
             f"Task: Generate a photorealistic {doc_type_key} by replacing specific data fields on the provided template.\n\n"
             f"{text_fields_instruction}\n\n"
             # f"{layout_section}"

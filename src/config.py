@@ -8,7 +8,7 @@ SUPPORTED_PLATFORMS = [PLATFORM_VERTEX_AI]
 
 SUPPORTED_DOC_TYPES = [
     "aus_passport",
-    "driver_license",
+    "aus_driver_license",
     "aus_medicare_card",
     "utility_bill",
     "aus_energy_bill",
@@ -221,8 +221,8 @@ PROMPT_TEMPLATES = {
             )
         }
     },
-    "driver_license/vic": {
-        "date_format": "Format dates exactly as DD-MM-YYYY for ALL.Not is DD-MMM-YYYY",
+    "aus_driver_license/vic": {
+        "date_format": "Format dates exactly as DD-MM-YYYY for ALL (eg. 13-02-1990). ",
         "photo_mode": "SINGLE",  
         "photo_instructions": (
             "Preserve the existing portrait placement and frame on the middle right of the front card. "

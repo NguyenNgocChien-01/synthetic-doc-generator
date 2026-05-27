@@ -77,7 +77,7 @@ synthetic-doc-generator/
 ```
 
 
-passport 10
-blue 13
-yellow 12
-green 10
+passport 25
+Medicare 35 (blue 13, yellow 12,green 10)
+WWC 25 
+driver license 25 vic
