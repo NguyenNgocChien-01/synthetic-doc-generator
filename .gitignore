@@ -31,4 +31,6 @@ setup_adc.sh
 sort_name.py
 test_api.py
 
+dataset/documents/aus_energy_bill/other/
+
 
