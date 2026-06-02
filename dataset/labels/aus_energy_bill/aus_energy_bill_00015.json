@@ -1,0 +1,31 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Synergy",
+  "provider_abn": "58 673 830 106",
+  "account_holder_name": "MISS J TAYLOR",
+  "account_number": "376 367 850",
+  "nmi": "80023745133",
+  "service_address_street": "28 Prosperity Dr",
+  "service_address_suburb": "Maddington",
+  "service_address_state": "WA",
+  "service_address_postcode": "6109",
+  "bill_issue_date": "2024-06-06",
+  "bill_due_date": null,
+  "billing_period_start": "2024-04-05",
+  "billing_period_end": "2024-06-05",
+  "electricity_kwh": 365.581,
+  "average_daily_usage_kwh": 5.8965,
+  "previous_balance": -150.64,
+  "payments_received": 240.0,
+  "supply_charge": 62.26,
+  "usage_charges": 102.4,
+  "solar_feed_in_credit": null,
+  "concession": null,
+  "total_discount": null,
+  "gst": 16.47,
+  "amount_due": -209.51,
+  "document_pages": [
+    "aus_energy_bill_00015_page1.png",
+    "aus_energy_bill_00015_page2.png"
+  ]
+}

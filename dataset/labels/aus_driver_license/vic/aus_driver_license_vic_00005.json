@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "first_name": "MOLLY",
+      "middle_name": null,
+      "last_name": "OLSON",
+      "full_name": "MOLLY OLSON",
+      "sex": "M",
+      "dob": "2002-12-10"
+    },
+    "licence": {
+      "licence_number": "303527852",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "2028-01-18",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 56",
+      "address_line_2": "23 HILL GREEN",
+      "suburb": "EAST JASON",
+      "state": "VIC",
+      "postcode": "2378"
+    },
+    "card_number": null,
+    "dob_watermark": "10122002",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D3810360",
+    "expiry_date": "2028-01-18",
+    "dob": null,
+    "age_indicator": "12-02",
+    "barcode_number": "ABnoteNZ9043121021",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

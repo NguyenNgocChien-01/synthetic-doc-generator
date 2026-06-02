@@ -1,0 +1,24 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Ergon Energy",
+  "provider_abn": "11 121 177 802",
+  "account_holder_name": "XXXXX",
+  "account_number": "12345678",
+  "tax_invoice_number": null,
+  "nmi": "9876543210",
+  "service_address_street": "PO BOX XXXX",
+  "service_address_suburb": "XXXXXXXX",
+  "service_address_state": "XXX",
+  "service_address_postcode": "XXXX",
+  "bill_issue_date": "2020-05-08",
+  "bill_due_date": "2020-05-28",
+  "billing_period_start": "2020-04-02",
+  "billing_period_end": "2020-05-06",
+  "total_electricity_kwh": null,
+  "average_daily_usage_kwh": 304.74,
+  "total_excl_gst": null,
+  "total_gst": 266.61 ,
+  "total_incl_gst": 2437.14,
+  "amount_due": 2937.14
+
+}

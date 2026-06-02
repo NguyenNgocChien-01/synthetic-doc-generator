@@ -1,0 +1,33 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "EnergyAustralia",
+  "provider_abn": "99 086 014 968",
+  "account_holder_name": "MS THI KHOI ANH PHAN",
+  "account_number": "1850219619",
+  "nmi": "41031438938",
+  "service_address_street": "10 Tallwood AVE",
+  "service_address_suburb": "EASTWOOD",
+  "service_address_state": "NSW",
+  "service_address_postcode": "2122",
+  "bill_issue_date": "2024-12-02",
+  "bill_due_date": "2024-12-19",
+  "billing_period_start": "2024-08-23",
+  "billing_period_end": "2024-11-21",
+  "electricity_kwh": 4893.019,
+  "average_daily_usage_kwh": 53.77,
+  "previous_balance": 650.82,
+  "payments_received": 980.0,
+  "supply_charge": 100.04,
+  "usage_charges": 1679.04,
+  "solar_feed_in_credit": null,
+  "concession": 75.0,
+  "total_discount": 142.33,
+  "gst": 148.8,
+  "amount_due": 1232.59,
+  "document_pages": [
+    "aus_energy_bill_00009_page1.png",
+    "aus_energy_bill_00009_page2.png",
+    "aus_energy_bill_00009_page3.png",
+    "aus_energy_bill_00009_page4.png"
+  ]
+}

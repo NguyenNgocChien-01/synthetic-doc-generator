@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "first_name": "RONNIE",
+      "middle_name": null,
+      "last_name": "LOPEZ",
+      "full_name": "RONNIE LOPEZ",
+      "sex": "M",
+      "dob": "1961-09-20"
+    },
+    "licence": {
+      "licence_number": "425964103",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "2031-01-19",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 99",
+      "address_line_2": "4 ALLISON HIGHWAY",
+      "suburb": "OSBORNEPORT",
+      "state": "VIC",
+      "postcode": "8470"
+    },
+    "card_number": null,
+    "dob_watermark": "20091961",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D8345976",
+    "expiry_date": "2031-01-19",
+    "dob": "1961-09-20",
+    "age_indicator": "09-61",
+    "barcode_number": "ABnoteNZ9454292768",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

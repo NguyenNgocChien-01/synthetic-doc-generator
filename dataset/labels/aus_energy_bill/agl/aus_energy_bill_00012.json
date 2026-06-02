@@ -1,0 +1,23 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "AGL",
+  "provider_abn": "88 090 538 337",
+  "account_holder_name": "Oscar Omegna",
+  "account_number": "7098 052 587",
+  "tax_invoice_number": null,
+  "nmi": "62038507995",
+  "service_address_street": "161 WARRALILY BOULEVARD",
+  "service_address_suburb": "ARMSTRONG CREEK",
+  "service_address_state": "VIC",
+  "service_address_postcode": "3217",
+  "bill_issue_date": "2025-06-10",
+  "bill_due_date": "2025-06-30",
+  "billing_period_start": "2025-05-08",
+  "billing_period_end": "2025-06-07",
+  "total_electricity_kwh":null,
+  "average_daily_usage_kwh": 34.33,
+  "total_excl_gst": null,
+  "total_gst": 27.38,
+  "total_incl_gst": 301.21,
+  "amount_due": 301.21
+}

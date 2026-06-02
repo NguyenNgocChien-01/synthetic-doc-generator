@@ -1,0 +1,31 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Tango Energy",
+  "provider_abn": "43 155 908 839",
+  "account_holder_name": "Andrew RoccaDavis",
+  "account_number": "1763992",
+  "nmi": "63051684176",
+  "service_address_street": "FLAT 1/11 ANDOVER COURT",
+  "service_address_suburb": "HAMPTON PARK",
+  "service_address_state": "VIC",
+  "service_address_postcode": "3976",
+  "bill_issue_date": "2022-07-11",
+  "bill_due_date": null,
+  "billing_period_start": "2022-06-06",
+  "billing_period_end": "2022-07-06",
+  "electricity_kwh": 214.12,
+  "average_daily_usage_kwh": 6.91,
+  "previous_balance": -15.47,
+  "payments_received": 55.0,
+  "supply_charge": 23.87,
+  "usage_charges": 50.46,
+  "solar_feed_in_credit": null,
+  "concession": 8.23,
+  "total_discount": null,
+  "gst": 6.01,
+  "amount_due": -4.37,
+  "document_pages": [
+    "aus_energy_bill_00013_page1.png",
+    "aus_energy_bill_00013_page2.png"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "VIC",
+  "front": {
+    "holder": {
+      "first_name": "THOMAS",
+      "middle_name": null,
+      "last_name": "KELLY",
+      "full_name": "THOMAS KELLY",
+      "sex": "F",
+      "dob": "1981-07-21"
+    },
+    "licence": {
+      "licence_number": "665127129",
+      "licence_classes": [
+        "C"
+      ],
+      "licence_type_raw": "CAR",
+      "expiry_date": "2029-07-12",
+      "conditions": [
+        "S",
+        "B",
+        "E",
+        "A",
+        "V",
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 12",
+      "address_line_2": "FLAT 30 9 NELSON TRAILER",
+      "suburb": "WEST ANTHONY",
+      "state": "VIC",
+      "postcode": "6636"
+    },
+    "card_number": null,
+    "dob_watermark": "21071981",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D512993",
+    "expiry_date": "2029-07-12",
+    "dob": null,
+    "age_indicator": "07-81",
+    "barcode_number": "ABnoteNZ7416365756",
+    "conditions_legend": {
+      "S": "Corrective lenses to be worn while driving",
+      "B": "Synchromesh Transmission - Heavy Vehicle",
+      "E": "LAMS & No Pillion Passenger End Restriction (20-09-2009)",
+      "A": "Automatic Transmission",
+      "V": "Automatic",
+      "X": "Condition Line Number Six",
+      "Y": "Condition Line Number Seven",
+      "Z": "Condition Line Number Eight"
+    },
+    "transport_notice": "VicRoads must be notified of your CHANGE OF ADDRESS by visiting www.vicroads.vic.gov.au or telephoning 131171 or writing to PO Box 777 Carlton Sth 3053"
+  }
+}

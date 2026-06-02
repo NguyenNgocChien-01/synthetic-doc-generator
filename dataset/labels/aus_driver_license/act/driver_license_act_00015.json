@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "first_name": "BARBARA",
+      "middle_name": null,
+      "last_name": "CASTILLO",
+      "full_name": "BARBARA CASTILLO",
+      "sex": "F",
+      "dob": "2001-03-26"
+    },
+    "licence": {
+      "licence_number": "222500536",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2027-09-17",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 89",
+      "address_line_2": "UNIT 55 1 CHAD CLOSE",
+      "suburb": "SHANNONMOUTH",
+      "state": "ACT",
+      "postcode": "2952"
+    },
+    "card_number": "D6445157",
+    "dob_watermark": "26032001",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D7174224",
+    "expiry_date": "17-09-2027",
+    "dob": "26-03-2001",
+    "age_indicator": "03-01",
+    "barcode_number": "ABnoteNZ1593802291",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "AGL",
+  "provider_abn": "88 090 538 337",
+  "account_holder_name": "Thi Phan",
+  "account_number": "7113 857 267",
+  "tax_invoice_number": null,
+  "nmi": "41031438938",
+  "service_address_street": "10 Tallwood Avenue",
+  "service_address_suburb": "EASTWOOD",
+  "service_address_state": "NSW",
+  "service_address_postcode": "2122",
+  "bill_issue_date": "2025-03-04",
+  "bill_due_date": "2025-03-21",
+  "billing_period_start": "2025-01-02",
+  "billing_period_end": "2025-03-02",
+  "total_electricity_kwh":null ,
+  "average_daily_usage_kwh": 43.21,
+  "total_excl_gst": 734.6,
+  "total_gst": 73.46,
+  "total_incl_gst": 808.06,
+  "amount_due": 808.06
+}

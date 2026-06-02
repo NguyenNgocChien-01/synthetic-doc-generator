@@ -1,0 +1,31 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Sumo Power Pty Ltd",
+  "provider_abn": "86 601 199 151",
+  "account_holder_name": "Thomas Paul Petty",
+  "account_number": "1308766",
+  "nmi": "61025356807",
+  "service_address_street": "39 Kinglake Crescent",
+  "service_address_suburb": "Craigieburn",
+  "service_address_state": "VIC",
+  "service_address_postcode": "3064",
+  "bill_issue_date": "2024-08-26",
+  "bill_due_date": "2024-09-15",
+  "billing_period_start": "2024-07-23",
+  "billing_period_end": "2024-08-18",
+  "electricity_kwh": 24.835,
+  "average_daily_usage_kwh": 0.92,
+  "previous_balance": 0.0,
+  "payments_received": 0.0,
+  "supply_charge": 29.7,
+  "usage_charges": 7.07,
+  "solar_feed_in_credit": null,
+  "concession": null,
+  "total_discount": 6.62,
+  "gst": 2.74,
+  "amount_due": 30.15,
+  "document_pages": [
+    "aus_energy_bill_00021_page1.png",
+    "aus_energy_bill_00021_page2.png"
+  ]
+}

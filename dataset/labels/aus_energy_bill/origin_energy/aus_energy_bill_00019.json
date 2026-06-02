@@ -1,0 +1,24 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Origin Energy",
+  "provider_abn": "33 071 052 287",
+  "account_holder_name": "UMER MOBEEN QURESHI",
+  "account_number": "A-5C7B9793",
+  "tax_invoice_number": "47050387",
+  "nmi": "33206328146",
+  "service_address_street": "41 PELSART AVE",
+  "service_address_suburb": "WILLMOT",
+  "service_address_state": "NSW",
+  "service_address_postcode": "2770",
+  "bill_issue_date": "2024-09-27",
+  "bill_due_date": "2024-10-15",
+  "billing_period_start": "2024-06-25",
+  "billing_period_end": "2024-09-24",
+  "total_electricity_kwh": 622.491,
+  "average_daily_usage_kwh":null ,
+  "total_excl_gst":null,
+  "total_gst": 29.46,
+  "total_incl_gst": 40.91,
+  "amount_due": 10.53
+
+}
