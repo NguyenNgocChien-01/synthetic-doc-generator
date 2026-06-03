@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "UM496362",
+  "family_name": "VAZQUEZ",
+  "given_names": "MELISSA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1980-06-14",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2021-03-03",
+  "place_of_birth": "GEELONG",
+  "authority": "CANBERRA",
+  "mrz_line1": "P<AUSVAZQUEZ<<MELISSA<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "UM4996362<AUS800614F310131<<<<<<<<<<<<<<<<01"
+}

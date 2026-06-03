@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "IY7580772",
+  "family_name": "FULLER",
+  "given_names": "ERICA",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1967-07-09",
+  "sex": "M",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2022-03-06",
+  "place_of_birth": "GENVING",
+  "authority": "CANBERRRA",
+  "mrz_line1": "P<AUSFULLER<<ERICA<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "IY7580772<AUS670709M300106<<<<<<<<<<<<<<<<09"
+}

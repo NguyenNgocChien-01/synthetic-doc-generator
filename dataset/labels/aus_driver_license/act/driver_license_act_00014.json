@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "first_name": "PAUL",
+      "middle_name": null,
+      "last_name": "WILSON",
+      "full_name": "PAUL WILSON",
+      "sex": "M",
+      "dob": "2001-04-13"
+    },
+    "licence": {
+      "licence_number": "102713589",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": null,
+      "expiry_date": "2029-06-19",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 78",
+      "address_line_2": "UNIT 60 20 VINCENT PLATEAU",
+      "suburb": "BECKERTON",
+      "state": "ACT",
+      "postcode": "9573"
+    },
+    "card_number": "D1463681",
+    "dob_watermark": "13042001",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D8504749",
+    "expiry_date": "19-06-2029",
+    "dob": "13-04-2001",
+    "age_indicator": "04-01",
+    "barcode_number": "ABnoteNZ5514333636",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "AGL",
+  "provider_abn": "88 090 538 337",
+  "account_holder_name": "Sam Sample",
+  "account_number": "123 4567 891X",
+  "tax_invoice_number": null,
+  "nmi": "410200000XX",
+  "service_address_street": "12304/123 ‘The sampletown’ Sampletown Sample St",
+  "service_address_suburb": "SampletownSample Town",
+  "service_address_state": null,
+  "service_address_postcode": null,
+  "bill_issue_date": "2023-04-05",
+  "bill_due_date": "2023-04-23",
+  "billing_period_start": "2023-03-05",
+  "billing_period_end": "2023-04-04",
+  "total_electricity_kwh": null,
+  "average_daily_usage_kwh": 9.03,
+  "total_excl_gst": 57,
+  "total_gst": 6.7  ,
+  "total_incl_gst": 63.7,
+  "amount_due": 63.7
+
+}

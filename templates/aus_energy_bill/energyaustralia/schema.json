@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Australian Electricity Bill",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "description": "Always AUS_ELECTRICITY_BILL.",
+      "required": true
+    },
+    "provider_name": {
+      "type": "string",
+      "title": "Provider Name",
+      "description": "Trading name of the energy retailer as shown on the bill (e.g. 'AGL', 'EnergyAustralia').",
+      "required": true
+    },
+    "provider_abn": {
+      "type": ["string", "null"],
+      "title": "Provider ABN",
+      "description": "Australian Business Number of the energy retailer (e.g. '11 222 333 444').",
+      "required": false
+    },
+    "tax_invoice_number": {
+      "type": ["string", "null"],
+      "title": "Tax Invoice Number",
+      "description": "The explicit tax invoice number printed on the bill. If the provider uses the account number as the invoice number, put it here as well. Null if not explicitly shown.",
+      "required": false
+    },
+    "account_holder_name": {
+      "type": "string",
+      "title": "Account Holder Name",
+      "description": "Full name of the account holder as shown on the bill (e.g. 'Jane Citizen').",
+      "required": true
+    },
+    "account_number": {
+      "type": ["string", "null"],
+      "title": "Account Number",
+      "description": "Customer account number as shown on the bill (e.g. '123456').",
+      "required": false
+    },
+    "nmi": {
+      "type": ["string", "null"],
+      "title": "National Metering Identifier (NMI)",
+      "description": "10-digit electricity meter identifier (e.g. '0123456789'). Electricity only.",
+      "required": false
+    },
+    "service_address_street": {
+      "type": "string",
+      "title": "Service Address - Street",
+      "description": "Street number and name of the supply address (e.g. '1 Street Road').",
+      "required": true
+    },
+    "service_address_suburb": {
+      "type": "string",
+      "title": "Service Address - Suburb",
+      "description": "Suburb or locality of the supply address (e.g. 'ANYTOWN').",
+      "required": true
+    },
+    "service_address_state": {
+      "type": "string",
+      "title": "Service Address - State",
+      "description": "Australian state or territory abbreviation (e.g. 'VIC').",
+      "enum": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+      "required": true
+    },
+    "service_address_postcode": {
+      "type": "string",
+      "title": "Service Address - Postcode",
+      "description": "4-digit Australian postcode (e.g. '0000').",
+      "required": true
+    },
+    "bill_issue_date": {
+      "type": ["string", "null"],
+      "title": "Bill Issue Date",
+      "description": "Date the bill was issued (YYYY-MM-DD) (e.g. '2022-04-01').",
+      "format": "date",
+      "required": false
+    },
+    "bill_due_date": {
+      "type": ["string", "null"],
+      "title": "Bill Due Date",
+      "description": "Payment due date (YYYY-MM-DD) (e.g. '2022-04-27').",
+      "format": "date",
+      "required": false
+    },
+    "billing_period_start": {
+      "type": "string",
+      "title": "Billing Period Start",
+      "description": "Start date of the billing period (YYYY-MM-DD) (e.g. '2022-03-01').",
+      "format": "date",
+      "required": true
+    },
+    "billing_period_end": {
+      "type": "string",
+      "title": "Billing Period End",
+      "description": "End date of the billing period (YYYY-MM-DD) (e.g. '2022-03-31').",
+      "format": "date",
+      "required": true
+    },
+    "total_electricity_kwh": {
+      "type": ["number", "null"],
+      "title": "Total Electricity Usage (kWh)",
+      "description": "Total electricity consumed in kWh only if explicitly stated on the bill (e.g. 242.447). Null if not shown.",
+      "required": false
+    },
+    "average_daily_usage_kwh": {
+      "type": ["number", "null"],
+      "title": "Average Daily Usage (kWh)",
+      "description": "Average daily energy usage as printed on the bill (e.g. 31.66). Null if not shown.",
+      "required": false
+    },
+    "total_excl_gst": {
+      "type": ["number", "null"],
+      "title": "Total Amount (excl. GST)",
+      "description": "Total charges before GST in AUD (e.g. 844.36). Null if not shown.",
+      "required": false
+    },
+    "total_gst": {
+      "type": ["number", "null"],
+      "title": "Total GST Amount",
+      "description": "Total GST (Goods and Services Tax) amount included in the bill in AUD (e.g. 135.80). Null if not explicitly shown.",
+      "required": false
+    },
+    "total_incl_gst": {
+      "type": "number",
+      "title": "Total Amount (incl. GST)",
+      "description": "Total amount payable including GST in AUD (e.g. 928.80).",
+      "required": true
+    },
+    "amount_due": {
+      "type": "number",
+      "title": "Amount Due",
+      "description": "Final amount payable by the customer including GST after all adjustments, credits and previous balance in AUD (e.g. 650.82). Use the last highlighted payable amount on the bill.",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Dodo",
+  "provider_abn": "15 123 155 840",
+  "account_holder_name": "SLAWOSZ WAMBERSKI",
+  "account_number": "11119718",
+  "tax_invoice_number": "114733207",
+  "nmi": "41028538237",
+  "service_address_street": "UNIT 8, 64 WILLIS ST",
+  "service_address_suburb": "KINGSFORD",
+  "service_address_state": "NSW",
+  "service_address_postcode": "2032",
+  "bill_issue_date": "2024-07-09",
+  "bill_due_date": "2024-07-26",
+  "billing_period_start": "2024-04-06",
+  "billing_period_end": "2024-07-05",
+  "total_electricity_kwh": 1100.0,
+  "average_daily_usage_kwh": 12.24,
+  "total_excl_gst": null,
+  "total_gst": 47.22,
+  "total_incl_gst": 519.41,
+  "amount_due": 519.41
+}

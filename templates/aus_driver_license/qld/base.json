@@ -1,0 +1,46 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "QLD",
+  "front": {
+    "holder": {
+      "first_name": "JOHN",
+      "middle_name": null,
+      "last_name": "DOE",
+      "full_name": "JOHN DOE",
+      "sex": "M",
+      "dob": "1986-10-16"
+    },
+    "licence": {
+      "licence_number": "123 456 789",
+      "licence_classes": [
+        "C",
+        "RE"
+      ],
+      "licence_type_raw": "O, L",
+      "expiry_date": "2025-12-14",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "27 MOUNT PETRIE RD",
+      "address_line_2": null,
+      "suburb": "MACKENZIE",
+      "state": "QLD",
+      "postcode": "4153"
+    },
+    "card_number": null,
+    "dob_watermark": null,
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "1A2B 3C4B 6E",
+    "expiry_date": null,
+    "dob": null,
+    "age_indicator": null,
+    "barcode_number": null,
+    "conditions_legend": null,
+    "transport_notice": "View Terms of use and update your information at: www.tmr.qld.gov.au"
+  }
+}

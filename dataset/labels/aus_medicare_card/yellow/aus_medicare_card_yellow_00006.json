@@ -1,0 +1,43 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "reciprocal health care",
+  "medicare_card_number": "4293 36425 7",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "MARY",
+      "middle_initial": null,
+      "last_name": "WOODS",
+      "full_name": "1 MARY WOODS"
+    },
+    {
+      "position": 2,
+      "first_name": "TOMMY",
+      "middle_initial": null,
+      "last_name": "DURAN",
+      "full_name": "2 TOMMY DURAN"
+    },
+    {
+      "position": 3,
+      "first_name": "PAUL",
+      "middle_initial": null,
+      "last_name": "JACKSON",
+      "full_name": "3 PAUL JACKSON"
+    },
+    {
+      "position": 4,
+      "first_name": "CHRISTINA",
+      "middle_initial": null,
+      "last_name": "CARLSON",
+      "full_name": "4 CHRISTINA CARLSON"
+    },
+    {
+      "position": 5,
+      "first_name": "JAMES",
+      "middle_initial": "R",
+      "last_name": "LOPEZ",
+      "full_name": "5 JAMES R LOPEZ"
+    }
+  ],
+  "expiry_date": "07/11/2030"
+}

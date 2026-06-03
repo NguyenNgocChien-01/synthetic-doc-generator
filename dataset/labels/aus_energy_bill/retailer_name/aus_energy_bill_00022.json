@@ -1,0 +1,24 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "Retailer Name",
+  "provider_abn": "11 222 333 444",
+  "account_holder_name": "Jane Citizen",
+  "account_number": "123456",
+  "tax_invoice_number": null,
+  "nmi": "0123456789",
+  "service_address_street": "1 Street Road",
+  "service_address_suburb": "Anytown",
+  "service_address_state": "STATE",
+  "service_address_postcode": "0000",
+  "bill_issue_date": "2022-04-01",
+  "bill_due_date": "2022-04-27",
+  "billing_period_start": "2022-03-01",
+  "billing_period_end": "2022-03-31",
+  "total_electricity_kwh": null,
+  "average_daily_usage_kwh": 18.0,
+  "total_excl_gst": null,
+  "total_gst": 18.77,
+  "total_incl_gst": 114.87,
+  "amount_due": 79.87
+
+}

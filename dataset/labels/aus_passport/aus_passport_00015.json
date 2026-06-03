@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "QIB5437923",
+  "family_name": "BURUKE",
+  "given_names": "SARAH",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1967-04-20",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2030-03-08",
+  "place_of_birth": "GEELONG",
+  "authority": "CANBERRA",
+  "mrz_line1": "P<AUSBURKE<<SARAH<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "QI1508620<AUS570420F300908<<<<<<<<<<<<<<<<06"
+}

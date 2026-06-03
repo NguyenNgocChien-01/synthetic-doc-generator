@@ -1,0 +1,23 @@
+{
+  "document_type": "AUS_ELECTRICITY_BILL",
+  "provider_name": "AGL",
+  "provider_abn": "88 090 538 337",
+  "account_holder_name": "Thi Khoi ANh Phan",
+  "account_number": "7095 004 987",
+  "tax_invoice_number": null,
+  "nmi": "41029727986",
+  "service_address_street": "2A Eyre Street",
+  "service_address_suburb": "CHIFLEY",
+  "service_address_state": "NSW",
+  "service_address_postcode": "2036",
+  "bill_issue_date": "2025-06-30",
+  "bill_due_date": "2025-07-17",
+  "billing_period_start": "2025-03-27",
+  "billing_period_end": "2025-06-26",
+  "total_electricity_kwh": null,
+  "average_daily_usage_kwh": 50.17,
+  "total_excl_gst": 1341.43,
+  "total_gst": 134.14,
+  "total_incl_gst": 1400.57,
+  "amount_due": 1400.57
+}

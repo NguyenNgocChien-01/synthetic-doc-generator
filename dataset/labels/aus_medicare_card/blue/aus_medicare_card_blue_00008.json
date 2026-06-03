@@ -1,0 +1,29 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "interim card",
+  "medicare_card_number": "2008 81603 8",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "VERONICA",
+      "middle_initial": null,
+      "last_name": "DAVIS",
+      "full_name": "1 VERONICA DAVIS"
+    },
+    {
+      "position": 2,
+      "first_name": "ROBERT",
+      "middle_initial": null,
+      "last_name": "GONZALEZ",
+      "full_name": "2 ROBERT GONZALEZ"
+    },
+    {
+      "position": 3,
+      "first_name": "DAVID",
+      "middle_initial": "C",
+      "last_name": "AVILA",
+      "full_name": "3 DAVID C AVILA"
+    }
+  ],
+  "expiry_date": "30/05/2030"
+}

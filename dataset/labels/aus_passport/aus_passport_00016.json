@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "FO75049159",
+  "family_name": "DAVID",
+  "given_names": "RILEY",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "1975-05-11",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2022-03-03",
+  "place_of_birth": "WEST BILLMOUTH",
+  "authority": "CANBERRA",
+  "mrz_line1": "P<AUSRILEY<<DAVID<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "FO7504159<AUS750511F310330<<<<<<<<<<<<<<<<05"
+}

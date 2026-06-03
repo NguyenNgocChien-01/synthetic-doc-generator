@@ -1,0 +1,43 @@
+{
+  "document_type": "AUS_MEDICARE_CARD",
+  "card_type": "regular",
+  "medicare_card_number": "1853 85275 1",
+  "cardholders": [
+    {
+      "position": 1,
+      "first_name": "NICOLE",
+      "middle_initial": null,
+      "last_name": "BROWN",
+      "full_name": "1 NICOLE BROWN"
+    },
+    {
+      "position": 2,
+      "first_name": "ERIC",
+      "middle_initial": null,
+      "last_name": "BARNES",
+      "full_name": "2 ERIC BARNES"
+    },
+    {
+      "position": 3,
+      "first_name": "DAVID",
+      "middle_initial": null,
+      "last_name": "WADE",
+      "full_name": "3 DAVID WADE"
+    },
+    {
+      "position": 4,
+      "first_name": "TRAVIS",
+      "middle_initial": "A",
+      "last_name": "LOPEZ",
+      "full_name": "4 TRAVIS A LOPEZ"
+    },
+    {
+      "position": 5,
+      "first_name": "ELIZABETH",
+      "middle_initial": null,
+      "last_name": "DUKE",
+      "full_name": "5 ELIZABETH DUKE"
+    }
+  ],
+  "expiry_date": "05/2029"
+}

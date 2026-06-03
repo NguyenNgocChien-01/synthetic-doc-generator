@@ -1,0 +1,50 @@
+{
+  "document_type": "AUS_DRIVER_LICENSE",
+  "issuing_state": "ACT",
+  "front": {
+    "holder": {
+      "first_name": "KATHY",
+      "middle_name": "B",
+      "last_name": "HAYES",
+      "full_name": "KATHY HAYES",
+      "sex": "M",
+      "dob": "1964-04-17"
+    },
+    "licence": {
+      "licence_number": "629666980",
+      "licence_classes": [
+        "C",
+        "R"
+      ],
+      "licence_type_raw": "FULL",
+      "expiry_date": "2029-01-31",
+      "conditions": [
+        "S"
+      ]
+    },
+    "address": {
+      "address_line_1": "UNIT 38",
+      "address_line_2": "6/0 WHITE MOUNT",
+      "suburb": "ST. BRANDIHAVEN",
+      "state": "ACT",
+      "postcode": "2865"
+    },
+    "card_number": "D9786877",
+    "dob_watermark": "17041964",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "back": {
+    "card_number": "D3108004",
+    "expiry_date": "2029-01-31",
+    "dob": "1964-04-17",
+    "age_indicator": "04-64",
+    "barcode_number": "ABnoteNZ1801324237",
+    "conditions_legend": {
+      "S": "Licensee must wear corrective lenses at all times",
+      "1": "May only drive a vehicle fitted with a breath alcohol interlock device",
+      "2": "Must not drive a vehicle if the licencee has a blood alcohol concentration of 0.02 g/100ml or more"
+    },
+    "transport_notice": "Change of address must be advised within 14 days by phoning the RTA Customer Service Centre on 13 22 81"
+  }
+}
