@@ -40,4 +40,11 @@ templates/*/*.jpg
 
 templates/*/*.pdf
 
+
+templates/*/*/*.png
+
+templates/*/*/*.jpg
+
+templates/*/*/*.pdf
+
 dataset/documents/aus_energy_bill/
