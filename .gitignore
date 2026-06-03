@@ -34,3 +34,10 @@ test_api.py
 dataset/documents/aus_energy_bill/other/
 
 
+templates/*.png
+
+templates/*.jpg
+
+templates/*.pdf
+
+dataset/documents/aus_energy_bill/
