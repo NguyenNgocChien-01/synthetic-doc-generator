@@ -1,51 +1,41 @@
+
 {
   "document_type": "AUS_DRIVER_LICENSE",
   "issuing_state": "VIC",
   "front": {
     "holder": {
-      "first_name": "DANIEL",
+      "first_name": "JANE",
       "middle_name": null,
-      "last_name": "FOWLER",
-      "full_name": "DANIEL FOWLER",
-      "sex": "M",
-      "dob": "1987-07-07"
+      "last_name": "CITIZEN",
+      "full_name": "JANE CITIZEN",
+      "sex": "F",
+      "dob": "1983-07-29"
     },
     "licence": {
-      "licence_number": "822170556",
-      "licence_classes": [
-        "C"
-      ],
+      "licence_number": "987654321",
+      "licence_classes": ["C"],
       "licence_type_raw": "CAR",
-      "expiry_date": "2029-10-18",
-      "conditions": [
-        "S",
-        "B",
-        "E",
-        "A",
-        "V",
-        "X",
-        "Y",
-        "Z"
-      ]
+      "expiry_date": "2019-05-20",
+      "conditions": ["S", "B", "E", "A", "V", "X", "Y", "Z"]
     },
     "address": {
-      "address_line_1": "UNIT 82",
-      "address_line_2": "16/93 BLACK GULLY",
-      "suburb": "JAMESFORT",
+      "address_line_1": "FLAT 10",
+      "address_line_2": "77 SAMPLE PARADE",
+      "suburb": "KEW EAST",
       "state": "VIC",
-      "postcode": "2928"
+      "postcode": "3102"
     },
     "card_number": null,
-    "dob_watermark": "07071987",
+    "dob_watermark": "29071983",
     "photo_present": true,
     "signature_present": true
   },
   "back": {
-    "card_number": "D3409784",
-    "expiry_date": "2029-10-18",
-    "dob": "1987-07-07",
-    "age_indicator": "07-87",
-    "barcode_number": "ABnoteNZ4375502226",
+    "card_number": "D9999999",
+    "expiry_date": "2019-05-20",
+    "dob": "1983-07-29",
+    "age_indicator": "07-83",
+    "barcode_number": "4B|poxdNZ03041785",
     "conditions_legend": {
       "S": "Corrective lenses to be worn while driving",
       "B": "Synchromesh Transmission - Heavy Vehicle",
