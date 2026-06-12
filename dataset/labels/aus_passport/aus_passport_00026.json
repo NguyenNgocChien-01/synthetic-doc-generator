@@ -1,0 +1,16 @@
+{
+  "document_type": "AUS_PASSPORT",
+  "issuing_country": "AUS",
+  "document_number": "YP9759331",
+  "family_name": "WILLIAMS",
+  "given_names": "RACHEL",
+  "nationality": "AUSTRALIAN",
+  "date_of_birth": "2007-02-09",
+  "sex": "F",
+  "date_of_issue": "2012-03-03",
+  "date_of_expiry": "2027-10-19",
+  "place_of_birth": "JOHNSONBOROUGH",
+  "authority": "EAST NATALIEPORT",
+  "mrz_line1": "P<AUSWILLIAMS<<RACHEL<<<<<<<<<<<<<<<<<<<<<<<",
+  "mrz_line2": "YP9759331<AUS070209F271019<<<<<<<<<<<<<<<<06"
+}

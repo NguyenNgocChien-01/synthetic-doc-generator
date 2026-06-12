@@ -1,5 +1,7 @@
 # Synthetic Document Generator
 
+
+[Review](generator.png)
 ## Setup
 
 `.env`:
